@@ -1,15 +1,15 @@
 package com.example.quemtocahoje.Enum;
 
-public enum TipoUsuario {
-    ESPECTADOR(1)
-    ,ESTABELECIMENTO(2)
-    ,MUSICO(3)
-    ,BANDA(4)
-    ,ADMIN(5);
+public enum StatusProposta {
+    ABERTO(1)
+    ,RECUSADO(2)
+    ,EXPIRADO(3)
+    ,CANCELADO(4)
+    ,ACEITO(5);
 
     private final int valor;
 
-    TipoUsuario(int valor) {
+    StatusProposta(int valor) {
         this.valor = valor;
     }
 

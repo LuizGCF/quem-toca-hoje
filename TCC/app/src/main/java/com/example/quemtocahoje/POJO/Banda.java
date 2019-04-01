@@ -1,5 +1,7 @@
 package com.example.quemtocahoje.POJO;
 
+import android.util.EventLog;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -11,18 +13,24 @@ public class Banda implements Serializable {
     private String descricao;
     private Date dataCriacao;
 
+    private List<Arquivo> arquivos;
     private List<String> generos;
     private List<Musico> membros;
     private List<Convite> convites;
+    private List<Evento> eventos;
+    private List<Avaliacao> avaliacoes;
 
-    public Banda(Integer id, String nome, String descricao, Date dataCriacao, List<String> generos, List<Musico> membros, List<Convite> convites) {
+    public Banda(Integer id, String nome, String descricao, Date dataCriacao, List<Arquivo> arquivos, List<String> generos, List<Musico> membros, List<Convite> convites, List<Evento> eventos, List<Avaliacao> avaliacoes) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.dataCriacao = dataCriacao;
+        this.arquivos = arquivos;
         this.generos = generos;
         this.membros = membros;
         this.convites = convites;
+        this.eventos = eventos;
+        this.avaliacoes = avaliacoes;
     }
 
     public Integer getId() {
@@ -79,5 +87,29 @@ public class Banda implements Serializable {
 
     public void setConvites(List<Convite> convites) {
         this.convites = convites;
+    }
+
+    public List<Arquivo> getArquivos() {
+        return arquivos;
+    }
+
+    public void setArquivos(List<Arquivo> arquivos) {
+        this.arquivos = arquivos;
+    }
+
+    public List<Evento> getEventos() {
+        return eventos;
+    }
+
+    public void setEventos(List<Evento> eventos) {
+        this.eventos = eventos;
+    }
+
+    public List<Avaliacao> getAvaliacoes() {
+        return avaliacoes;
+    }
+
+    public void setAvaliacoes(List<Avaliacao> avaliacoes) {
+        this.avaliacoes = avaliacoes;
     }
 }
