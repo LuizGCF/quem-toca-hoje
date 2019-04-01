@@ -1,4 +1,4 @@
-package com.example.quemtocahoje.Enums;
+package com.example.quemtocahoje.Enum;
 
 public enum TipoUsuario {
     ESPECTADOR(1)

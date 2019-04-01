@@ -1,6 +1,6 @@
 package com.example.quemtocahoje.POJO;
 
-import com.example.quemtocahoje.Enums.TipoUsuario;
+import com.example.quemtocahoje.Enum.TipoUsuario;
 
 import java.io.Serializable;
 import java.util.Date;
