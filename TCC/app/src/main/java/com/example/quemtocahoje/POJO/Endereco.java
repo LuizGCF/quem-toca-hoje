@@ -13,8 +13,7 @@ public class Endereco implements Serializable {
     private String uf;
     private Date dataCriacao;
 
-    public Endereco(Integer id, String logradouro, String bairro, String complemento, String cidade, String uf, Date dataCriacao) {
-        this.id = id;
+    public Endereco(String logradouro, String bairro, String complemento, String cidade, String uf, Date dataCriacao) {
         this.logradouro = logradouro;
         this.bairro = bairro;
         this.complemento = complemento;

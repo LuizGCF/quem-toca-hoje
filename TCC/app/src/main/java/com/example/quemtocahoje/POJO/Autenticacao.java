@@ -14,8 +14,7 @@ public class Autenticacao implements Serializable {
     private Date dataCriacao;
     private Date dataUltimoLogin;
 
-    public Autenticacao(Integer id, String login, String senha, TipoUsuario tipoUsuario, Date dataCriacao, Date dataUltimoLogin) {
-        this.id = id;
+    public Autenticacao(String login, String senha, TipoUsuario tipoUsuario, Date dataCriacao, Date dataUltimoLogin) {
         this.login = login;
         this.senha = senha;
         this.tipoUsuario = tipoUsuario;

@@ -14,8 +14,7 @@ public class Convite implements Serializable {
     private Integer idBanda;
     private Integer idMusico;
 
-    public Convite(Integer id, String emailConvidado, StatusConvite statusConvite, Date dataCriacao, Integer idBanda) {
-        this.id = id;
+    public Convite(String emailConvidado, StatusConvite statusConvite, Date dataCriacao, Integer idBanda) {
         this.emailConvidado = emailConvidado;
         this.statusConvite = statusConvite;
         this.dataCriacao = dataCriacao;

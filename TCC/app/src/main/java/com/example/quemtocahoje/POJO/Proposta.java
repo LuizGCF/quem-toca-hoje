@@ -14,8 +14,7 @@ public class Proposta implements Serializable {
     private Double valorProposta;
     private Endereco endereco;
 
-    public Proposta(Integer id, Integer idEstabelecimento, Integer idBanda, String descricao, Double valorProposta, Endereco endereco) {
-        this.id = id;
+    public Proposta(Integer idEstabelecimento, Integer idBanda, String descricao, Double valorProposta, Endereco endereco) {
         this.idEstabelecimento = idEstabelecimento;
         this.idBanda = idBanda;
         this.descricao = descricao;

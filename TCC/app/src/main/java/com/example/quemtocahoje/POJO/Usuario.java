@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Usuario implements Serializable {
 
+    private Integer id;
     private String nomeUsuario;
     private Autenticacao autenticacao;
 
@@ -15,6 +16,14 @@ public class Usuario implements Serializable {
         this.nomeUsuario = nomeUsuario;
         this.autenticacao = autenticacao;
         this.arquivo = arquivo;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNomeUsuario() {

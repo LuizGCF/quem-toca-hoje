@@ -18,8 +18,7 @@ public class Avaliacao implements Serializable {
 
     private TipoUsuario tipoUsuario;
 
-    public Avaliacao(Integer id, Integer idAvaliador, Integer idAnalisado, Double notaAvaliacao, String descricao, Date dataAvaliacao, Date dataApresentacao, TipoUsuario tipoUsuario) {
-        this.id = id;
+    public Avaliacao(Integer idAvaliador, Integer idAnalisado, Double notaAvaliacao, String descricao, Date dataAvaliacao, Date dataApresentacao, TipoUsuario tipoUsuario) {
         this.idAvaliador = idAvaliador;
         this.idAnalisado = idAnalisado;
         this.notaAvaliacao = notaAvaliacao;

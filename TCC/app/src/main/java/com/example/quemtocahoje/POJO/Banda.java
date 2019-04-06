@@ -20,8 +20,7 @@ public class Banda implements Serializable {
     private List<Evento> eventos;
     private List<Avaliacao> avaliacoes;
 
-    public Banda(Integer id, String nome, String descricao, Date dataCriacao, List<Arquivo> arquivos, List<String> generos, List<Musico> membros, List<Convite> convites, List<Evento> eventos, List<Avaliacao> avaliacoes) {
-        this.id = id;
+    public Banda(String nome, String descricao, Date dataCriacao, List<Arquivo> arquivos, List<String> generos, List<Musico> membros, List<Convite> convites, List<Evento> eventos, List<Avaliacao> avaliacoes) {
         this.nome = nome;
         this.descricao = descricao;
         this.dataCriacao = dataCriacao;

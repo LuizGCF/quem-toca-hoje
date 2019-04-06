@@ -4,20 +4,18 @@ import com.example.quemtocahoje.Enum.TipoArquivo;
 import com.example.quemtocahoje.Enum.TipoUsuario;
 
 import java.io.Serializable;
-import java.sql.Blob;
-import java.sql.Date;
+import java.util.Date;
 
 public class Arquivo implements Serializable {
 
     private Integer id;
     private Integer idUsuario;
     private TipoUsuario tipoUsuario;
-    private Blob arquivo;
+    private Byte[] arquivo;
     private TipoArquivo tipoArquivo;
     private Date dataCriacao;
 
-    public Arquivo(Integer id, Integer idUsuario, TipoUsuario tipoUsuario, Blob arquivo, TipoArquivo tipoArquivo, Date dataCriacao) {
-        this.id = id;
+    public Arquivo(Integer idUsuario, TipoUsuario tipoUsuario, Byte[] arquivo, TipoArquivo tipoArquivo, Date dataCriacao) {
         this.idUsuario = idUsuario;
         this.tipoUsuario = tipoUsuario;
         this.arquivo = arquivo;
@@ -49,11 +47,11 @@ public class Arquivo implements Serializable {
         this.tipoUsuario = tipoUsuario;
     }
 
-    public Blob getArquivo() {
+    public Byte[] getArquivo() {
         return arquivo;
     }
 
-    public void setArquivo(Blob arquivo) {
+    public void setArquivo(Byte[] arquivo) {
         this.arquivo = arquivo;
     }
 

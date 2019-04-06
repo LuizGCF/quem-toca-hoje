@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Estabelecimento extends Usuario {
 
-    private Integer id;
     private String cnpj;
     private String razaoSocial;
     private String celular;
@@ -22,9 +21,8 @@ public class Estabelecimento extends Usuario {
     private List<Arquivo> arquivos;
     private List<Proposta> propostas;
 
-    public Estabelecimento(String nomeUsuario, Autenticacao autenticacao, Arquivo arquivo, Integer id, String cnpj, String razaoSocial, String celular, String nomeFantasia, String descricao, Date horarioAbertura, Date horarioFechamento, Date dataCriacao, Endereco endereco, List<Avaliacao> avaliacoes, List<Arquivo> arquivos, List<Proposta> propostas) {
+    public Estabelecimento(String nomeUsuario, Autenticacao autenticacao, Arquivo arquivo, String cnpj, String razaoSocial, String celular, String nomeFantasia, String descricao, Date horarioAbertura, Date horarioFechamento, Date dataCriacao, Endereco endereco, List<Avaliacao> avaliacoes, List<Arquivo> arquivos, List<Proposta> propostas) {
         super(nomeUsuario, autenticacao, arquivo);
-        this.id = id;
         this.cnpj = cnpj;
         this.razaoSocial = razaoSocial;
         this.celular = celular;
@@ -39,13 +37,6 @@ public class Estabelecimento extends Usuario {
         this.propostas = propostas;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getCnpj() {
         return cnpj;
