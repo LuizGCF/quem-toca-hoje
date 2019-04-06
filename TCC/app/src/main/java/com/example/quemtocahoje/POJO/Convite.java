@@ -10,16 +10,14 @@ public class Convite implements Serializable {
     private Integer id;
     private String emailConvidado;
     private StatusConvite statusConvite;
-    private String tokenConvite;
     private Date dataCriacao;
     private Integer idBanda;
     private Integer idMusico;
 
-    public Convite(Integer id, String emailConvidado, StatusConvite statusConvite, String tokenConvite, Date dataCriacao, Integer idBanda) {
+    public Convite(Integer id, String emailConvidado, StatusConvite statusConvite, Date dataCriacao, Integer idBanda) {
         this.id = id;
         this.emailConvidado = emailConvidado;
         this.statusConvite = statusConvite;
-        this.tokenConvite = tokenConvite;
         this.dataCriacao = dataCriacao;
         this.idBanda = idBanda;
     }
@@ -46,14 +44,6 @@ public class Convite implements Serializable {
 
     public void setStatusConvite(StatusConvite statusConvite) {
         this.statusConvite = statusConvite;
-    }
-
-    public String getTokenConvite() {
-        return tokenConvite;
-    }
-
-    public void setTokenConvite(String tokenConvite) {
-        this.tokenConvite = tokenConvite;
     }
 
     public Date getDataCriacao() {

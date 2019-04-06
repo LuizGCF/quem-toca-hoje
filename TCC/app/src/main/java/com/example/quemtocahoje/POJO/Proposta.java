@@ -71,3 +71,4 @@ public class Proposta implements Serializable {
         this.endereco = endereco;
     }
 }
+
