@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.quemtocahoje.Views.Tela"></activity>
+        <activity android:name="com.example.quemtocahoje.Views.TelaCadastroEstabelecimento" />
+        <activity android:name="com.example.quemtocahoje.Views.TelaCadastroMusico" />
+        <activity android:name="com.example.quemtocahoje.Views.TelaCadastroEspectador" />
+        <activity android:name="com.example.quemtocahoje.Views.TelaEscolhaCadastro" />
+        <activity android:name="com.example.quemtocahoje.Views.Tela" />
         <activity android:name="com.example.quemtocahoje.Views.TelaInicial">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,6 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.example.quemtocahoje.Views.TelaEsqueceuaSenha" />
+        <activity android:name="com.example.quemtocahoje.Views.TelaRedefinirSenha" />
+        <activity
+            android:name="com.example.quemtocahoje.Views.MenuPrincipal"
+            android:label="@string/title_activity_menu_principal"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
