@@ -10,24 +10,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center_vertical"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
-        <android.support.v7.widget.AppCompatEditText
-            android:layout_width="200dp"
+        android:gravity="center_vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/edtLogin"
-            android:layout_gravity="center_horizontal"/>
-        <android.support.v7.widget.AppCompatEditText
-            android:layout_width="200dp"
+            android:layout_gravity="center">
+            <android.support.v7.widget.AppCompatEditText
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/edtLogin"
+                android:hint="LOGIN"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/edtSenha"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center">
+            <android.support.v7.widget.AppCompatEditText
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/edtSenha"
+                android:hint="SENHA"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
         <android.support.v7.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Funciona"
+            android:text="LOGIN"
             android:id="@+id/btnLogin"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Esqueceu sua senha?"
+            android:layout_gravity="center"
+            android:id="@+id/txtEsqueceuSuaSenha"/>
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Criar uma nova conta"
+            android:id="@+id/txtCadastro"
             android:layout_gravity="center"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
