@@ -9,6 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="com.example.quemtocahoje.Views.TelaInicialEstabelecimento"></activity>
+        <activity android:name="com.example.quemtocahoje.Views.TelaInicialMusico" />
+        <activity android:name="com.example.quemtocahoje.Views.TelaPesquisaEstabelecimento" />
+        <activity android:name="com.example.quemtocahoje.Views.TelaPesquisaMusico" />
+        <activity android:name="com.example.quemtocahoje.Views.TelaConvite" />
+        <activity android:name="com.example.quemtocahoje.Views.TelaProposta" />
+        <activity android:name="com.example.quemtocahoje.Views.TelaUpload" />
         <activity android:name="com.example.quemtocahoje.Views.TelaCadastroEstabelecimento" />
         <activity android:name="com.example.quemtocahoje.Views.TelaCadastroMusico" />
         <activity android:name="com.example.quemtocahoje.Views.TelaCadastroEspectador" />
@@ -24,7 +31,7 @@
         <activity
             android:name="com.example.quemtocahoje.Views.MenuPrincipal"
             android:label="@string/title_activity_menu_principal"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
