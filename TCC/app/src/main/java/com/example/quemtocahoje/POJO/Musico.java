@@ -5,12 +5,17 @@ import java.util.List;
 public class Musico extends Usuario {
 
     private String nomeArtistico;
+    private String nomeMusico;
     private String celular;
+    private String login;
+    private String senha;
+    private String email;
+    private Endereco endereco;
 
     private List<Arquivo> arquivos;
     private List<Banda> bandas;
     private List<Convite> convites;
-    private Endereco endereco;
+
 
 
     public Musico(String nomeUsuario, Autenticacao autenticacao, Arquivo arquivo, String nomeArtistico, String celular, List<Banda> bandas, List<Convite> convites, Endereco endereco, List<Arquivo> arquivos) {

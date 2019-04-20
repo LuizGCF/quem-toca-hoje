@@ -5,39 +5,98 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.quemtocahoje.DTO.AutenticacaoDTO;
+import com.example.quemtocahoje.Enum.TipoUsuario;
+import com.example.quemtocahoje.Persistencia.Banco;
+import com.example.quemtocahoje.Persistencia.Dao.AutenticacaoDao;
+import com.example.quemtocahoje.Utility.AESCrypt;
+import com.example.quemtocahoje.Utility.DefinirDatas;
 import com.example.tcc.R;
 
 public class TelaInicial extends AppCompatActivity {
 
     private Button btnLogin;
     private TextView txtCadastro;
+    private EditText edtLogin;
+    private EditText edtSenha;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final Intent telacadastro = new Intent(this, TelaEscolhaCadastro.class);
-        final Intent tela2 = new Intent(this, Tela.class);
+        final Intent telaEscolhaCadastro = new Intent(this, TelaEscolhaCadastro.class);
         setContentView(R.layout.activity_tela_inicial);
         btnLogin = findViewById(R.id.btnLogin);
         txtCadastro = findViewById(R.id.txtCadastro);
+        edtLogin = findViewById(R.id.edtLogin);
+        edtSenha = findViewById(R.id.edtSenha);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                if(isCamposValidos(edtLogin, edtSenha)){
+                    AutenticacaoDTO autenticacao = autenticarLogin(edtLogin, edtSenha);
+                    if(autenticacao != null){
+                        Banco.getDatabase(getApplicationContext()).autenticacaoDao().updateDataUltimoLogin(DefinirDatas.dataAtual(), autenticacao.getIdAutenticacao());
+                        if(autenticacao.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name())){
+                            //TODO navegação de tela estabelecimento
+                        }else if(autenticacao.getTipoUsuario().equals(TipoUsuario.MUSICO.name())){
+                            //TODO navegação de tela músico
+                        }else{
+                            System.out.println("ID: "+autenticacao.getIdAutenticacao()+"\n TIPO: "+autenticacao.getTipoUsuario());
+                            //TODO navegação de tela espectador
+                        }
+                    }else{
+                        System.out.println("USUÁRIO INVÁLIDO");
+                        //TODO mensagem usuário inválido
+                    }
+                }else{
+                    System.out.println("CAMPO INVÁLIDO");
+                    //TODO mensagem campos inválidos
+                }
+            }
+        });
+
+        txtCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //passando da tela inicial para a segunda tela
 
-                startActivity ( tela2 );
+                startActivity ( telaEscolhaCadastro );
             }
         });
-        txtCadastro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(telacadastro);
-            }
-        });
+
+
+//        txtCadastro.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(telacadastro);
+//            }
+//        });
+    }
+
+    private AutenticacaoDTO autenticarLogin(EditText l, EditText s){
+        try {
+            String login = l.getText().toString();
+            String senha = AESCrypt.encrypt(s.getText().toString());
+            AutenticacaoDTO dto = Banco.getDatabase(getApplicationContext()).autenticacaoDao().findAutenticacaoByLoginSenha(login, senha) ;
+            if(dto != null)
+                return dto;
+        }catch(Exception e) {
+            e.getMessage();
+        }
+        return null;
+    }
+
+    private boolean isCamposValidos(EditText l, EditText s){
+        if(l == null || l.getText().toString().trim().equals("")
+           || s == null || s.getText().toString().trim().equals(""))
+            return false;
+
+        return true;
     }
 
 }

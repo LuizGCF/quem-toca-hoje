@@ -20,11 +20,9 @@
         <activity android:name="com.example.quemtocahoje.Views.TelaCadastroMusico" />
         <activity android:name="com.example.quemtocahoje.Views.TelaCadastroEspectador" />
         <activity android:name="com.example.quemtocahoje.Views.TelaEscolhaCadastro" />
-        <activity android:name="com.example.quemtocahoje.Views.Tela" />
         <activity android:name="com.example.quemtocahoje.Views.TelaInicial">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
