@@ -11,7 +11,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.quemtocahoje.Enum.StatusToken;
 import com.example.quemtocahoje.Persistencia.Banco;
+import com.example.quemtocahoje.Persistencia.Entity.TokenEntity;
+import com.example.quemtocahoje.Utility.DefinirDatas;
 import com.example.quemtocahoje.Utility.Email;
 import com.example.quemtocahoje.Utility.Token;
 import com.example.tcc.R;
@@ -40,10 +43,22 @@ public class TelaEsqueceuaSenha extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(isCampoValido(email)){
-                    if(isUsuarioCadastrado(email)){
-//                        enviarEmail();
+                    final Long idUser = isUsuarioCadastrado(email);
+                    if(idUser != null){
+                        enviarEmail(idUser);
                         btnToken.setVisibility(View.VISIBLE);
                         layoutToken.setVisibility(View.VISIBLE);
+
+                        btnToken.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(validarToken(idUser)) {
+                                    telaRedefinirSenha.putExtra("idUser", idUser);
+                                    startActivity(telaRedefinirSenha);
+                                }
+                                    //TODO criar um else com mensagem token inválido
+                            }
+                        });
 
                     }else{
                         //TODO mensagem usuario nao cadastrado
@@ -63,24 +78,41 @@ public class TelaEsqueceuaSenha extends AppCompatActivity {
         return true;
     }
 
-    protected boolean isUsuarioCadastrado(EditText email){
+    protected Long isUsuarioCadastrado(EditText email){
         String e = email.getText().toString();
-        if(Banco.getDatabase(getApplicationContext()).autenticacaoDao().findAutenticacaoByLogin(e) != null)
-            return true;
+        Long id = Banco.getDatabase(getApplicationContext()).autenticacaoDao().findAutenticacaoByEmail(e);
+        if(id != null)
+            return id;
 
-        return false;
+        return null;
     }
 
-    private void enviarEmail() {
-        //Getting content for email
+    private void enviarEmail(Long idUser) {
+        //Conteudo do email
         String destinatario = email.getText().toString().trim();
         String subject = "Redefinir senha";
-        String message = "Para redefinir sua senha, insira o seguinte token no seu aplicativo: " + Token.gerarToken();
+        String token = Token.gerarToken();
+        String message = "Para redefinir sua senha, insira o seguinte token no seu aplicativo: " + token;
+        persistirToken(idUser, destinatario, token);
 
-        //Creating SendMail object
+        //SendMail object
         Email sm = new Email(this, destinatario, subject, message);
 
-        //Executing sendmail to send email
         sm.execute();
+    }
+
+    private boolean validarToken(Long idEspec){
+        Long id = Banco.getDatabase(getApplicationContext()).tokenDao().findAutenticacaoIdByToken(token.getText().toString());
+        if(id == idEspec){
+            Banco.getDatabase(getApplicationContext()).tokenDao().updateTokenValido(StatusToken.INATIVO.name(), token.getText().toString());
+            return true;
+        }
+        return false;
+
+    }
+
+    private void persistirToken(Long idUser, String email, String token){
+        TokenEntity tokenEntity = new TokenEntity(idUser,email, token, StatusToken.ABERTO.name(), DefinirDatas.dataAtual());
+        Banco.getDatabase(getApplicationContext()).tokenDao().insertToken(tokenEntity);
     }
 }

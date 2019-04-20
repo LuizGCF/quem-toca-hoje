@@ -13,6 +13,7 @@ public class AutenticacaoEntity implements Serializable {
     @PrimaryKey
     private Long idAutenticacao;
 
+    private String email;
     private String login;
     private String senha;
     private String tipoUsuario;
@@ -21,12 +22,21 @@ public class AutenticacaoEntity implements Serializable {
 
 
 
-    public AutenticacaoEntity(String login, String senha, String tipoUsuario, String dataCriacao, String dataUltimoLogin) {
+    public AutenticacaoEntity(String email, String login, String senha, String tipoUsuario, String dataCriacao, String dataUltimoLogin) {
+        this.email = email;
         this.login = login;
         this.senha = senha;
         this.tipoUsuario = tipoUsuario;
         this.dataCriacao = dataCriacao;
         this.dataUltimoLogin = dataUltimoLogin;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Long getIdAutenticacao() {

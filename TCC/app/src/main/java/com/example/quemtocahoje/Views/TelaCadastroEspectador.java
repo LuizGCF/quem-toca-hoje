@@ -14,10 +14,6 @@ import com.example.quemtocahoje.Utility.AESCrypt;
 import com.example.quemtocahoje.Utility.DefinirDatas;
 import com.example.tcc.R;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 public class TelaCadastroEspectador extends AppCompatActivity {
 
     private EditText nomeEspectador;
@@ -47,11 +43,9 @@ public class TelaCadastroEspectador extends AppCompatActivity {
                 if(isCamposValidos(nomeEspectador, edtEmailEspectador, loginEspectador, senhaEspectador, confirmarSenhaEspectador)){
                     if(isUsuarioUnico(loginEspectador)) {
                         if (isSenhaCorreta(senhaEspectador, confirmarSenhaEspectador)) {
-                            //TODO passar o email/login do espectador ao invés do nome
-                            AutenticacaoEntity a = criarObjetoAutenticacao(loginEspectador, senhaEspectador);
+                            AutenticacaoEntity a = criarObjetoAutenticacao(edtEmailEspectador, loginEspectador, senhaEspectador);
                             Long id = Banco.getDatabase(getApplicationContext()).autenticacaoDao().insertAutenticacao(a);
-                            //TODO passar o nome do espectador ao invés do email/login
-                            EspectadorEntity e = criarObjectoEspectador(id, a.getLogin(),edtEmailEspectador, a.getDataCriacao());
+                            EspectadorEntity e = criarObjectoEspectador(id, nomeEspectador.getText().toString().trim(), a.getDataCriacao());
                             Banco.getDatabase(getApplicationContext()).espectadorDao().insertEspectador(e);
                             limparTela();
                             //TODO mensagem de sucesso
@@ -85,7 +79,7 @@ public class TelaCadastroEspectador extends AppCompatActivity {
     }
 
     private boolean isUsuarioUnico(EditText loginEspectador) {
-        if(Banco.getDatabase(getApplicationContext()).autenticacaoDao().findAutenticacaoByLogin(loginEspectador.getText().toString()) != null)
+        if(Banco.getDatabase(getApplicationContext()).autenticacaoDao().findAutenticacaoByEmailLogin(edtEmailEspectador.getText().toString(), loginEspectador.getText().toString()) != null)
             return false;
 
         return true;
@@ -111,13 +105,14 @@ public class TelaCadastroEspectador extends AppCompatActivity {
     }
 
     //Prepara o objeto de autenticação para persistir
-    private AutenticacaoEntity criarObjetoAutenticacao(EditText loginEspectador, EditText senhaEspectador){
+    private AutenticacaoEntity criarObjetoAutenticacao(EditText edtEmailEspectador, EditText loginEspectador, EditText senhaEspectador){
         String login = loginEspectador.getText().toString().trim();
         String senha = senhaEspectador.getText().toString();
+        String email = edtEmailEspectador.getText().toString().trim();
 
         String dataCriacao = DefinirDatas.dataAtual();
 
-        AutenticacaoEntity a = new AutenticacaoEntity(login, senha, TipoUsuario.ESPECTADOR.name(), dataCriacao, null);
+        AutenticacaoEntity a = new AutenticacaoEntity(email, login, senha, TipoUsuario.ESPECTADOR.name(), dataCriacao, null);
         try{
             a.setSenha(AESCrypt.encrypt(senha));
         }catch(Exception e){
@@ -128,7 +123,7 @@ public class TelaCadastroEspectador extends AppCompatActivity {
     }
 
     //Prepara o objeto de Espectador para persistir
-    private EspectadorEntity criarObjectoEspectador(Long idAutenticacao, String nomeEspectador, EditText emailEspectador, String dataCriacao){
-        return new EspectadorEntity(idAutenticacao, nomeEspectador, emailEspectador.getText().toString(), dataCriacao);
+    private EspectadorEntity criarObjectoEspectador(Long idAutenticacao, String nomeEspectador, String dataCriacao){
+        return new EspectadorEntity(idAutenticacao, nomeEspectador, dataCriacao);
     }
 }

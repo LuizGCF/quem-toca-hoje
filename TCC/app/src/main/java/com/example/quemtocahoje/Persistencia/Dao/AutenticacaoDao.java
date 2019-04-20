@@ -29,12 +29,18 @@ public interface AutenticacaoDao {
     @Query("SELECT * FROM autenticacao WHERE idAutenticacao = :id")
     public LiveData<AutenticacaoEntity> findAutenticacaoById(Long id);
 
-    @Query("SELECT idAutenticacao FROM autenticacao WHERE login = :loginEspec")
-    public AutenticacaoEntity findAutenticacaoByLogin(String loginEspec);
+    @Query("SELECT idAutenticacao FROM autenticacao WHERE email = :emailEspec OR login = :loginEspec")
+    public AutenticacaoEntity findAutenticacaoByEmailLogin(String emailEspec, String loginEspec);
+
+    @Query("SELECT idAutenticacao FROM autenticacao WHERE email = :emailEspec")
+    public Long findAutenticacaoByEmail(String emailEspec);
 
     @Query("SELECT idAutenticacao, tipoUsuario FROM autenticacao WHERE login = :login AND senha = :senha")
     public AutenticacaoDTO findAutenticacaoByLoginSenha(String login, String senha);
 
     @Query("UPDATE autenticacao SET dataUltimoLogin = :data WHERE idAutenticacao = :id")
     public int updateDataUltimoLogin(String data, Long id);
+
+    @Query("UPDATE autenticacao SET senha = :senha WHERE idAutenticacao = :id")
+    public void updateSenhaById(String senha, Long id);
 }

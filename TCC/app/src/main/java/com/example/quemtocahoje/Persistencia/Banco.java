@@ -7,16 +7,19 @@ import android.content.Context;
 
 import com.example.quemtocahoje.Persistencia.Dao.AutenticacaoDao;
 import com.example.quemtocahoje.Persistencia.Dao.EspectadorDao;
+import com.example.quemtocahoje.Persistencia.Dao.TokenDao;
 import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
+import com.example.quemtocahoje.Persistencia.Entity.TokenEntity;
 
-@Database(entities = {EspectadorEntity.class, AutenticacaoEntity.class}, version = 1)
+@Database(entities = {EspectadorEntity.class, AutenticacaoEntity.class, TokenEntity.class}, version = 1)
 public abstract class Banco extends RoomDatabase {
 
     private static Banco INSTANCIA;
 
     public abstract EspectadorDao espectadorDao();
     public abstract AutenticacaoDao autenticacaoDao();
+    public abstract TokenDao tokenDao();
 
     public static Banco getDatabase(Context context) {
         if (INSTANCIA == null) {
