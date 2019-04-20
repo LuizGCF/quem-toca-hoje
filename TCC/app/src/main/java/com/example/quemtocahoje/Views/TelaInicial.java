@@ -20,6 +20,7 @@ public class TelaInicial extends AppCompatActivity {
 
     private Button btnLogin;
     private TextView txtCadastro;
+    private TextView txtEsqueciSenha;
     private EditText edtLogin;
     private EditText edtSenha;
 
@@ -28,9 +29,12 @@ public class TelaInicial extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final Intent telaEscolhaCadastro = new Intent(this, TelaEscolhaCadastro.class);
+        final Intent telaEsqueciSenha = new Intent(this, TelaEsqueceuaSenha.class);
+
         setContentView(R.layout.activity_tela_inicial);
         btnLogin = findViewById(R.id.btnLogin);
         txtCadastro = findViewById(R.id.txtCadastro);
+        txtEsqueciSenha = findViewById(R.id.txtEsqueceuSuaSenha);
         edtLogin = findViewById(R.id.edtLogin);
         edtSenha = findViewById(R.id.edtSenha);
 
@@ -42,20 +46,20 @@ public class TelaInicial extends AppCompatActivity {
                     if(autenticacao != null){
                         Banco.getDatabase(getApplicationContext()).autenticacaoDao().updateDataUltimoLogin(DefinirDatas.dataAtual(), autenticacao.getIdAutenticacao());
                         if(autenticacao.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name())){
-                            //TODO navegação de tela estabelecimento
+                            //TODO navegar para tela estabelecimento
                         }else if(autenticacao.getTipoUsuario().equals(TipoUsuario.MUSICO.name())){
-                            //TODO navegação de tela músico
+                            //TODO navegar para tela musico
                         }else{
                             System.out.println("ID: "+autenticacao.getIdAutenticacao()+"\n TIPO: "+autenticacao.getTipoUsuario());
-                            //TODO navegação de tela espectador
+                            //TODO navegar para tela espectador
                         }
                     }else{
-                        System.out.println("USUÁRIO INVÁLIDO");
-                        //TODO mensagem usuário inválido
+                        System.out.println("USUARIO INVALIDO");
+                        //TODO mensagem usuario invalido
                     }
                 }else{
-                    System.out.println("CAMPO INVÁLIDO");
-                    //TODO mensagem campos inválidos
+                    System.out.println("CAMPO INVALIDO");
+                    //TODO mensagem campos invalidos
                 }
             }
         });
@@ -69,13 +73,13 @@ public class TelaInicial extends AppCompatActivity {
             }
         });
 
+        txtEsqueciSenha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(telaEsqueciSenha);
+            }
+        });
 
-//        txtCadastro.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(telacadastro);
-//            }
-//        });
     }
 
     private AutenticacaoDTO autenticarLogin(EditText l, EditText s){
