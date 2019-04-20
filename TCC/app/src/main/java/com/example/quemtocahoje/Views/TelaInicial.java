@@ -20,7 +20,7 @@ public class TelaInicial extends AppCompatActivity {
 
     private Button btnLogin;
     private TextView txtCadastro;
-    private TextView txtEsqueciSenha;
+    private TextView txtEsqueceuSuaSenha;
     private EditText edtLogin;
     private EditText edtSenha;
 
@@ -34,7 +34,7 @@ public class TelaInicial extends AppCompatActivity {
         setContentView(R.layout.activity_tela_inicial);
         btnLogin = findViewById(R.id.btnLogin);
         txtCadastro = findViewById(R.id.txtCadastro);
-        txtEsqueciSenha = findViewById(R.id.txtEsqueceuSuaSenha);
+        txtEsqueceuSuaSenha = findViewById(R.id.txtEsqueceuSuaSenha);
         edtLogin = findViewById(R.id.edtLogin);
         edtSenha = findViewById(R.id.edtSenha);
 
@@ -69,11 +69,11 @@ public class TelaInicial extends AppCompatActivity {
             public void onClick(View v) {
                 //passando da tela inicial para a segunda tela
 
-                startActivity ( telaEscolhaCadastro );
+                startActivity (telaEscolhaCadastro);
             }
         });
 
-        txtEsqueciSenha.setOnClickListener(new View.OnClickListener() {
+        txtEsqueceuSuaSenha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(telaEsqueciSenha);

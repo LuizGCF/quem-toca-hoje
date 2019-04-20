@@ -15,12 +15,22 @@ public class EspectadorEntity implements Serializable {
     private Long autenticacao_id;
 
     private String nomeEspectador;
+    private String emailEspectador;
     private String dataCriacao;
 
-    public EspectadorEntity(Long autenticacao_id, String nomeEspectador, String dataCriacao) {
+    public EspectadorEntity(Long autenticacao_id, String nomeEspectador, String emailEspectador, String dataCriacao) {
         this.autenticacao_id = autenticacao_id;
         this.nomeEspectador = nomeEspectador;
+        this.emailEspectador = emailEspectador;
         this.dataCriacao = dataCriacao;
+    }
+
+    public String getEmailEspectador() {
+        return emailEspectador;
+    }
+
+    public void setEmailEspectador(String emailEspectador) {
+        this.emailEspectador = emailEspectador;
     }
 
     public Long getIdEspectador() {
