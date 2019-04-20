@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.quemtocahoje.Views.TelaUpload">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="Olá Fulano!"
+        android:textSize="35dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/txtNomeUsuarioUpload"/>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Carregue sua Foto:"
+            android:textSize="15dp"/>
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@mipmap/upload_imagem"
+            android:id="@+id/imgFotoUsuarioUpload"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Insira até 3 vídeos de demonstração"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="20dp">
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginRight="5dp"
+                android:src="@mipmap/upload_video"
+                android:id="@+id/imgVideoUsuarioUpload1"/>
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="120dp"
+                android:layout_marginRight="5dp"
+                android:layout_height="120dp"
+                android:src="@mipmap/upload_video"
+                android:id="@+id/imgVideoUsuarioUpload2"/>
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@mipmap/upload_video"
+                android:id="@+id/imgVideoUsuarioUpload3"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+</android.support.constraint.ConstraintLayout>

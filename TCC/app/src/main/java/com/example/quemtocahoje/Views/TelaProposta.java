@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import com.example.tcc.R;
 
-public class TelaRedefinirSenha extends AppCompatActivity {
+public class TelaProposta extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tela_redefinir_senha);
+        setContentView(R.layout.activity_tela_proposta);
     }
 }

@@ -3,6 +3,8 @@ package com.example.quemtocahoje.Views;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.tcc.R;
+
 public class TelaEsqueceuaSenha extends AppCompatActivity {
 
     @Override

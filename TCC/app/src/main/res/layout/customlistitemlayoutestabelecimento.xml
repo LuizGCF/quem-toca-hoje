@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/imgListItemEstabelecimento"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"/>
+    <TextView
+        android:id="@+id/txtEstabelecimentoListItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_toRightOf="@id/imgListItemEstabelecimento"
+        android:layout_alignTop="@id/imgListItemEstabelecimento"
+        android:text="Estabelecimento: "/>
+    <TextView
+        android:id="@+id/txtDescricaoEstabelecimentoListItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_toRightOf="@id/txtEstabelecimentoListItem"
+        android:layout_alignTop="@id/txtEstabelecimentoListItem"
+        android:text="DescricaoEstabelecimento"/>
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_toRightOf="@id/imgListItemEstabelecimento"
+        android:layout_below="@id/txtEstabelecimentoListItem"
+        android:text="Local: "/>
+    <TextView
+        android:id="@+id/txtLocalEstabelecimentoListItem"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_toRightOf="@id/txtEstabelecimentoListItem"
+        android:layout_below="@id/txtEstabelecimentoListItem"
+        android:text="LocalEstabelecimento"/>
+</RelativeLayout>
