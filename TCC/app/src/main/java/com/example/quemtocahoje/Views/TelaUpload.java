@@ -96,7 +96,6 @@ public class TelaUpload extends AppCompatActivity {
             }
 
             File f = new File(result);
-            //ByteArrayOutputStream bos = null;
             try {
                 FileInputStream fis = new FileInputStream(f);
                 byte[] buffer = new byte[1024];
@@ -105,9 +104,6 @@ public class TelaUpload extends AppCompatActivity {
                     bos.write(buffer, 0, len);
                 }
 
-//                Long idUser = getIntent().getLongExtra("idUser", -1L);
-//                ArquivoEntity arquivo = new ArquivoEntity(idUser, bos.toByteArray(), TipoArquivo.FOTO_PERFIL.name(), DefinirDatas.dataAtual());
-//                Banco.getDatabase(getApplicationContext()).arquivoDao().insertArquivo(arquivo);
                 fis.close();
             }catch(IOException e){
                 e.getMessage();
