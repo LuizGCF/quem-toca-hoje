@@ -61,7 +61,6 @@ public class TelaCadastroEstabelecimento extends AppCompatActivity {
                             telaEndereco.putExtra("objetoEstabelecimento", e);
 
                             startActivity(telaEndereco);
-                            Toast.makeText(TelaCadastroEstabelecimento.this, "Sucesso!", Toast.LENGTH_LONG).show();
                         }else{
                             Mensagem.notificar(TelaCadastroEstabelecimento.this, "CNPJ Cadastrado", "Esse CNPJ já foi cadastrado");
                         }
@@ -96,13 +95,6 @@ public class TelaCadastroEstabelecimento extends AppCompatActivity {
         return true;
     }
 
-//    private boolean isSenhaCorreta(EditText edtSenhaEstabelecimento, EditText edtConfirmarSenhaSenhaEstabelecimento)
-//    {
-//        if(edtSenhaEstabelecimento.getText().toString().equals(edtConfirmarSenhaSenhaEstabelecimento.getText().toString()))
-//            return true;
-//        return false;
-//    }
-//
     private boolean isCnpjCadastrado(){
         if(Banco.getDatabase(getApplicationContext()).estabelecimentoDao().findEstabelecimentoByCNPJ(edtCNPJ.getText().toString()) != null)
             return true;

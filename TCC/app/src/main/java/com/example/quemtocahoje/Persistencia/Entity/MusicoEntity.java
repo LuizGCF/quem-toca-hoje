@@ -26,6 +26,11 @@ public class MusicoEntity implements Serializable {
     @Ignore
     private List<String> convites;
 
+    /*
+    @Ignore
+    private List<BandaEntity> bandas;
+    */
+
     public MusicoEntity(Long autenticacao_id, String nome, String nomeArtistico, String telefone, String dataCriacao) {
         this.autenticacao_id = autenticacao_id;
         this.nome = nome;

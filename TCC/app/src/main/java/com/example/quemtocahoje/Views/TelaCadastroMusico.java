@@ -9,19 +9,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.quemtocahoje.Enum.TipoUsuario;
+import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
+import com.example.quemtocahoje.Persistencia.Entity.MusicoEntity;
 import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
 
 public class TelaCadastroMusico extends AppCompatActivity {
 
-    private EditText edtNomeMusico;
     private EditText edtNomeArtisticoMusico;
     private EditText edtCelularMusico;
-    private EditText edtEmailMusico;
-    private EditText edtLoginMusico;
-    private EditText edtSenhaMusico;
-    private EditText edtConfirmarSenhaMusico;
+    private EditText edtCidadeMusico;
     private EditText edtDescricaoMusico;
+
     private Button btnCadastrarMusico;
     private Button btnCancelarMusico;
 
@@ -30,33 +29,26 @@ public class TelaCadastroMusico extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_cadastro_musico);
 
-        final Intent telaEndereco = new Intent(this, TelaEndereco.class);
+        final Intent telaUpload = new Intent(this, TelaUpload.class);
 
-        edtNomeMusico = findViewById(R.id.edtNomeMusico);
         edtNomeArtisticoMusico = findViewById(R.id.edtNomeArtisticoMusico);
         edtCelularMusico = findViewById(R.id.edtCelularMusico);
-        edtEmailMusico = findViewById(R.id.edtEmailMusico);
-        edtLoginMusico = findViewById(R.id.edtLoginMusico);
-        edtSenhaMusico = findViewById(R.id.edtSenhaMusico);
-        edtConfirmarSenhaMusico = findViewById(R.id.edtConfirmarSenhaMusico);
+        edtCidadeMusico = findViewById(R.id.edtCidadeMusico);
         edtDescricaoMusico = findViewById(R.id.edtDescricaoMusico);
+
         btnCadastrarMusico = findViewById(R.id.btnCadastrarMusico);
         btnCancelarMusico = findViewById(R.id.btnCancelarMusico);
 
         btnCadastrarMusico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isCamposValidos(edtNomeMusico,edtNomeArtisticoMusico,edtCelularMusico,edtEmailMusico,edtLoginMusico,edtSenhaMusico,edtConfirmarSenhaMusico,edtDescricaoMusico))
+                if(isCamposValidos(edtNomeArtisticoMusico,edtCelularMusico,edtCidadeMusico,edtDescricaoMusico))
                 {
-                    if(isSenhaCorreta(edtSenhaMusico,edtConfirmarSenhaMusico))
-                    {
-                        telaEndereco.putExtra("TipoUsuario", TipoUsuario.MUSICO.getValor());
-                        startActivity(telaEndereco);
-                        Toast.makeText(TelaCadastroMusico.this, "Sucesso!", Toast.LENGTH_LONG).show();
-                    }
-                    else
-                        Mensagem.notificar(TelaCadastroMusico.this,"Senhas diferentes","As senhas diferem uma da outra.");
-
+                    MusicoEntity m = prepararObjetoMusico();
+                    telaUpload.putExtra("tipoUsuario", TipoUsuario.MUSICO.name());
+                    telaUpload.putExtra("objetoAutenticacao", getIntent().getSerializableExtra("objetoAutenticacao"));
+                    telaUpload.putExtra("objetoMusico", m);
+                    startActivity(telaUpload);
                 }
                 else
                     Mensagem.notificar(TelaCadastroMusico.this,"Campos Inválidos","Um ou mais campos não foram preenchidos corretamente");
@@ -70,23 +62,26 @@ public class TelaCadastroMusico extends AppCompatActivity {
             }
         });
     }
-    private boolean isCamposValidos(EditText edtNomeMusico, EditText edtNomeArtisticoMusico, EditText edtCelularMusico, EditText edtEmailMusico, EditText edtLoginMusico, EditText edtSenhaMusico, EditText edtConfirmarSenhaMusico, EditText edtDescricaoMusico)
+    private boolean isCamposValidos(EditText edtNomeArtisticoMusico, EditText edtCelularMusico, EditText edtCidadeMusico, EditText edtDescricaoMusico)
     {
-        if(edtNomeMusico == null || edtNomeMusico.getText().toString().trim().equals("")
-        || edtNomeArtisticoMusico == null || edtNomeArtisticoMusico.getText().toString().trim().equals("")
+        if(edtNomeArtisticoMusico == null || edtNomeArtisticoMusico.getText().toString().trim().equals("")
         || edtCelularMusico == null || edtCelularMusico.getText().toString().trim().equals("")
-        || edtEmailMusico == null || edtEmailMusico.getText().toString().trim().equals("")
-        || edtLoginMusico == null || edtLoginMusico.getText().toString().trim().equals("")
-        || edtSenhaMusico == null || edtSenhaMusico.getText().toString().trim().equals("")
-        || edtConfirmarSenhaMusico == null || edtConfirmarSenhaMusico.getText().toString().trim().equals("")
+        || edtCidadeMusico == null || edtCidadeMusico.getText().toString().trim().equals("")
         || edtDescricaoMusico == null || edtDescricaoMusico.getText().toString().trim().equals(""))
             return false;
+
         return  true;
     }
-    private boolean isSenhaCorreta(EditText edtSenhaMusico, EditText edtConfirmarSenhaMusico)
-    {
-        if(edtSenhaMusico.getText().toString().equals(edtConfirmarSenhaMusico.getText().toString()))
-            return true;
-        return false;
+
+    private MusicoEntity prepararObjetoMusico(){
+        EspectadorEntity es = (EspectadorEntity) getIntent().getSerializableExtra("objetoEspectador");
+        MusicoEntity m = new MusicoEntity(null
+                ,es.getNomeEspectador()
+                ,edtNomeArtisticoMusico.getText().toString().trim()
+                ,edtCelularMusico.getText().toString().trim()
+                ,es.getDataCriacao()
+        );
+
+        return m;
     }
 }

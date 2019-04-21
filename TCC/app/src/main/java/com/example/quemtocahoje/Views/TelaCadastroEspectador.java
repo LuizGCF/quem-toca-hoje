@@ -34,6 +34,7 @@ public class TelaCadastroEspectador extends AppCompatActivity {
 
         final Intent telaUpload = new Intent(this, TelaUpload.class);
         final Intent telaCadEstab = new Intent(this, TelaCadastroEstabelecimento.class);
+        final Intent telaCadMusico = new Intent(this, TelaCadastroMusico.class);
 
         //final Intent telaEndereco = new Intent(this, TelaEndereco.class);
 
@@ -68,6 +69,10 @@ public class TelaCadastroEspectador extends AppCompatActivity {
                                 startActivity(telaCadEstab);
                             }else if(getIntent().getStringExtra("tipoUsuario").equals("MUSICO")){
                                 //TODO ações de musico e passar o tipo de usuário pelo intent pra verificação na tela de upload
+                                telaCadMusico.putExtra("tipoUsuario", TipoUsuario.MUSICO.name());
+                                telaCadMusico.putExtra("objetoAutenticacao", a);
+                                telaCadMusico.putExtra("objetoEspectador", e);
+                                startActivity(telaCadMusico);
                             }
 
                         } else {
