@@ -36,12 +36,12 @@ public interface AutenticacaoDao {
     @Query("SELECT idAutenticacao FROM autenticacao WHERE email = :emailEspec")
     public Long findAutenticacaoByEmail(String emailEspec);
 
-    @Query("SELECT idAutenticacao, tipoUsuario FROM autenticacao WHERE login = :login AND senha = :senha")
-    public AutenticacaoDTO findAutenticacaoByLoginSenha(String login, String senha);
-
     @Query("UPDATE autenticacao SET dataUltimoLogin = :data WHERE idAutenticacao = :id")
     public int updateDataUltimoLogin(String data, Long id);
 
     @Query("UPDATE autenticacao SET senha = :senha WHERE idAutenticacao = :id")
     public void updateSenhaById(String senha, Long id);
+
+    @Query("SELECT idAutenticacao, tipoUsuario FROM autenticacao WHERE (email = :email OR login = :login) AND senha = :senha")
+    public AutenticacaoDTO findAutenticacaoByLoginOuEmailESenha(String email, String login, String senha);
 }

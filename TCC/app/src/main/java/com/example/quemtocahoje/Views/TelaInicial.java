@@ -90,7 +90,7 @@ public class TelaInicial extends AppCompatActivity {
         try {
             String login = l.getText().toString();
             String senha = AESCrypt.encrypt(s.getText().toString());
-            AutenticacaoDTO dto = Banco.getDatabase(getApplicationContext()).autenticacaoDao().findAutenticacaoByLoginSenha(login, senha) ;
+            AutenticacaoDTO dto = Banco.getDatabase(getApplicationContext()).autenticacaoDao().findAutenticacaoByLoginOuEmailESenha(login, login, senha);
             if(dto != null)
                 return dto;
         }catch(Exception e) {
