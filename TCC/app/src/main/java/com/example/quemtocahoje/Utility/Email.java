@@ -22,8 +22,8 @@ import javax.mail.internet.MimeMessage;
 //Class is extending AsyncTask because this class is going to perform a networking operation
 public class Email extends AsyncTask<Void,Void,Void> {
 
-    public static final String EMAIL ="atendentehinode2018@gmail.com";
-    public static final String PASSWORD ="alfafaboy2018";
+    public static final String EMAIL ="";
+    public static final String PASSWORD ="";
 
     private Context context;
     private Session session;

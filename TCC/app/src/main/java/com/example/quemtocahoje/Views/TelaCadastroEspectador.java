@@ -1,5 +1,6 @@
 package com.example.quemtocahoje.Views;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,7 +30,9 @@ public class TelaCadastroEspectador extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_cadastro_espectador);
 
-        btnCadastrarEspectador = findViewById(R.id.btnCadastrarEspectador);
+        final Intent telaUpload = new Intent(this, TelaUpload.class);
+
+                btnCadastrarEspectador = findViewById(R.id.btnCadastrarEspectador);
         nomeEspectador = findViewById(R.id.edtNomeEspectador);
         edtEmailEspectador = findViewById(R.id.edtEmailEspectador);
         loginEspectador = findViewById(R.id.edtLoginEspectador);
@@ -48,6 +51,10 @@ public class TelaCadastroEspectador extends AppCompatActivity {
                             EspectadorEntity e = criarObjectoEspectador(id, nomeEspectador.getText().toString().trim(), a.getDataCriacao());
                             Banco.getDatabase(getApplicationContext()).espectadorDao().insertEspectador(e);
                             limparTela();
+                            telaUpload.putExtra("idUser", id);
+                            telaUpload.putExtra("nomeUser", e.getNomeEspectador());
+                            startActivity(telaUpload);
+
                             //TODO mensagem de sucesso
                         } else {
                             //TODO inserir mensagem de erro para senhas divergentes
