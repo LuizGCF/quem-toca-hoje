@@ -7,6 +7,7 @@ import android.content.Context;
 
 import com.example.quemtocahoje.Persistencia.Dao.ArquivoDao;
 import com.example.quemtocahoje.Persistencia.Dao.AutenticacaoDao;
+import com.example.quemtocahoje.Persistencia.Dao.ConviteDao;
 import com.example.quemtocahoje.Persistencia.Dao.EnderecoDao;
 import com.example.quemtocahoje.Persistencia.Dao.EspectadorDao;
 import com.example.quemtocahoje.Persistencia.Dao.EstabelecimentoDao;
@@ -14,6 +15,7 @@ import com.example.quemtocahoje.Persistencia.Dao.MusicoDao;
 import com.example.quemtocahoje.Persistencia.Dao.TokenDao;
 import com.example.quemtocahoje.Persistencia.Entity.ArquivoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
+import com.example.quemtocahoje.Persistencia.Entity.ConviteEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EnderecoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
@@ -26,7 +28,8 @@ import com.example.quemtocahoje.Persistencia.Entity.TokenEntity;
         , ArquivoEntity.class
         , EnderecoEntity.class
         , EstabelecimentoEntity.class
-        , MusicoEntity.class}
+        , MusicoEntity.class
+        , ConviteEntity.class}
         , version = 1)
 public abstract class Banco extends RoomDatabase {
 
@@ -39,6 +42,7 @@ public abstract class Banco extends RoomDatabase {
     public abstract EnderecoDao enderecoDao();
     public abstract EstabelecimentoDao estabelecimentoDao();
     public abstract MusicoDao musicoDao();
+    public abstract ConviteDao conviteDao();
 
     public static Banco getDatabase(Context context) {
         if (INSTANCIA == null) {

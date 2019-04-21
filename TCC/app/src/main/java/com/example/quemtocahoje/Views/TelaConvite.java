@@ -5,7 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.quemtocahoje.Enum.StatusConvite;
+import com.example.quemtocahoje.Persistencia.Banco;
+import com.example.quemtocahoje.Persistencia.Entity.ConviteEntity;
+import com.example.quemtocahoje.Utility.DefinirDatas;
+import com.example.quemtocahoje.Utility.Email;
 import com.example.tcc.R;
 
 public class TelaConvite extends AppCompatActivity {
@@ -25,6 +31,10 @@ public class TelaConvite extends AppCompatActivity {
         btnEnviarConvite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(isCampoValido()){
+                    notificarUsuario();
+                    edtEmailConvite.setText("");
+                }
 
             }
         });
@@ -36,4 +46,33 @@ public class TelaConvite extends AppCompatActivity {
             }
         });
     }
+
+    private boolean isCampoValido(){
+        if(edtEmailConvite == null || edtEmailConvite.getText().toString().equals(""))
+            return false;
+
+        return true;
+
+    }
+
+    private void notificarUsuario(){
+        if(Banco.getDatabase(getApplicationContext()).autenticacaoDao().findAutenticacaoByEmail(edtEmailConvite.getText().toString()) == null){
+            String destinatario = edtEmailConvite.getText().toString().trim();
+            String subject = "Convite para juntar-se à banda";
+            String message = "Você foi convidado para uma banda. Instale nosso aplicativo para integrá-la!";
+
+            Email sm = new Email(this, destinatario, subject, message);
+            sm.execute();
+        }
+
+        //TODO alterar o banda_id quando a tabela dela estiver pronta
+        ConviteEntity c = new ConviteEntity(null
+                ,edtEmailConvite.getText().toString().trim()
+                , StatusConvite.ABERTO.name()
+                , DefinirDatas.dataAtual()
+        );
+        Banco.getDatabase(getApplicationContext()).conviteDao().insertConvite(c);
+        Toast.makeText(TelaConvite.this,"Convite enviado!",Toast.LENGTH_LONG).show();
+    }
+
 }
