@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.quemtocahoje.Enum.TipoUsuario;
 import com.example.tcc.R;
 
 public class TelaEscolhaCadastro extends AppCompatActivity {
@@ -22,25 +23,26 @@ public class TelaEscolhaCadastro extends AppCompatActivity {
         btnEstabelecimento = findViewById(R.id.btnEstabelecimento);
 
         final Intent telacadastroespectador = new Intent(this, TelaCadastroEspectador.class);
-        final Intent telacadastromusico = new Intent(this, TelaCadastroMusico.class);
-        final Intent telacadastroestabelecimento = new Intent(this, TelaCadastroEstabelecimento.class);
 
         btnEspectador.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                telacadastroespectador.putExtra("tipoUsuario", TipoUsuario.ESPECTADOR.name());
                 startActivity(telacadastroespectador);
             }
         });
         btnMusico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(telacadastromusico);
+                telacadastroespectador.putExtra("tipoUsuario", TipoUsuario.MUSICO.name());
+                startActivity(telacadastroespectador);
             }
         });
         btnEstabelecimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(telacadastroestabelecimento);
+                telacadastroespectador.putExtra("tipoUsuario", TipoUsuario.ESTABELECIMENTO.name());
+                startActivity(telacadastroespectador);
             }
         });
     }

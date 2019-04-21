@@ -33,6 +33,7 @@ public class TelaCadastroEspectador extends AppCompatActivity {
         setContentView(R.layout.activity_tela_cadastro_espectador);
 
         final Intent telaUpload = new Intent(this, TelaUpload.class);
+        final Intent telaCadEstab = new Intent(this, TelaCadastroEstabelecimento.class);
 
         //final Intent telaEndereco = new Intent(this, TelaEndereco.class);
 
@@ -50,29 +51,33 @@ public class TelaCadastroEspectador extends AppCompatActivity {
                 if(isCamposValidos(nomeEspectador, edtEmailEspectador, loginEspectador, senhaEspectador, confirmarSenhaEspectador)){
                     if(isUsuarioUnico(loginEspectador)) {
                         if (isSenhaCorreta(senhaEspectador, confirmarSenhaEspectador)) {
-                            AutenticacaoEntity a = criarObjetoAutenticacao(edtEmailEspectador, loginEspectador, senhaEspectador);
-                            Long id = Banco.getDatabase(getApplicationContext()).autenticacaoDao().insertAutenticacao(a);
-                            EspectadorEntity e = criarObjectoEspectador(id, nomeEspectador.getText().toString().trim(), a.getDataCriacao());
-                            Banco.getDatabase(getApplicationContext()).espectadorDao().insertEspectador(e);
-                            limparTela();
-                            telaUpload.putExtra("idUser", id);
-                            telaUpload.putExtra("nomeUser", e.getNomeEspectador());
-                            startActivity(telaUpload);
-                            //telaEndereco.putExtra("TipoUsuario", TipoUsuario.ESPECTADOR.getValor());
-                            //startActivity(telaEndereco);
-                            //Coloquei a mensagem de sucesso no Toast mesmo
-                            Toast.makeText(TelaCadastroEspectador.this,"Sucesso!",Toast.LENGTH_LONG).show();
+                            String tipoUsuario = getIntent().getStringExtra("tipoUsuario");
+                            AutenticacaoEntity a = criarObjetoAutenticacao(edtEmailEspectador, loginEspectador, senhaEspectador, tipoUsuario);
+                            EspectadorEntity e = criarObjectoEspectador(null, nomeEspectador.getText().toString().trim(), a.getDataCriacao());
+                            if(tipoUsuario.equals("ESPECTADOR")) {
+                                telaUpload.putExtra("tipoUsuario", TipoUsuario.ESPECTADOR.name());
+                                telaUpload.putExtra("objetoAutenticacao", a);
+                                telaUpload.putExtra("objetoEspectador", e);
+                                startActivity(telaUpload);
+
+                                //Coloquei a mensagem de sucesso no Toast mesmo
+//                                Toast.makeText(TelaCadastroEspectador.this, "Sucesso!", Toast.LENGTH_LONG).show();
+                            }else if(getIntent().getStringExtra("tipoUsuario").equals("ESTABELECIMENTO")){
+                                telaCadEstab.putExtra("objetoAutenticacao", a);
+                                telaCadEstab.putExtra("objetoEspectador", e);
+                                startActivity(telaCadEstab);
+                            }else if(getIntent().getStringExtra("tipoUsuario").equals("MUSICO")){
+                                //TODO ações de musico e passar o tipo de usuário pelo intent pra verificação na tela de upload
+                            }
 
                         } else {
-                            //TODO Verificar erro que era pra cair nos elses que acessam banco
-                            Mensagem.notificar(TelaCadastroEspectador.this,"Senhas diferentes","A senhas diferem uma da outra.");
+                            Mensagem.notificar(TelaCadastroEspectador.this,"Senhas diferentes","As senhas diferem uma da outra.");
                         }
                     }else{
-                        //TODO Verificar erro que era pra cair nos elses que acessam banco
-                        Mensagem.notificar(TelaCadastroEspectador.this,"Login existente","O login digitado ja existe em nosso banco de dados.");
+                        Mensagem.notificar(TelaCadastroEspectador.this,"Login existente","O login ou email digitado já existe em nosso banco de dados.");
                     }
                 }else{
-                    Mensagem.notificar(TelaCadastroEspectador.this,"Campos invalidos","Um ou mais campos não foram preenchidos corretamente");
+                    Mensagem.notificar(TelaCadastroEspectador.this,"Campos invalidos","Um ou mais campos não foram preenchidos corretamente.");
                 }
             }
         });
@@ -121,14 +126,14 @@ public class TelaCadastroEspectador extends AppCompatActivity {
     }
 
     //Prepara o objeto de autenticação para persistir
-    private AutenticacaoEntity criarObjetoAutenticacao(EditText edtEmailEspectador, EditText loginEspectador, EditText senhaEspectador){
+    private AutenticacaoEntity criarObjetoAutenticacao(EditText edtEmailEspectador, EditText loginEspectador, EditText senhaEspectador, String tipoUsuario){
         String login = loginEspectador.getText().toString().trim();
         String senha = senhaEspectador.getText().toString();
         String email = edtEmailEspectador.getText().toString().trim();
 
         String dataCriacao = DefinirDatas.dataAtual();
 
-        AutenticacaoEntity a = new AutenticacaoEntity(email, login, senha, TipoUsuario.ESPECTADOR.name(), dataCriacao, null);
+        AutenticacaoEntity a = new AutenticacaoEntity(email, login, senha, tipoUsuario, dataCriacao, null);
         try{
             a.setSenha(AESCrypt.encrypt(senha));
         }catch(Exception e){

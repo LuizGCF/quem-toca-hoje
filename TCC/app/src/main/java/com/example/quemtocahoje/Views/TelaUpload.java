@@ -19,9 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.quemtocahoje.Enum.TipoArquivo;
+import com.example.quemtocahoje.Enum.TipoUsuario;
 import com.example.quemtocahoje.Persistencia.Banco;
 import com.example.quemtocahoje.Persistencia.Entity.ArquivoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
+import com.example.quemtocahoje.Persistencia.Entity.EnderecoEntity;
+import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
+import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
+import com.example.quemtocahoje.Persistencia.Entity.MusicoEntity;
 import com.example.quemtocahoje.Utility.DefinirDatas;
 import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
@@ -44,6 +49,8 @@ public class TelaUpload extends AppCompatActivity {
     private AppCompatImageView imgVideoUsuarioUpload2;
     private AppCompatImageView imgVideoUsuarioUpload3;
 
+    Long idUser;
+
     ByteArrayOutputStream bos = null;
 
     @Override
@@ -56,19 +63,14 @@ public class TelaUpload extends AppCompatActivity {
         imgVideoUsuarioUpload1 = findViewById(R.id.imgVideoUsuarioUpload1);
         imgVideoUsuarioUpload2 = findViewById(R.id.imgVideoUsuarioUpload2);
         imgVideoUsuarioUpload3 = findViewById(R.id.imgVideoUsuarioUpload3);
-        Long idUser = getIntent().getLongExtra("idUser", -1L);
+
+        persistirNovoUsuario();
 
         imgFotoUsuarioUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 abrirGaleria();
-                if(bos != null) {
-                    persistirArquivo(TipoArquivo.FOTO_PERFIL.name());
-                    imgFotoUsuarioUpload.setImageBitmap(getImagem(TipoArquivo.FOTO_PERFIL.name()));
                     //TODO botao pra encerrar o cadastro e voltar pra tela inicial
-                }else{
-                    Mensagem.notificar(TelaUpload.this,"Erro","Erro ao enviar imagem.");
-                }
             }
         });
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},STORAGE_PERMISSION_CODE);
@@ -106,15 +108,18 @@ public class TelaUpload extends AppCompatActivity {
                 }
 
                 fis.close();
+
+                persistirArquivo(TipoArquivo.FOTO_PERFIL.name());
+                imgFotoUsuarioUpload.setImageURI(imagemUri);
             }catch(IOException e){
                 e.getMessage();
                 bos = null;
+                Mensagem.notificar(TelaUpload.this,"Erro","Erro ao enviar imagem.");
             }
         }
     }
 
     protected Bitmap getImagem(String tipoArquivo){
-        Long idUser = getIntent().getLongExtra("idUser", -1L);
         byte[] b = Banco.getDatabase(getApplicationContext()).arquivoDao().findAnexoArquivoById(idUser, tipoArquivo);
         ByteArrayInputStream imageStream = new ByteArrayInputStream(b);
         Bitmap theImage = BitmapFactory.decodeStream(imageStream);
@@ -122,9 +127,35 @@ public class TelaUpload extends AppCompatActivity {
     }
 
     private Long persistirArquivo(String tipoArquivo){
-        Long idUser = getIntent().getLongExtra("idUser", -1L);
         ArquivoEntity arquivo = new ArquivoEntity(idUser, bos.toByteArray(), tipoArquivo, DefinirDatas.dataAtual());
         return Banco.getDatabase(getApplicationContext()).arquivoDao().insertArquivo(arquivo);
+    }
+
+    private void persistirNovoUsuario(){
+        Banco bd = Banco.getDatabase(getApplicationContext());
+        String tipo = getIntent().getStringExtra("tipoUsuario");
+        AutenticacaoEntity a = (AutenticacaoEntity) getIntent().getSerializableExtra("objetoAutenticacao");
+        idUser = bd.autenticacaoDao().insertAutenticacao(a);
+
+        if(tipo.equals(TipoUsuario.ESPECTADOR.name())){
+            EspectadorEntity e = (EspectadorEntity) getIntent().getSerializableExtra("objetoEspectador");
+            e.setAutenticacao_id(idUser);
+            bd.espectadorDao().insertEspectador(e);
+        }else if(tipo.equals(TipoUsuario.ESTABELECIMENTO.name())){
+            EnderecoEntity end = (EnderecoEntity) getIntent().getSerializableExtra("objetoEndereco");
+            Long idEndereco = bd.enderecoDao().insertEndereco(end);
+
+            EstabelecimentoEntity estab = (EstabelecimentoEntity) getIntent().getSerializableExtra("objetoEstabelecimento");
+            estab.setAutenticacao_id(idUser);
+            estab.setEndereco_id(idEndereco);
+            bd.estabelecimentoDao().insertEstabelecimento(estab);
+        }else if(tipo.equals(TipoUsuario.MUSICO.name())){
+            //TODO ajustar esse insert
+            MusicoEntity m = (MusicoEntity) getIntent().getSerializableExtra("objetoMusico");
+            m.setAutenticacao_id(idUser);
+
+            bd.musicoDao().insertMusico(m);
+        }
     }
 
 

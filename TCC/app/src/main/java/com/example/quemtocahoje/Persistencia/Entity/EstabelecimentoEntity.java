@@ -20,6 +20,7 @@ public class EstabelecimentoEntity implements Serializable {
     private Long autenticacao_id;
     private Long endereco_id;
 
+    private String nomeDono;
     private String razaoSocial;
     private String cnpj;
     private String nomeFantasia;
@@ -29,10 +30,13 @@ public class EstabelecimentoEntity implements Serializable {
     private String descricao;
     private String tipoUsuario;
 
+    private String dataCriacao;
 
-    public EstabelecimentoEntity(Long autenticacao_id, Long endereco_id, String razaoSocial, String cnpj, String nomeFantasia, String horaInicio, String horaTermino, String telefone, String descricao, String tipoUsuario) {
+
+    public EstabelecimentoEntity(Long autenticacao_id, Long endereco_id, String nomeDono, String razaoSocial, String cnpj, String nomeFantasia, String horaInicio, String horaTermino, String telefone, String descricao, String tipoUsuario, String dataCriacao) {
         this.autenticacao_id = autenticacao_id;
         this.endereco_id = endereco_id;
+        this.nomeDono = nomeDono;
         this.razaoSocial = razaoSocial;
         this.cnpj = cnpj;
         this.nomeFantasia = nomeFantasia;
@@ -41,6 +45,15 @@ public class EstabelecimentoEntity implements Serializable {
         this.telefone = telefone;
         this.descricao = descricao;
         this.tipoUsuario = tipoUsuario;
+        this.dataCriacao = dataCriacao;
+    }
+
+    public String getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(String dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
 
     public Long getIdEstabelecimento() {
@@ -49,6 +62,14 @@ public class EstabelecimentoEntity implements Serializable {
 
     public void setIdEstabelecimento(Long idEstabelecimento) {
         this.idEstabelecimento = idEstabelecimento;
+    }
+
+    public String getNomeDono() {
+        return nomeDono;
+    }
+
+    public void setNomeDono(String nomeDono) {
+        this.nomeDono = nomeDono;
     }
 
     public Long getAutenticacao_id() {

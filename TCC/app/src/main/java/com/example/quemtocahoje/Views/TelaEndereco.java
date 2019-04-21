@@ -9,6 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.quemtocahoje.Enum.TipoUsuario;
+import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
+import com.example.quemtocahoje.Persistencia.Entity.EnderecoEntity;
+import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
+import com.example.quemtocahoje.Utility.DefinirDatas;
 import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
 
@@ -20,6 +24,7 @@ public class TelaEndereco extends AppCompatActivity {
     private EditText edtComplementoEndereco;
     private EditText edtCEPEndereco;
     private EditText edtUFEndereco;
+
     private Button btnConfirmarEndereco;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,23 +39,22 @@ public class TelaEndereco extends AppCompatActivity {
         edtComplementoEndereco = findViewById(R.id.edtComplementoEndereco);
         edtCEPEndereco = findViewById(R.id.edtCEPEndereco);
         edtUFEndereco = findViewById(R.id.edtUFEndereco);
+
         btnConfirmarEndereco = findViewById(R.id.btnConfirmarEndereco);
 
         btnConfirmarEndereco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(isCamposValidos(edtLogradouroEndereco,edtBairroEndereco,edtCidadeEndereco,edtComplementoEndereco,edtCEPEndereco,edtUFEndereco)) {
-                    //pego o tipo do usuario recebido pelo intentextra
-                    TipoUsuario tipoUsuario = TipoUsuario.values()[getIntent().getIntExtra("TipoUsuario", -1)];
-                    //TODO Persistir os Dados para o perfil designado
-                    if (tipoUsuario == TipoUsuario.ESPECTADOR)
-                        startActivity(telaUpload);
-                    else if (tipoUsuario == TipoUsuario.MUSICO)
-                        startActivity(telaUpload);
-                    else if (tipoUsuario == TipoUsuario.ESTABELECIMENTO)
-                        startActivity(telaUpload);
-                    else
-                        Mensagem.notificar(TelaEndereco.this, "Erro", "Perfil desconhecido");//??
+                    telaUpload.putExtra("tipoUsuario", TipoUsuario.ESTABELECIMENTO.name());
+                    telaUpload.putExtra("objetoEndereco", prepararObjetoEndereco());
+
+                    AutenticacaoEntity a = (AutenticacaoEntity)  getIntent().getSerializableExtra("objetoAutenticacao");
+                    telaUpload.putExtra("objetoAutenticacao", a);
+
+                    EstabelecimentoEntity e = (EstabelecimentoEntity) getIntent().getSerializableExtra("objetoEstabelecimento");
+                    telaUpload.putExtra("objetoEstabelecimento", e);
+                    startActivity(telaUpload);
                 }
                 else
                     Mensagem.notificar(TelaEndereco.this,"Campos Inválidos","Um ou mais campos não foram preenchidos corretamente.");
@@ -69,5 +73,18 @@ public class TelaEndereco extends AppCompatActivity {
             return false;
         return true;
 
+    }
+
+    private EnderecoEntity prepararObjetoEndereco(){
+        EnderecoEntity end = new EnderecoEntity(
+                edtLogradouroEndereco.getText().toString()
+                ,edtBairroEndereco.getText().toString()
+                ,edtCidadeEndereco.getText().toString()
+                ,edtComplementoEndereco.getText().toString()
+                ,Integer.parseInt(edtCEPEndereco.getText().toString())
+                ,edtUFEndereco.getText().toString()
+                ,DefinirDatas.dataAtual()
+        );
+        return end;
     }
 }

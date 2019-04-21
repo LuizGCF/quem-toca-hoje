@@ -26,13 +26,12 @@ public class MusicoEntity implements Serializable {
     @Ignore
     private List<String> convites;
 
-    public MusicoEntity(Long autenticacao_id, String nome, String nomeArtistico, String telefone, String dataCriacao, List<String> convites) {
+    public MusicoEntity(Long autenticacao_id, String nome, String nomeArtistico, String telefone, String dataCriacao) {
         this.autenticacao_id = autenticacao_id;
         this.nome = nome;
         this.nomeArtistico = nomeArtistico;
         this.telefone = telefone;
         this.dataCriacao = dataCriacao;
-        this.convites = convites;
     }
 
     public Long getAutenticacao_id() {
@@ -81,5 +80,13 @@ public class MusicoEntity implements Serializable {
 
     public void setConvites(List<String> convites) {
         this.convites = convites;
+    }
+
+    public Long getIdMusico() {
+        return idMusico;
+    }
+
+    public void setIdMusico(Long idMusico) {
+        this.idMusico = idMusico;
     }
 }

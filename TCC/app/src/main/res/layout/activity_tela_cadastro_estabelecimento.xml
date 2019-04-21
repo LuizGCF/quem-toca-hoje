@@ -5,140 +5,164 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.quemtocahoje.Views.TelaCadastroEstabelecimento">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical"
-        android:gravity="center">
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:paddingRight="50dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingRight="50dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Razão Social: " />
+
             <EditText
+                android:id="@+id/edtRazaoSocial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:width="200dp"
-                android:id="@+id/edtRazaoSocial"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:paddingRight="50dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CNPJ "/>
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="200dp"
-                android:id="@+id/edtCNPJ"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:paddingRight="50dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Celular"/>
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="200dp"
-                android:id="@+id/edtCelular"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:paddingRight="50dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="E-mail "/>
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="200dp"
-                android:id="@+id/edtEmail"/>
+                android:width="200dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:paddingRight="50dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingRight="50dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login: "/>
+                android:text="CNPJ " />
+
             <EditText
+                android:id="@+id/edtCNPJ"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:width="200dp"
-                android:id="@+id/edtLoginEstabelecimento"/>
+                android:width="200dp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:paddingRight="50dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingRight="50dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Senha: "/>
+                android:text="Nome Fantasia" />
+
             <EditText
+                android:id="@+id/edtNomeFantasia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:width="200dp"
-                android:inputType="textPassword"
-                android:id="@+id/edtSenhaEstabelecimento"/>
+                android:width="200dp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:paddingRight="50dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingRight="50dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Confirmar Senha: "/>
+                android:text="Telefone" />
+
             <EditText
+                android:id="@+id/edtTelefoneEstabelecimento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:width="200dp"
-                android:inputType="textPassword"
-                android:id="@+id/edtConfirmarSenhaSenhaEstabelecimento"/>
+                android:width="200dp" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:orientation="horizontal"
+            android:paddingRight="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Início do Expediente" />
+
+            <EditText
+                android:id="@+id/edtInicioExpediente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="200dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:orientation="horizontal"
+            android:paddingRight="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fim do Expediente" />
+
+            <EditText
+                android:id="@+id/edtFimExpediente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="200dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:orientation="horizontal"
+            android:paddingRight="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Descrição" />
+
+            <EditText
+                android:id="@+id/edtDescricaoEstabelecimento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="200dp" />
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <Button
+                android:id="@+id/btnCadastrarEstabelecimento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cadastrar"
-                android:id="@+id/btnCadastrarEstabelecimento"/>
+                android:text="Cadastrar" />
+
             <Button
+                android:id="@+id/btnCancelarEstabelecimento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancelar"
-                android:id="@+id/btnCancelarEstabelecimento"/>
+                android:text="Cancelar" />
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

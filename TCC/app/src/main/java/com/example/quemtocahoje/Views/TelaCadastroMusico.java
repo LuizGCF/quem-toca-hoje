@@ -46,7 +46,6 @@ public class TelaCadastroMusico extends AppCompatActivity {
         btnCadastrarMusico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO putExtra dados validados
                 if(isCamposValidos(edtNomeMusico,edtNomeArtisticoMusico,edtCelularMusico,edtEmailMusico,edtLoginMusico,edtSenhaMusico,edtConfirmarSenhaMusico,edtDescricaoMusico))
                 {
                     if(isSenhaCorreta(edtSenhaMusico,edtConfirmarSenhaMusico))

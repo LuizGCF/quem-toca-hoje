@@ -41,9 +41,9 @@ public class TelaRedefinirSenha extends AppCompatActivity {
                     }
                     else
                         Mensagem.notificar(TelaRedefinirSenha.this,"Senhas Divergentes","As senhas digitadas divergem uma da outra.");
-                }//TODO else mensagem campos invalidos
+                }
                 else
-                    Mensagem.notificar(TelaRedefinirSenha.this,"Campos Inválidos","Um ou mais campos não foram definidos corretamente.");
+                    Mensagem.notificar(TelaRedefinirSenha.this,"Campos Inválidos","Um ou mais campos não foram preenchidos corretamente.");
             }
         });
 
