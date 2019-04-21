@@ -1,6 +1,9 @@
 package com.example.quemtocahoje.Views;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +17,7 @@ import com.example.quemtocahoje.Persistencia.Banco;
 import com.example.quemtocahoje.Persistencia.Dao.AutenticacaoDao;
 import com.example.quemtocahoje.Utility.AESCrypt;
 import com.example.quemtocahoje.Utility.DefinirDatas;
+import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
 
 public class TelaInicial extends AppCompatActivity {
@@ -30,6 +34,8 @@ public class TelaInicial extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         final Intent telaEscolhaCadastro = new Intent(this, TelaEscolhaCadastro.class);
         final Intent telaEsqueciSenha = new Intent(this, TelaEsqueceuaSenha.class);
+        final Intent telaInicialEstabelecimento = new Intent(this, TelaInicialEstabelecimento.class);
+        final Intent telaInicialMusico = new Intent(this, TelaInicialMusico.class);
 
         setContentView(R.layout.activity_tela_inicial);
         btnLogin = findViewById(R.id.btnLogin);
@@ -46,20 +52,18 @@ public class TelaInicial extends AppCompatActivity {
                     if(autenticacao != null){
                         Banco.getDatabase(getApplicationContext()).autenticacaoDao().updateDataUltimoLogin(DefinirDatas.dataAtual(), autenticacao.getIdAutenticacao());
                         if(autenticacao.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name())){
-                            //TODO navegar para tela estabelecimento
+                            startActivity(telaInicialEstabelecimento);
                         }else if(autenticacao.getTipoUsuario().equals(TipoUsuario.MUSICO.name())){
-                            //TODO navegar para tela musico
+                            startActivity(telaInicialMusico);
                         }else{
                             System.out.println("ID: "+autenticacao.getIdAutenticacao()+"\n TIPO: "+autenticacao.getTipoUsuario());
                             //TODO navegar para tela espectador
                         }
                     }else{
-                        System.out.println("USUARIO INVALIDO");
-                        //TODO mensagem usuario invalido
+                        Mensagem.notificar(TelaInicial.this,"Usuário Inválido","Login e/ou senha incorretos");
                     }
                 }else{
-                    System.out.println("CAMPO INVALIDO");
-                    //TODO mensagem campos invalidos
+                    Mensagem.notificar(TelaInicial.this,"Campos Inválidos","Um ou mais campos não foram preenchidos corretamente");
                 }
             }
         });

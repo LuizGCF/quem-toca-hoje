@@ -31,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/edtSenha"
                 android:hint="SENHA"
+                android:inputType="textPassword"
                 android:layout_gravity="center_horizontal"/>
         </LinearLayout>
         <android.support.v7.widget.AppCompatButton

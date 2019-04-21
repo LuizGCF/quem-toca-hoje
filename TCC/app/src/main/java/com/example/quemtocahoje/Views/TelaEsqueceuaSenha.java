@@ -16,6 +16,7 @@ import com.example.quemtocahoje.Persistencia.Banco;
 import com.example.quemtocahoje.Persistencia.Entity.TokenEntity;
 import com.example.quemtocahoje.Utility.DefinirDatas;
 import com.example.quemtocahoje.Utility.Email;
+import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.quemtocahoje.Utility.Token;
 import com.example.tcc.R;
 
@@ -56,15 +57,16 @@ public class TelaEsqueceuaSenha extends AppCompatActivity {
                                     telaRedefinirSenha.putExtra("idUser", idUser);
                                     startActivity(telaRedefinirSenha);
                                 }
-                                    //TODO criar um else com mensagem token inválido
+                                else
+                                    Mensagem.notificar(TelaEsqueceuaSenha.this,"Token inválido","O token digitado é inválido.");
                             }
                         });
 
                     }else{
-                        //TODO mensagem usuario nao cadastrado
+                        Mensagem.notificar(TelaEsqueceuaSenha.this,"Usuário não cadastrado","O usuário foi cadastrado.");//??
                     }
                 }else{
-                    //TODO mensagem campo invalido
+                    Mensagem.notificar(TelaEsqueceuaSenha.this,"Campo Inválido","O campo não foi preenchido corretamente.");
                 }
             }
         });

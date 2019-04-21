@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.quemtocahoje.Persistencia.Banco;
 import com.example.quemtocahoje.Utility.AESCrypt;
+import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
 
 public class TelaRedefinirSenha extends AppCompatActivity {
@@ -33,10 +35,15 @@ public class TelaRedefinirSenha extends AppCompatActivity {
                 if(isCamposValidos()){
                     if(isSenhaValida()){
                         atualizarSenha();
-                        //TODO mensagem de sucesso
+                        //Utilizei o Toast mesmo para mensagens de sucesso
+                        Toast.makeText(TelaRedefinirSenha.this,"Sucesso!",Toast.LENGTH_LONG).show();
                         startActivity(telaInicial);
-                    }//TODO else mensagem senhas divergentes
+                    }
+                    else
+                        Mensagem.notificar(TelaRedefinirSenha.this,"Senhas Divergentes","As senhas digitadas divergem uma da outra.");
                 }//TODO else mensagem campos invalidos
+                else
+                    Mensagem.notificar(TelaRedefinirSenha.this,"Campos Inválidos","Um ou mais campos não foram definidos corretamente.");
             }
         });
 

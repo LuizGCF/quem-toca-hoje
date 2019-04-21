@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.quemtocahoje.Enum.TipoUsuario;
 import com.example.quemtocahoje.Persistencia.Banco;
@@ -13,6 +14,7 @@ import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
 import com.example.quemtocahoje.Utility.AESCrypt;
 import com.example.quemtocahoje.Utility.DefinirDatas;
+import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
 
 public class TelaCadastroEspectador extends AppCompatActivity {
@@ -32,7 +34,9 @@ public class TelaCadastroEspectador extends AppCompatActivity {
 
         final Intent telaUpload = new Intent(this, TelaUpload.class);
 
-                btnCadastrarEspectador = findViewById(R.id.btnCadastrarEspectador);
+        //final Intent telaEndereco = new Intent(this, TelaEndereco.class);
+
+        btnCadastrarEspectador = findViewById(R.id.btnCadastrarEspectador);
         nomeEspectador = findViewById(R.id.edtNomeEspectador);
         edtEmailEspectador = findViewById(R.id.edtEmailEspectador);
         loginEspectador = findViewById(R.id.edtLoginEspectador);
@@ -54,16 +58,21 @@ public class TelaCadastroEspectador extends AppCompatActivity {
                             telaUpload.putExtra("idUser", id);
                             telaUpload.putExtra("nomeUser", e.getNomeEspectador());
                             startActivity(telaUpload);
+                            //telaEndereco.putExtra("TipoUsuario", TipoUsuario.ESPECTADOR.getValor());
+                            //startActivity(telaEndereco);
+                            //Coloquei a mensagem de sucesso no Toast mesmo
+                            Toast.makeText(TelaCadastroEspectador.this,"Sucesso!",Toast.LENGTH_LONG).show();
 
-                            //TODO mensagem de sucesso
                         } else {
-                            //TODO inserir mensagem de erro para senhas divergentes
+                            //TODO Verificar erro que era pra cair nos elses que acessam banco
+                            Mensagem.notificar(TelaCadastroEspectador.this,"Senhas diferentes","A senhas diferem uma da outra.");
                         }
                     }else{
-                        //TODO inserir mensagem de login já existente
+                        //TODO Verificar erro que era pra cair nos elses que acessam banco
+                        Mensagem.notificar(TelaCadastroEspectador.this,"Login existente","O login digitado ja existe em nosso banco de dados.");
                     }
                 }else{
-                    //TODO inserir mensagem de erro para campos inválidos
+                    Mensagem.notificar(TelaCadastroEspectador.this,"Campos invalidos","Um ou mais campos não foram preenchidos corretamente");
                 }
             }
         });

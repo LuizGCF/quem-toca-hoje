@@ -23,6 +23,7 @@ import com.example.quemtocahoje.Persistencia.Banco;
 import com.example.quemtocahoje.Persistencia.Entity.ArquivoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
 import com.example.quemtocahoje.Utility.DefinirDatas;
+import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
 
 import java.io.ByteArrayInputStream;
@@ -66,7 +67,7 @@ public class TelaUpload extends AppCompatActivity {
                     imgFotoUsuarioUpload.setImageBitmap(getImagem(TipoArquivo.FOTO_PERFIL.name()));
                     //TODO botao pra encerrar o cadastro e voltar pra tela inicial
                 }else{
-                    //TODO mensagem erro ao enviar imagem
+                    Mensagem.notificar(TelaUpload.this,"Erro","Erro ao enviar imagem.");
                 }
             }
         });
