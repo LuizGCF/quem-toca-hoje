@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.quemtocahoje.Views.TelaInicialEstabelecimento">
+    tools:context="com.example.quemtocahoje.Views.TelaInicialEspectador">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,7 +16,7 @@
             android:text="Olá Fulano!"
             android:textSize="35dp"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/txtNomeEstabelecimento"/>
+            android:id="@+id/txtNomeEspectador"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -25,32 +25,15 @@
             android:layout_marginTop="40dp"
             android:text="Pesquisar"
             android:textSize="20dp"
-            android:id="@+id/txtPesquisarInicialEstabelecimento"/>
+            android:id="@+id/txtPesquisaInicialEspectador"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
-            android:text="Propostas"
+            android:text="Editar Perfil"
             android:textSize="20dp"
-            android:id="@+id/txtPropostasInicialEstabelecimento"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
-            android:text="Agenda"
-            android:textSize="20dp"
-            android:id="@+id/txtAgendaInicialEstabelecimento"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
-            android:text="Histórico"
-            android:textSize="20dp"
-            android:id="@+id/txtHistoricoInicialEstabelecimento"/>
-
+            android:id="@+id/txtPerfilInicialEspectador"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

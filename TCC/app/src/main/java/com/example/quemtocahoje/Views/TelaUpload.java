@@ -14,7 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,27 +47,62 @@ public class TelaUpload extends AppCompatActivity {
     private int STORAGE_PERMISSION_CODE = 23;
     private TextView txtNomeUsuarioUpload;
     private AppCompatImageView imgFotoUsuarioUpload;
-    private ImageView imgVideoUsuarioUpload1;
-    private AppCompatImageView imgVideoUsuarioUpload2;
-    private AppCompatImageView imgVideoUsuarioUpload3;
-
+    private ImageView imgImagemUsuarioUpload1;
+    private AppCompatImageView imgImagemUsuarioUpload2;
+    private AppCompatImageView imgImagemUsuarioUpload3;
+    private Button btnEncerrar;
+    private LinearLayout linearImagensDemonstracao;
     Long idUser;
 
     ByteArrayOutputStream bos = null;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_upload);
 
+        final Intent telaInicialEspectador = new Intent(this,TelaInicialEspectador.class);
+        final Intent telaInicialEstabelecimento = new Intent(this,TelaInicialEstabelecimento.class);
+        final Intent telaInicialMusico = new Intent(this,TelaInicialMusico.class);
+
         txtNomeUsuarioUpload = findViewById(R.id.txtNomeUsuarioUpload);
         imgFotoUsuarioUpload = findViewById(R.id.imgFotoUsuarioUpload);
-        imgVideoUsuarioUpload1 = findViewById(R.id.imgVideoUsuarioUpload1);
-        imgVideoUsuarioUpload2 = findViewById(R.id.imgVideoUsuarioUpload2);
-        imgVideoUsuarioUpload3 = findViewById(R.id.imgVideoUsuarioUpload3);
+        imgImagemUsuarioUpload1 = findViewById(R.id.imgImagemUsuarioUpload1);
+        imgImagemUsuarioUpload2 = findViewById(R.id.imgImagemUsuarioUpload2);
+        imgImagemUsuarioUpload3 = findViewById(R.id.imgImagemUsuarioUpload3);
+        btnEncerrar = findViewById(R.id.btnEncerrar);
+        linearImagensDemonstracao = findViewById(R.id.linearImagensDemonstracao);
 
+        txtNomeUsuarioUpload.setText("Olá "+preencherNomeUsuario() + "!");
+        verificarVisibilidadeImagensDemonstracao();
+        btnEncerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String tipo = getIntent().getStringExtra("tipoUsuario");
+                if (tipo.equals(TipoUsuario.ESPECTADOR.name())) {
+                    String nome = ((EspectadorEntity) getIntent().getSerializableExtra("objetoEspectador")).getNomeEspectador();
+                    telaInicialEspectador.putExtra("nome",nome);
+                    startActivity(telaInicialEspectador);
+                }
+                else if (tipo.equals(TipoUsuario.ESTABELECIMENTO.name()))
+                {
+                    String nome = ((EstabelecimentoEntity) getIntent().getSerializableExtra("objetoEstabelecimento")).getNomeDono();
+                    telaInicialEstabelecimento.putExtra("nome",nome);
+                    startActivity(telaInicialEstabelecimento);
+                }
+                else if(tipo.equals(TipoUsuario.MUSICO.name()))
+                {
+                   String nome = ((MusicoEntity) getIntent().getSerializableExtra("objetoMusico")).getNome();
+                   telaInicialMusico.putExtra("nome",nome);
+                   startActivity(telaInicialMusico);
+                }
+            }
+        });
+
+        linearImagensDemonstracao = findViewById(R.id.linearImagensDemonstracao);
         persistirNovoUsuario();
-
         imgFotoUsuarioUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,7 +187,6 @@ public class TelaUpload extends AppCompatActivity {
             estab.setEndereco_id(idEndereco);
             bd.estabelecimentoDao().insertEstabelecimento(estab);
         }else if(tipo.equals(TipoUsuario.MUSICO.name())){
-            //TODO ajustar esse insert
             MusicoEntity m = (MusicoEntity) getIntent().getSerializableExtra("objetoMusico");
             m.setAutenticacao_id(idUser);
 
@@ -158,5 +194,39 @@ public class TelaUpload extends AppCompatActivity {
         }
     }
 
+    private void verificarVisibilidadeImagensDemonstracao()
+    {
+        String tipo = getIntent().getStringExtra("tipoUsuario");
+        if (tipo.equals(TipoUsuario.ESTABELECIMENTO.name()) || tipo.equals(TipoUsuario.MUSICO.name()))
+        {
+            linearImagensDemonstracao.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            linearImagensDemonstracao.setVisibility(View.GONE);
+        }
+    }
+
+    private String preencherNomeUsuario()
+    {
+        String tipo = getIntent().getStringExtra("tipoUsuario");
+        String pessoa = "";
+        if (tipo.equals(TipoUsuario.ESTABELECIMENTO.name()))
+        {
+            EstabelecimentoEntity estab = (EstabelecimentoEntity) getIntent().getSerializableExtra("objetoEstabelecimento");
+            pessoa = estab.getNomeDono();
+        }
+        else if (tipo.equals(TipoUsuario.MUSICO.name()))
+        {
+            MusicoEntity m = (MusicoEntity) getIntent().getSerializableExtra("objetoMusico");
+            pessoa = m.getNome();
+        }
+        else
+        {
+            EspectadorEntity e = (EspectadorEntity) getIntent().getSerializableExtra("objetoEspectador");
+            pessoa = e.getNomeEspectador();
+        }
+        return pessoa;
+    }
 
 }

@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="30dp"
         android:text="Olá Fulano!"
         android:textSize="35dp"
         android:layout_gravity="center_horizontal"
@@ -38,11 +38,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/linearImagensDemonstracao">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Insira até 3 vídeos de demonstração"/>
+            android:text="Insira até 3 imagens de demonstração"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -53,19 +54,25 @@
                 android:layout_height="120dp"
                 android:layout_marginRight="5dp"
                 android:src="@mipmap/upload_video"
-                android:id="@+id/imgVideoUsuarioUpload1"/>
+                android:id="@+id/imgImagemUsuarioUpload1"/>
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="120dp"
                 android:layout_marginRight="5dp"
                 android:layout_height="120dp"
                 android:src="@mipmap/upload_video"
-                android:id="@+id/imgVideoUsuarioUpload2"/>
+                android:id="@+id/imgImagemUsuarioUpload2"/>
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:src="@mipmap/upload_video"
-                android:id="@+id/imgVideoUsuarioUpload3"/>
+                android:id="@+id/imgImagemUsuarioUpload3"/>
         </LinearLayout>
     </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Encerrar"
+        android:id="@+id/btnEncerrar"
+        android:layout_gravity="center"/>
 </LinearLayout>
 </android.support.constraint.ConstraintLayout>

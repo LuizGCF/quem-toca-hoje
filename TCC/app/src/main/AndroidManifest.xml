@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.quemtocahoje.Views.TelaEndereco"></activity>
+        <activity android:name="com.example.quemtocahoje.Views.TelaInicialEspectador"></activity>
+        <activity android:name="com.example.quemtocahoje.Views.TelaEndereco" />
         <activity android:name="com.example.quemtocahoje.Views.TelaInicialEstabelecimento" />
         <activity android:name="com.example.quemtocahoje.Views.TelaInicialMusico" />
         <activity android:name="com.example.quemtocahoje.Views.TelaPesquisaEstabelecimento" />

@@ -29,4 +29,6 @@ public interface MusicoDao {
     @Query("SELECT * FROM musico  WHERE idMusico = :idMusico")
     public MusicoEntity findMusicoById(Long idMusico);
 
+    @Query("SELECT * FROM musico WHERE autenticacao_id = :autenticacao_id")
+    public MusicoEntity findMusicoByAutenticacao(Long autenticacao_id);
 }

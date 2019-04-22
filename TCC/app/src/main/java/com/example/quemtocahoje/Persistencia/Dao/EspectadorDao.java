@@ -9,6 +9,8 @@ import android.arch.persistence.room.Update;
 
 import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
 
+import java.util.List;
+
 @Dao
 public interface EspectadorDao {
 
@@ -23,9 +25,14 @@ public interface EspectadorDao {
 
     //QUERIES
     @Query("SELECT * FROM espectador")
-    public LiveData<EspectadorEntity[]> findAllEspectadores();
+    //public LiveData<EspectadorEntity[]> findAllEspectadores();
+    public List<EspectadorEntity> findAllEspectadores();
 
     //para parâmetros, usar : seguido do nome do parâmetro
     @Query("SELECT * FROM espectador WHERE idEspectador = :id")
-    public LiveData<EspectadorEntity> findEspectadorById(Long id);
+    //public LiveData<EspectadorEntity> findEspectadorById(Long id);
+    public EspectadorEntity findEspectadorById(Long id);
+
+    @Query("SELECT * FROM espectador WHERE autenticacao_id = :autenticacao_id")
+    public EspectadorEntity findEspectadorByAutenticacao(Long autenticacao_id);
 }

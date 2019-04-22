@@ -55,8 +55,7 @@ public class TelaCadastroEstabelecimento extends AppCompatActivity {
                     {
                         if(!isCnpjCadastrado()) {
                             EstabelecimentoEntity e = prepararObjetoEstabelecimento();
-
-                            telaEndereco.putExtra("TipoUsuario", TipoUsuario.ESTABELECIMENTO.name());
+                            telaEndereco.putExtra("tipoUsuario", TipoUsuario.ESTABELECIMENTO.name());
                             telaEndereco.putExtra("objetoAutenticacao", getIntent().getSerializableExtra("objetoAutenticacao"));
                             telaEndereco.putExtra("objetoEstabelecimento", e);
 

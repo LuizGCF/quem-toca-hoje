@@ -64,6 +64,7 @@ public class TelaEndereco extends AppCompatActivity {
 
     private boolean isCamposValidos(EditText edtLogradouroEndereco, EditText edtBairroEndereco, EditText edtCidadeEndereco, EditText edtComplementoEndereco, EditText edtCEPEndereco, EditText edtUFEndereco)
     {
+        //TODO Validar CEP
         if(edtLogradouroEndereco == null || edtLogradouroEndereco.getText().toString().trim().equals("")
             || edtBairroEndereco == null || edtBairroEndereco.getText().toString().trim().equals("")
             || edtCidadeEndereco == null || edtCidadeEndereco.getText().toString().trim().equals("")

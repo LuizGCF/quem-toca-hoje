@@ -15,6 +15,9 @@ import com.example.quemtocahoje.DTO.AutenticacaoDTO;
 import com.example.quemtocahoje.Enum.TipoUsuario;
 import com.example.quemtocahoje.Persistencia.Banco;
 import com.example.quemtocahoje.Persistencia.Dao.AutenticacaoDao;
+import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
+import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
+import com.example.quemtocahoje.Persistencia.Entity.MusicoEntity;
 import com.example.quemtocahoje.Utility.AESCrypt;
 import com.example.quemtocahoje.Utility.DefinirDatas;
 import com.example.quemtocahoje.Utility.Mensagem;
@@ -36,6 +39,7 @@ public class TelaInicial extends AppCompatActivity {
         final Intent telaEsqueciSenha = new Intent(this, TelaEsqueceuaSenha.class);
         final Intent telaInicialEstabelecimento = new Intent(this, TelaInicialEstabelecimento.class);
         final Intent telaInicialMusico = new Intent(this, TelaInicialMusico.class);
+        final Intent telaInicialEspectador = new Intent(this, TelaInicialEspectador.class);
 
         setContentView(R.layout.activity_tela_inicial);
         btnLogin = findViewById(R.id.btnLogin);
@@ -52,12 +56,18 @@ public class TelaInicial extends AppCompatActivity {
                     if(autenticacao != null){
                         Banco.getDatabase(getApplicationContext()).autenticacaoDao().updateDataUltimoLogin(DefinirDatas.dataAtual(), autenticacao.getIdAutenticacao());
                         if(autenticacao.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name())){
+                            String nome = Banco.getDatabase(getApplicationContext()).estabelecimentoDao().findEstabelecimentoByAutenticacao(autenticacao.getIdAutenticacao()).getNomeDono();
+                            telaInicialEstabelecimento.putExtra("nome",nome);
                             startActivity(telaInicialEstabelecimento);
                         }else if(autenticacao.getTipoUsuario().equals(TipoUsuario.MUSICO.name())){
+                            String nome = Banco.getDatabase(getApplicationContext()).musicoDao().findMusicoByAutenticacao(autenticacao.getIdAutenticacao()).getNome();
+                            telaInicialMusico.putExtra("nome",nome);
                             startActivity(telaInicialMusico);
                         }else{
-                            System.out.println("ID: "+autenticacao.getIdAutenticacao()+"\n TIPO: "+autenticacao.getTipoUsuario());
-                            //TODO navegar para tela espectador
+                            //System.out.println("ID: "+autenticacao.getIdAutenticacao()+"\n TIPO: "+autenticacao.getTipoUsuario());
+                            String nome = Banco.getDatabase(getApplicationContext()).espectadorDao().findEspectadorByAutenticacao(autenticacao.getIdAutenticacao()).getNomeEspectador();
+                            telaInicialEspectador.putExtra("nome",nome);
+                            startActivity(telaInicialEspectador);
                         }
                     }else{
                         Mensagem.notificar(TelaInicial.this,"Usuário Inválido","Login e/ou senha incorretos");

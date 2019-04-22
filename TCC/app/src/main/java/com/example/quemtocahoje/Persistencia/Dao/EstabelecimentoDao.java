@@ -32,4 +32,7 @@ public interface EstabelecimentoDao {
     @Query("SELECT * FROM estabelecimento WHERE cnpj = :cnpj")
     public EstabelecimentoEntity findEstabelecimentoByCNPJ(String cnpj);
 
+    @Query("SELECT * FROM estabelecimento WHERE autenticacao_id = :autenticacao_id")
+    public EstabelecimentoEntity findEstabelecimentoByAutenticacao(Long autenticacao_id);
+
 }
