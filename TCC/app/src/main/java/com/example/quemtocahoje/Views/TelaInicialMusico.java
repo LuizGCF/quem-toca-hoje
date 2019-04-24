@@ -20,12 +20,14 @@ public class TelaInicialMusico extends AppCompatActivity {
     private TextView txtHistoricoInicialMusico;
     private TextView txtVisualizacaoInicialMusico;
     private TextView txtSairInicialMusico;
+    private TextView txtConviteInicialMusico;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_inicial_musico);
 
         final Intent telaPesquisaMusico = new Intent(this,TelaPesquisaMusico.class);
+        final Intent telaLogin = new Intent(this, TelaInicial.class);
 
         txtNomeMusico = findViewById(R.id.txtNomeMusico);
         txtNomeBandaInicialMusico = findViewById(R.id.txtNomeBandaInicialMusico);
@@ -36,8 +38,18 @@ public class TelaInicialMusico extends AppCompatActivity {
         txtHistoricoInicialMusico = findViewById(R.id.txtHistoricoInicialMusico);
         txtVisualizacaoInicialMusico = findViewById(R.id.txtVisualizacaoInicialMusico);
         txtSairInicialMusico = findViewById(R.id.txtSairInicialMusico);
+        txtConviteInicialMusico = findViewById(R.id.txtConviteInicialMusico);
 
         txtNomeMusico.setText("Olá " + preencherNomeUsuario() + "!");
+
+        final Intent convidarMembro = new Intent(this, TelaConvite.class);
+
+        txtConviteInicialMusico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(convidarMembro);
+            }
+        });
 
         txtPesquisarInicialMusico.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +60,8 @@ public class TelaInicialMusico extends AppCompatActivity {
         txtSairInicialMusico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                startActivity(telaLogin);
+                finishAffinity();
             }
         });
     }

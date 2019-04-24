@@ -63,7 +63,7 @@ public class TelaEsqueceuaSenha extends AppCompatActivity {
                         });
 
                     }else{
-                        Mensagem.notificar(TelaEsqueceuaSenha.this,"Usuário não cadastrado","O usuário foi cadastrado.");//??
+                        Mensagem.notificar(TelaEsqueceuaSenha.this,"Usuário não cadastrado","O usuário não existe em nosso sistema.");
                     }
                 }else{
                     Mensagem.notificar(TelaEsqueceuaSenha.this,"Campo Inválido","O campo não foi preenchido corretamente.");

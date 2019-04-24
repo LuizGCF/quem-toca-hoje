@@ -89,7 +89,7 @@ public class TelaUpload extends AppCompatActivity {
                 else if (tipo.equals(TipoUsuario.ESTABELECIMENTO.name()))
                 {
                     String nome = ((EstabelecimentoEntity) getIntent().getSerializableExtra("objetoEstabelecimento")).getNomeDono();
-                    telaInicialEstabelecimento.putExtra("nome",nome);
+                    telaInicialEstabelecimento.putExtra("nome", nome);
                     startActivity(telaInicialEstabelecimento);
                 }
                 else if(tipo.equals(TipoUsuario.MUSICO.name()))
@@ -107,7 +107,6 @@ public class TelaUpload extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 abrirGaleria();
-                    //TODO botao pra encerrar o cadastro e voltar pra tela inicial
             }
         });
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},STORAGE_PERMISSION_CODE);

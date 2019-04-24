@@ -16,11 +16,12 @@ public class TelaInicialEstabelecimento extends AppCompatActivity {
     private TextView txtAgendaInicialEstabelecimento;
     private TextView txtHistoricoInicialEstabelecimento;
     private TextView txtSairInicialEstabelecimento;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_inicial_estabelecimento);
-
+        final Intent telaLogin = new Intent(this, TelaInicial.class);
         final Intent telaPesquisaEstabelecimento = new Intent(this,TelaPesquisaEstabelecimento.class);
         final Intent telaProposta = new Intent(this,TelaProposta.class);
         txtNomeEstabelecimento = findViewById(R.id.txtNomeEstabelecimento);
@@ -42,7 +43,8 @@ public class TelaInicialEstabelecimento extends AppCompatActivity {
         txtSairInicialEstabelecimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                startActivity(telaLogin);
+                finishAffinity();
             }
         });
 
