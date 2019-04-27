@@ -162,7 +162,7 @@
                 android:id="@+id/btnCancelarEstabelecimento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancelar" />
+                android:text="Voltar" />
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

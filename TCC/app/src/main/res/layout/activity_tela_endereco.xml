@@ -24,6 +24,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:text="CEP"
+                android:gravity="center" />
+            <EditText
+                android:layout_marginRight="20dp"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/edtCEPEndereco"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:text="Logradouro"
                 android:gravity="center"/>
             <EditText
@@ -78,21 +93,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/edtComplementoEndereco"/>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="CEP"
-                android:gravity="center" />
-            <EditText
-                android:layout_marginRight="20dp"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/edtCEPEndereco"/>
-        </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
