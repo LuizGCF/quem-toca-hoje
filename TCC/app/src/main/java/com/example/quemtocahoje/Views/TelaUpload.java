@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.quemtocahoje.Enum.TipoArquivo;
 import com.example.quemtocahoje.Enum.TipoUsuario;
@@ -29,20 +28,18 @@ import com.example.quemtocahoje.Persistencia.Entity.EnderecoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.MusicoEntity;
+import com.example.quemtocahoje.Utility.ConversaoArquivo;
 import com.example.quemtocahoje.Utility.DefinirDatas;
-import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 public class TelaUpload extends AppCompatActivity {
 
     private static final int IMAGEM = 1;
     Uri imagemUri;
+    ByteArrayOutputStream bos = null;
+    Cursor cursor = null;
 
     private int STORAGE_PERMISSION_CODE = 23;
     private TextView txtNomeUsuarioUpload;
@@ -53,10 +50,6 @@ public class TelaUpload extends AppCompatActivity {
     private Button btnEncerrar;
     private LinearLayout linearImagensDemonstracao;
     Long idUser;
-
-    ByteArrayOutputStream bos = null;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +73,7 @@ public class TelaUpload extends AppCompatActivity {
         btnEncerrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                persistirNovoUsuario();
                 String tipo = getIntent().getStringExtra("tipoUsuario");
                 if (tipo.equals(TipoUsuario.ESPECTADOR.name())) {
                     String nome = ((EspectadorEntity) getIntent().getSerializableExtra("objetoEspectador")).getNomeEspectador();
@@ -102,7 +96,6 @@ public class TelaUpload extends AppCompatActivity {
         });
 
         linearImagensDemonstracao = findViewById(R.id.linearImagensDemonstracao);
-        persistirNovoUsuario();
         imgFotoUsuarioUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,57 +110,20 @@ public class TelaUpload extends AppCompatActivity {
         startActivityForResult(galeria, IMAGEM);
     }
 
+    //recupera o URI da imagem selecionada para usar no método de conversão para BLOB
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK && requestCode == IMAGEM){
+        if(resultCode == RESULT_OK && requestCode == IMAGEM) {
             imagemUri = data.getData();
-            Cursor cursor = getContentResolver().query(imagemUri, null, null, null, null);
-
-            String result;
-            if (cursor == null) {
-                result = imagemUri.getPath();
-            } else {
-                cursor.moveToFirst();
-                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-                result = cursor.getString(idx);
-                cursor.close();
-            }
-
-            File f = new File(result);
-            try {
-                FileInputStream fis = new FileInputStream(f);
-                byte[] buffer = new byte[1024];
-                bos = new ByteArrayOutputStream();
-                for (int len; (len = fis.read(buffer)) != -1;) {
-                    bos.write(buffer, 0, len);
-                }
-
-                fis.close();
-
-                persistirArquivo(TipoArquivo.FOTO_PERFIL.name());
-                imgFotoUsuarioUpload.setImageURI(imagemUri);
-            }catch(IOException e){
-                e.getMessage();
-                bos = null;
-                Mensagem.notificar(TelaUpload.this,"Erro","Erro ao enviar imagem.");
-            }
+            cursor = getContentResolver().query(imagemUri, null, null, null, null);
+            //TODO atribuir dinamicamente ao image view certo
+            imgFotoUsuarioUpload.setImageURI(imagemUri);
         }
     }
 
-    protected Bitmap getImagem(String tipoArquivo){
-        byte[] b = Banco.getDatabase(getApplicationContext()).arquivoDao().findAnexoArquivoById(idUser, tipoArquivo);
-        ByteArrayInputStream imageStream = new ByteArrayInputStream(b);
-        Bitmap theImage = BitmapFactory.decodeStream(imageStream);
-        return theImage;
-    }
-
-    private Long persistirArquivo(String tipoArquivo){
-        ArquivoEntity arquivo = new ArquivoEntity(idUser, bos.toByteArray(), tipoArquivo, DefinirDatas.dataAtual());
-        return Banco.getDatabase(getApplicationContext()).arquivoDao().insertArquivo(arquivo);
-    }
-
     private void persistirNovoUsuario(){
+
         Banco bd = Banco.getDatabase(getApplicationContext());
         String tipo = getIntent().getStringExtra("tipoUsuario");
         AutenticacaoEntity a = (AutenticacaoEntity) getIntent().getSerializableExtra("objetoAutenticacao");
@@ -191,6 +147,12 @@ public class TelaUpload extends AppCompatActivity {
 
             bd.musicoDao().insertMusico(m);
         }
+
+
+        //TODO alterar para identificar os tipos de arquivos certos
+        bos = ConversaoArquivo.converterImagem(cursor, imagemUri);
+        ArquivoEntity arquivo = new ArquivoEntity(idUser, bos.toByteArray(), TipoArquivo.FOTO_PERFIL.name(), DefinirDatas.dataAtual());
+        Banco.getDatabase(getApplicationContext()).arquivoDao().insertArquivo(arquivo);
     }
 
     private void verificarVisibilidadeImagensDemonstracao()
