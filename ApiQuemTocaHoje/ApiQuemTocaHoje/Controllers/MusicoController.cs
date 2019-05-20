@@ -1,6 +1,7 @@
 ﻿using ApiQuemTocaHoje.Banco;
 using ApiQuemTocaHoje.Models;
 using ApiQuemTocaHoje.Repositorio;
+using ApiQuemTocaHoje.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -61,15 +62,52 @@ namespace ApiQuemTocaHoje.Controllers
             //return "value";
         }
 
+        // GET api/autenticacao/5
+        [HttpGet("nome")]
+        public async Task<ActionResult<List<Musico>>> GetPorNomeAsync([FromQuery] string nome)
+        {
+            var item = await RespositorioEspectador.DbSet.Where(x => x.NomeMusico.StartsWith(nome)).ToListAsync();
+            if (item == null || item.Count == 0)
+                return NotFound();
+
+            return item;
+            //return "value";
+        }
+
         // POST api/autenticacao
         //no post preciso colocar postman que o content-type é do tipo application/json
         [HttpPost]
-        public async Task<ActionResult<Musico>> PostAsync([FromBody] Musico item)
+        public async Task<ActionResult<Musico>> PostAsync([FromBody] MusicoViewModel values)
         {
-            RespositorioEspectador.DbSet.Add(item);
-            await RespositorioEspectador.Contexto.SaveChangesAsync();
+            try
+            {
+                Autenticacao autenticacao = await Contexto.Autenticacao.Where(x => x.IdAutenticacao == values.IdAutenticacao).FirstOrDefaultAsync();
 
-            return CreatedAtAction(nameof(Evento), new { id = item.IdMusico }, item);
+                if (autenticacao != null)
+                {
+                    Musico item = new Musico()
+                    {
+                        Autenticacao = autenticacao,
+                        DataCriacao = DateTime.Now,
+                        Endereco = values.Endereco,
+                        IdAutenticacao = autenticacao.IdAutenticacao,
+                        NomeArtMusico = values.NomeArtistico,
+                        NomeMusico = values.Nome,
+                        TelMusico = values.Telefone,
+                        IdEndereco = values.Endereco.IdEndereco
+                    };
+                    RespositorioEspectador.DbSet.Add(item);
+                    await RespositorioEspectador.Contexto.SaveChangesAsync();
+
+                    return Ok(item);//CreatedAtAction(nameof(Evento), new { id = item.IdMusico }, item);
+                }
+                else
+                    return BadRequest();
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         // PUT api/autenticacao/5

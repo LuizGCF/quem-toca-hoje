@@ -61,6 +61,18 @@ namespace ApiQuemTocaHoje.Controllers
             //return "value";
         }
 
+        // GET api/autenticacao/nome?nomeaprocurar
+        [HttpGet("nome")]
+        public async Task<ActionResult<List<Banda>>> GetPorNomeAsync([FromQuery]string nome)
+        {
+            var item = await RespositorioEspectador.DbSet.Where(x=>x.Nome.StartsWith(nome)).ToListAsync();
+            if (item == null)
+                return NotFound();
+
+            return item;
+            //return "value";
+        }
+
         // POST api/autenticacao
         //no post preciso colocar postman que o content-type é do tipo application/json
         [HttpPost]

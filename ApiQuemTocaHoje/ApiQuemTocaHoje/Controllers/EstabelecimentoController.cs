@@ -1,6 +1,7 @@
 ﻿using ApiQuemTocaHoje.Banco;
 using ApiQuemTocaHoje.Models;
 using ApiQuemTocaHoje.Repositorio;
+using ApiQuemTocaHoje.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -61,15 +62,50 @@ namespace ApiQuemTocaHoje.Controllers
             //return "value";
         }
 
+        [HttpGet("nome")]
+        public async Task<ActionResult<List<Estabelecimento>>> GetPeloNomeAsync([FromQuery] string nome)
+        {
+            var item = await RespositorioEspectador.DbSet.Where(x => x.NomeFantasiaEstabelecimento.StartsWith(nome)).ToListAsync();
+            if (item == null || item.Count == 0)
+                return NotFound();
+
+            return item;
+            //return "value";
+        }
+
         // POST api/autenticacao
         //no post preciso colocar postman que o content-type é do tipo application/json
         [HttpPost]
-        public async Task<ActionResult<Estabelecimento>> PostAsync([FromBody] Estabelecimento item)
+        public async Task<ActionResult<Estabelecimento>> PostAsync([FromBody] EstabelecimentoViewModel values)
         {
-            RespositorioEspectador.DbSet.Add(item);
-            await RespositorioEspectador.Contexto.SaveChangesAsync();
+            Autenticacao autenticacao = await Contexto.Autenticacao.Where(x => x.IdAutenticacao == values.IdAutenticacao).FirstOrDefaultAsync();
+            if (autenticacao != null)
+            {
+                Estabelecimento item = new Estabelecimento()
+                {
+                    Autenticacao = autenticacao,
+                    CnpjEstabelecimento = values.CNPJ,
+                    DescricaoAmbienteEstabelecimento = values.Descricao,
+                    Endereco = values.Endereco,
+                    HoraInicioEstabelecimento = values.HoraInicio,
+                    HoraTerminoEstabelecimento = values.HoraTermino,
+                    IdAutenticacao = autenticacao.IdAutenticacao,
+                    IdEndereco = values.Endereco.IdEndereco,
+                    NomeDono = values.NomeDono,
+                    NomeFantasiaEstabelecimento = values.NomeFantasia,
+                    RazaoSocialEstabelecimento = values.RazaoSocial,
+                    TelEstabelecimento = values.Telefone,
+                    TipoUsuario = values.TipoUsuario
+                };
+                RespositorioEspectador.DbSet.Add(item);
+                await RespositorioEspectador.Contexto.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(Endereco), new { id = item.IdEstabelecimento }, item);
+                return Ok(item);//CreatedAtAction(nameof(Endereco), new { id = item.IdEstabelecimento }, item);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         // PUT api/autenticacao/5

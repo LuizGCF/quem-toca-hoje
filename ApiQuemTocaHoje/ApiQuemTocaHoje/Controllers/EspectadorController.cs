@@ -1,6 +1,7 @@
 ﻿using ApiQuemTocaHoje.Banco;
 using ApiQuemTocaHoje.Models;
 using ApiQuemTocaHoje.Repositorio;
+using ApiQuemTocaHoje.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -62,15 +63,45 @@ namespace ApiQuemTocaHoje.Controllers
             //return "value";
         }
 
+        // GET api/autenticacao/5
+        [HttpGet("nome")]
+        public async Task<ActionResult<List<Espectador>>> GetPorNomeAsync([FromQuery]string nome)
+        {
+            var item = await RespositorioEspectador.DbSet.Where(x => x.NomeEspectador.StartsWith(nome)).ToListAsync();
+            if (item == null || item.Count == 0)
+                return NotFound();
+
+            return item;
+            //return "value";
+        }
+
         // POST api/autenticacao
         //no post preciso colocar postman que o content-type é do tipo application/json
         [HttpPost]
-        public async Task<ActionResult<Espectador>> PostAsync([FromBody] Espectador item)
+        public async Task<ActionResult<Espectador>> PostAsync([FromBody] EspectadorViewModel values)
         {
-            RespositorioEspectador.DbSet.Add(item);
-            await RespositorioEspectador.Contexto.SaveChangesAsync();
+            Autenticacao autenticacao = await Contexto.Autenticacao.Where(x => x.IdAutenticacao == values.IdAutenticacao).FirstOrDefaultAsync();
 
-            return CreatedAtAction(nameof(Espectador), new { id = item.IdEspectador }, item);
+            if (autenticacao != null)
+            {
+                Espectador item = new Espectador()
+                {
+                    Autenticacao = autenticacao,
+                    IdAutenticacao = autenticacao.IdAutenticacao,
+                    DataCriacao = DateTime.Now,
+                    NomeEspectador = values.Nome,
+                    TipoUsuario = values.TipoUsuario
+                };
+
+                RespositorioEspectador.DbSet.Add(item);
+                await RespositorioEspectador.Contexto.SaveChangesAsync();
+
+                return Ok(item);//CreatedAtAction(nameof(Espectador), new { id = item.IdEspectador }, item);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         // PUT api/autenticacao/5

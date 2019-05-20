@@ -70,7 +70,7 @@ namespace ApiQuemTocaHoje.Controllers
             RepositorioAvaliacao.DbSet.Add(item);
             await RepositorioAvaliacao.Contexto.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(Avaliacao), new { id = item.IdAvaliacao }, item);
+            return Ok(item);//CreatedAtAction(nameof(Avaliacao), new { id = item.IdAvaliacao }, item);
         }
 
         // PUT api/autenticacao/5
