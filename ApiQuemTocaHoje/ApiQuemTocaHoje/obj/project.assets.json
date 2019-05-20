@@ -8747,23 +8747,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\pcsicomdsv_5\\.nuget\\packages\\": {},
+    "C:\\Users\\GABRIEL\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pcsicomdsv_5\\Documents\\ApiQuemTocaHoje\\ApiQuemTocaHoje\\ApiQuemTocaHoje.csproj",
+      "projectUniqueName": "C:\\Users\\GABRIEL\\Desktop\\FACULDADE\\quem-toca-hoje\\ApiQuemTocaHoje\\ApiQuemTocaHoje\\ApiQuemTocaHoje.csproj",
       "projectName": "ApiQuemTocaHoje",
-      "projectPath": "C:\\Users\\pcsicomdsv_5\\Documents\\ApiQuemTocaHoje\\ApiQuemTocaHoje\\ApiQuemTocaHoje.csproj",
-      "packagesPath": "C:\\Users\\pcsicomdsv_5\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pcsicomdsv_5\\Documents\\ApiQuemTocaHoje\\ApiQuemTocaHoje\\obj\\",
+      "projectPath": "C:\\Users\\GABRIEL\\Desktop\\FACULDADE\\quem-toca-hoje\\ApiQuemTocaHoje\\ApiQuemTocaHoje\\ApiQuemTocaHoje.csproj",
+      "packagesPath": "C:\\Users\\GABRIEL\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\GABRIEL\\Desktop\\FACULDADE\\quem-toca-hoje\\ApiQuemTocaHoje\\ApiQuemTocaHoje\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\pcsicomdsv_5\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\GABRIEL\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

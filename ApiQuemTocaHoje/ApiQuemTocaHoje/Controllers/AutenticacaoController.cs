@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ApiQuemTocaHoje.Banco;
 using ApiQuemTocaHoje.Models;
 using ApiQuemTocaHoje.Repositorio;
+using ApiQuemTocaHoje.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -65,12 +66,21 @@ namespace ApiQuemTocaHoje.Controllers
         // POST api/autenticacao
         //no post preciso colocar postman que o content-type é do tipo application/json
         [HttpPost]
-        public async Task<ActionResult<Autenticacao>> PostAsync([FromBody] Autenticacao item)
+        public async Task<ActionResult<Autenticacao>> PostAsync([FromBody] AutenticacaoViewModel values)
         {
+            Autenticacao item = new Autenticacao()
+            {
+                DataCriacao = DateTime.Now,
+                DataUltimoLogin = DateTime.Now,
+                EmailAutenticacao = values.Email,
+                LoginAutenticacao = values.Login,
+                SenhaAutenticacao = values.Senha,
+                TipoUsuarioAutenticacao = values.TipoUsuario
+            };
             RepositorioAutenticacao.DbSet.Add(item);
             await RepositorioAutenticacao.Contexto.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(Autenticacao), new { id = item.IdAutenticacao}, item);
+            return Ok(item);//CreatedAtAction(nameof(Autenticacao), new { id = item.IdAutenticacao}, item);
         }
 
         // PUT api/autenticacao/5
