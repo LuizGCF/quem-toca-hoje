@@ -34,10 +34,15 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    //Room database implementation start
+    //room database start
     implementation 'android.arch.persistence.room:runtime:1.1.1'
     annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
-    //Room database implementation end
+    //room database end
+
+    //retrofit start
+    implementation 'com.squareup.retrofit2:retrofit:2.0.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.0.0'
+    //retrofit end
 
     implementation files('libs/activation.jar')
     implementation files('libs/additionnal.jar')

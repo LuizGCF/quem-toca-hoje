@@ -45,7 +45,7 @@ public class TelaEndereco extends AppCompatActivity {
         btnConfirmarEndereco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isCamposValidos(edtLogradouroEndereco,edtBairroEndereco,edtCidadeEndereco,edtComplementoEndereco,edtCEPEndereco,edtUFEndereco)) {
+                if(isCamposValidos(edtLogradouroEndereco,edtBairroEndereco,edtCidadeEndereco,edtCEPEndereco,edtUFEndereco)) {
                     telaUpload.putExtra("tipoUsuario", TipoUsuario.ESTABELECIMENTO.name());
                     telaUpload.putExtra("objetoEndereco", prepararObjetoEndereco());
 
@@ -62,13 +62,12 @@ public class TelaEndereco extends AppCompatActivity {
         });
     }
 
-    private boolean isCamposValidos(EditText edtLogradouroEndereco, EditText edtBairroEndereco, EditText edtCidadeEndereco, EditText edtComplementoEndereco, EditText edtCEPEndereco, EditText edtUFEndereco)
+    private boolean isCamposValidos(EditText edtLogradouroEndereco, EditText edtBairroEndereco, EditText edtCidadeEndereco, EditText edtCEPEndereco, EditText edtUFEndereco)
     {
         //TODO Validar CEP
         if(edtLogradouroEndereco == null || edtLogradouroEndereco.getText().toString().trim().equals("")
             || edtBairroEndereco == null || edtBairroEndereco.getText().toString().trim().equals("")
             || edtCidadeEndereco == null || edtCidadeEndereco.getText().toString().trim().equals("")
-            || edtComplementoEndereco == null || edtComplementoEndereco.getText().toString().trim().equals("")
             || edtCEPEndereco == null || edtCEPEndereco.getText().toString().trim().equals("")
             || edtUFEndereco == null || edtUFEndereco.getText().toString().trim().equals(""))
             return false;
