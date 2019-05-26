@@ -17,6 +17,7 @@ namespace ApiQuemTocaHoje
 {
     public class Startup
     {
+        //https://medium.com/@alexalves_85598/publicando-aplica%C3%A7%C3%A3o-net-core-no-iss-f4079c2f312
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,7 +28,7 @@ namespace ApiQuemTocaHoje
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {           
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_0);
             services.AddScoped<ContextoBanco>(s => new ContextoBanco(Configuration["ConnectionString:BancoQuemTocaHoje"]));
             services.AddSwaggerGen(c =>
             {
@@ -37,6 +38,12 @@ namespace ApiQuemTocaHoje
                     Version = "1.0"
                 });
             });
+
+            services.Configure<IISOptions>(o =>
+            {
+                o.ForwardClientCertificate = false;
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
