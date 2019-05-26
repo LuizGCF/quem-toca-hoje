@@ -38,16 +38,14 @@ public class Notificacao {
 
     //TODO Mover para inicialização do aplicativo
     private void createNotificationChannel(Context context) {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
+        // Cria o NotificationChannel, mas apenas em API 26+ pois é uma classe recente
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString("canal");
             String description = getString("descricao");
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel("channel_id", name, importance);
             channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
+            // Registra o canal no sistema; não é possível mudar a importância ou outros comportamentos de notificação depois daqui
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
