@@ -31,6 +31,14 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/edtCEPEndereco"/>
+            <Button
+                android:background="@color/colorPrimary"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnBuscarCep"
+                android:text="Buscar"
+                android:textColor="#FDFDFD"
+                android:textSize="8sp"
+                android:layout_width="wrap_content"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
