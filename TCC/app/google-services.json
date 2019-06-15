@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "876264720147",
-    "firebase_url": "https://quemtocahoje.firebaseio.com",
-    "project_id": "quemtocahoje",
-    "storage_bucket": "quemtocahoje.appspot.com"
+    "project_number": "939655221256",
+    "firebase_url": "https://quem-toca-hoje.firebaseio.com",
+    "project_id": "quem-toca-hoje",
+    "storage_bucket": "quem-toca-hoje.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:876264720147:android:cae2afb58cc39e2c",
+        "mobilesdk_app_id": "1:939655221256:android:cae2afb58cc39e2c",
         "android_client_info": {
           "package_name": "com.example.tcc"
         }
       },
       "oauth_client": [
         {
-          "client_id": "876264720147-3h9i84i8h6k4qalf2l6m75gj77o8iqlb.apps.googleusercontent.com",
+          "client_id": "939655221256-7pfdmr90ghdn20ofk5udsqlsvevhdb99.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDEK667XWWqP6bro-1cjgZ0k5ITi3cJg38"
+          "current_key": "AIzaSyDpvKOM-wDSWU_O2jNI18TCATl2_jV2ba4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "876264720147-3h9i84i8h6k4qalf2l6m75gj77o8iqlb.apps.googleusercontent.com",
+              "client_id": "939655221256-7pfdmr90ghdn20ofk5udsqlsvevhdb99.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
