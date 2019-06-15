@@ -1,72 +1,69 @@
 package com.example.quemtocahoje.POJO;
 
-import com.example.quemtocahoje.Enum.TipoUsuario;
+public class Autenticacao {
+    //campos com o nome igual ao que está recebendo do get da api
+    private Integer idAutenticacao;
+    private String emailAutenticacao;
+    private String loginAutenticacao;
+    private String senhaAutenticacao;
+    private String tipoUsuarioAutenticacao;
+    private String dataCriacao;
+    private String dataUltimoLogin;
 
-import java.io.Serializable;
-import java.util.Date;
-
-public class Autenticacao implements Serializable {
-
-    private Integer id;
-    private String login;
-    private String senha;
-    private TipoUsuario tipoUsuario;
-    private Date dataCriacao;
-    private Date dataUltimoLogin;
-
-    public Autenticacao(String login, String senha, TipoUsuario tipoUsuario, Date dataCriacao, Date dataUltimoLogin) {
-        this.login = login;
-        this.senha = senha;
-        this.tipoUsuario = tipoUsuario;
-        this.dataCriacao = dataCriacao;
-        this.dataUltimoLogin = dataUltimoLogin;
+    public Integer getIdAutenticacao() {
+        return idAutenticacao;
     }
 
-    public Integer getId() {
-        return id;
+    public void setIdAutenticacao(Integer idAutenticacao) {
+        this.idAutenticacao = idAutenticacao;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public String getEmailAutenticacao() {
+        return emailAutenticacao;
     }
 
-    public String getLogin() {
-        return login;
+    public void setEmailAutenticacao(String emailAutenticacao) {
+        this.emailAutenticacao = emailAutenticacao;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public String getLoginAutenticacao() {
+        return loginAutenticacao;
     }
 
-    public String getSenha() {
-        return senha;
+    public void setLoginAutenticacao(String loginAutenticacao) {
+        this.loginAutenticacao = loginAutenticacao;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public String getSenhaAutenticacao() {
+        return senhaAutenticacao;
     }
 
-    public TipoUsuario getTipoUsuario() {
-        return tipoUsuario;
+    public void setSenhaAutenticacao(String senhaAutenticacao) {
+        this.senhaAutenticacao = senhaAutenticacao;
     }
 
-    public void setTipoUsuario(TipoUsuario tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
+    public String getTipoUsuarioAutenticacao() {
+        return tipoUsuarioAutenticacao;
     }
 
-    public Date getDataCriacao() {
+    public void setTipoUsuarioAutenticacao(String tipoUsuarioAutenticacao) {
+        this.tipoUsuarioAutenticacao = tipoUsuarioAutenticacao;
+    }
+
+    public String getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
+    public void setDataCriacao(String dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    public Date getDataUltimoLogin() {
+    public String getDataUltimoLogin() {
         return dataUltimoLogin;
     }
 
-    public void setDataUltimoLogin(Date dataUltimoLogin) {
+    public void setDataUltimoLogin(String dataUltimoLogin) {
         this.dataUltimoLogin = dataUltimoLogin;
     }
+
 }

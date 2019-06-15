@@ -8753,11 +8753,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\GABRIEL\\Desktop\\FACULDADE\\quem-toca-hoje\\ApiQuemTocaHoje\\ApiQuemTocaHoje\\ApiQuemTocaHoje.csproj",
+      "projectUniqueName": "C:\\Users\\GABRIEL\\Desktop\\FACULDADE\\quem-toca-hoje\\quem-toca-hoje\\ApiQuemTocaHoje\\ApiQuemTocaHoje\\ApiQuemTocaHoje.csproj",
       "projectName": "ApiQuemTocaHoje",
-      "projectPath": "C:\\Users\\GABRIEL\\Desktop\\FACULDADE\\quem-toca-hoje\\ApiQuemTocaHoje\\ApiQuemTocaHoje\\ApiQuemTocaHoje.csproj",
+      "projectPath": "C:\\Users\\GABRIEL\\Desktop\\FACULDADE\\quem-toca-hoje\\quem-toca-hoje\\ApiQuemTocaHoje\\ApiQuemTocaHoje\\ApiQuemTocaHoje.csproj",
       "packagesPath": "C:\\Users\\GABRIEL\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\GABRIEL\\Desktop\\FACULDADE\\quem-toca-hoje\\ApiQuemTocaHoje\\ApiQuemTocaHoje\\obj\\",
+      "outputPath": "C:\\Users\\GABRIEL\\Desktop\\FACULDADE\\quem-toca-hoje\\quem-toca-hoje\\ApiQuemTocaHoje\\ApiQuemTocaHoje\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

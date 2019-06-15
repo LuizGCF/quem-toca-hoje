@@ -63,6 +63,18 @@ namespace ApiQuemTocaHoje.Controllers
             //return "value";
         }
 
+        // GET api/autenticacao/5
+        [HttpGet("login")]
+        public async Task<ActionResult<Autenticacao>> GetPorUsuarioAsync([FromQuery] string login, [FromQuery] string senha)
+        {
+            var item = await RepositorioAutenticacao.DbSet.Where(x => x.LoginAutenticacao.Equals(login) && x.SenhaAutenticacao.Equals(senha)).SingleOrDefaultAsync();
+            if (item == null)
+                return NotFound();
+
+            return item;
+            //return "value";
+        }
+
         // POST api/autenticacao
         //no post preciso colocar postman que o content-type é do tipo application/json
         [HttpPost]
