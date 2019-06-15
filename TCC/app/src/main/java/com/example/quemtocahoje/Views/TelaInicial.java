@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,7 +51,7 @@ public class TelaInicial extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         final Intent telaEscolhaCadastro = new Intent(this, TelaEscolhaCadastro.class);
         final Intent telaEsqueciSenha = new Intent(this, TelaEsqueceuaSenha.class);
-        final Intent telaInicialEstabelecimento = new Intent(this, TelaInicialEstabelecimento.class);
+        //final Intent telaInicialEstabelecimento = new Intent(this, TelaInicialEstabelecimento.class);
         final Intent telaInicialMusico = new Intent(this, TelaInicialMusico.class);
         final Intent telaInicialEspectador = new Intent(this, TelaInicialEspectador.class);
 
@@ -115,7 +116,7 @@ public class TelaInicial extends AppCompatActivity {
             public void onClick(View v){
                 if(isCamposValidos(edtLogin, edtSenha)){
                     //AutenticacaoDTO autenticacao = autenticarLogin(edtLogin, edtSenha);
-                    Autenticacao autenticacao = autenticarLogin(edtLogin,edtSenha);
+                    Autenticacao autenticacao = autenticarLogin(edtLogin,edtSenha, getApplicationContext());
 
 
 
@@ -166,8 +167,9 @@ public class TelaInicial extends AppCompatActivity {
 
     }
     //TODO Verificar como esperar o resultado da chamada assincrona
-    private Autenticacao autenticarLogin(EditText l, EditText s)
+    private Autenticacao autenticarLogin(EditText l, EditText s, Context context)
     {
+        final Context c = context;
         AutenticacaoEndPoint r = RetrofitCreator.criarRetrofit().create(AutenticacaoEndPoint.class);//criando uma instancia do retrofit com a interface do autenticacao
         Call<Autenticacao> aut = r.getAutenticaoLogin("a","a");//MOCK que faz a chamada da api que busca no banco alguem que tenha login "a" e senha "a"
         aut.enqueue(new Callback<Autenticacao>() {//enqueue é a chamada assincrona do get nesse caso, Onresponse traz o resultado caso certo, OnFailure caso de algum problema
@@ -175,8 +177,11 @@ public class TelaInicial extends AppCompatActivity {
             public void onResponse(Call<Autenticacao> call, Response<Autenticacao> response) {
                 if(response.isSuccessful())
                 {
+                    Log.d("AUTENTICAR LOGIN", "onResponse iniciado");
                     Autenticacao resulttest = response.body();//aqui ele já conseguiu trazer o resultado da api e esta populando na Model Autenticacao
-                    autenticacao = resulttest;
+                    final Intent telaInicialEstabelecimento = new Intent(c, TelaInicialEstabelecimento.class);
+                    telaInicialEstabelecimento.putExtra("nome",resulttest.getLoginAutenticacao());
+                    startActivity(telaInicialEstabelecimento);
                 }
                 else
                 {
