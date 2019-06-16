@@ -31,10 +31,10 @@ public class TelaPesquisaEstabelecimento extends AppCompatActivity {
 
         lstResultadoPesquisaEstabelecimento = findViewById(R.id.lstResultadoPesquisaEstabelecimento);
 
-        estabelecimentos.add(new Estabelecimento("Gabriel",null,null,null,null,null,null,"Rua 123",null,null,null,
+        /*estabelecimentos.add(new Estabelecimento("Gabriel",null,null,null,null,null,null,"Rua 123",null,null,null,
                 new Endereco(null,"Parque Itaberaba",null,null,null,null),null,null,null));
         estabelecimentos.add(new Estabelecimento("Matheus",null,null,null,null,null,null,"Rua 321",null,null,null,
-                new Endereco(null,"Freguesia do Ó",null,null,null,null),null,null,null));
+                new Endereco(null,"Freguesia do Ó",null,null,null,null),null,null,null));*/
 
         lstResultadoPesquisaEstabelecimento.setAdapter(new CustomAdapter());
     }
@@ -66,8 +66,8 @@ public class TelaPesquisaEstabelecimento extends AppCompatActivity {
             TextView txtLocalEstabelecimentoListItem = view.findViewById(R.id.txtLocalEstabelecimentoListItem);
 
             imgListItemEstabelecimento.setImageResource(R.mipmap.upload_imagem);
-            txtDescricaoEstabelecimentoListItem.setText(estabelecimentos.get(position).getDescricao());
-            txtLocalEstabelecimentoListItem.setText(estabelecimentos.get(position).getEndereco().getBairro());
+            //txtDescricaoEstabelecimentoListItem.setText(estabelecimentos.get(position).getDescricao());
+            //txtLocalEstabelecimentoListItem.setText(estabelecimentos.get(position).getEndereco().getBairro());
 
             return view;
         }

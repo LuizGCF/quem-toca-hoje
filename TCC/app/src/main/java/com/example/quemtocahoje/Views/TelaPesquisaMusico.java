@@ -30,8 +30,8 @@ public class TelaPesquisaMusico extends AppCompatActivity {
 
         lstResultadoPesquisaMusico = findViewById(R.id.lstResultadoPesquisaMusico);
 
-        musicos.add(new Musico("Gabriel",null,null,"Gaaab","11950601650",null,null,null,null));
-        musicos.add(new Musico("Matheus",null,null,"Maaat","11912345678",null,null,null,null));
+        /*musicos.add(new Musico("Gabriel",null,null,"Gaaab","11950601650",null,null,null,null));
+        musicos.add(new Musico("Matheus",null,null,"Maaat","11912345678",null,null,null,null));*/
 
         lstResultadoPesquisaMusico.setAdapter(new CustomAdapter());
     }
@@ -63,8 +63,8 @@ public class TelaPesquisaMusico extends AppCompatActivity {
             TextView txtDescricaoGeneroBandaListItem = view.findViewById(R.id.txtDescricaoGeneroBandaListItem);
 
             imgListItem.setImageResource(R.mipmap.upload_imagem);
-            txtDescricaoBandaListItem.setText(musicos.get(position).getNomeArtistico());//Seria o nome da banda no caso
-            txtDescricaoGeneroBandaListItem.setText(musicos.get(position).getNomeUsuario());//Seria o nome do musico(ou esse mesmo?)
+            //txtDescricaoBandaListItem.setText(musicos.get(position).getNomeArtistico());//Seria o nome da banda no caso
+            //txtDescricaoGeneroBandaListItem.setText(musicos.get(position).getNomeUsuario());//Seria o nome do musico(ou esse mesmo?)
 
             return view;
         }

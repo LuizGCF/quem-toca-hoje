@@ -1,105 +1,124 @@
 package com.example.quemtocahoje.POJO;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
+public class Estabelecimento {
 
-public class Estabelecimento extends Usuario {
-
-    private String cnpj;
-    private String razaoSocial;
-    private String celular;
-    private String nomeFantasia;
-    private String descricao;
-
-    private Date horarioAbertura;
-    private Date horarioFechamento;
-    private Date dataCriacao;
-
+    private Integer idEstabelecimento;
+    private String nomeDono;
+    private String cnpjEstabelecimento;
+    private String razaoSocialEstabelecimento;
+    private String nomeFantasiaEstabelecimento;
+    private String horaInicioEstabelecimento;
+    private String horaTerminoEstabelecimento;
+    private String descricaoAmbienteEstabelecimento;
+    private String tipoUsuario;
+    private String telEstabelecimento;
+    private Integer idAutenticacao;
+    private Integer idEndereco;
+    private Autenticacao autenticacao;
     private Endereco endereco;
-    private List<Avaliacao> avaliacoes;
-    private List<Arquivo> arquivos;
-    private List<Proposta> propostas;
 
-    public Estabelecimento(String nomeUsuario, Autenticacao autenticacao, Arquivo arquivo, String cnpj, String razaoSocial, String celular, String nomeFantasia, String descricao, Date horarioAbertura, Date horarioFechamento, Date dataCriacao, Endereco endereco, List<Avaliacao> avaliacoes, List<Arquivo> arquivos, List<Proposta> propostas) {
-        super(nomeUsuario, autenticacao, arquivo);
-        this.cnpj = cnpj;
-        this.razaoSocial = razaoSocial;
-        this.celular = celular;
-        this.nomeFantasia = nomeFantasia;
-        this.descricao = descricao;
-        this.horarioAbertura = horarioAbertura;
-        this.horarioFechamento = horarioFechamento;
-        this.dataCriacao = dataCriacao;
-        this.endereco = endereco;
-        this.avaliacoes = avaliacoes;
-        this.arquivos = arquivos;
-        this.propostas = propostas;
+    public Integer getIdEstabelecimento() {
+        return idEstabelecimento;
     }
 
-
-    public String getCnpj() {
-        return cnpj;
+    public void setIdEstabelecimento(Integer idEstabelecimento) {
+        this.idEstabelecimento = idEstabelecimento;
     }
 
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
+    public String getNomeDono() {
+        return nomeDono;
     }
 
-    public String getRazaoSocial() {
-        return razaoSocial;
+    public void setNomeDono(String nomeDono) {
+        this.nomeDono = nomeDono;
     }
 
-    public void setRazaoSocial(String razaoSocial) {
-        this.razaoSocial = razaoSocial;
+    public String getCnpjEstabelecimento() {
+        return cnpjEstabelecimento;
     }
 
-    public String getCelular() {
-        return celular;
+    public void setCnpjEstabelecimento(String cnpjEstabelecimento) {
+        this.cnpjEstabelecimento = cnpjEstabelecimento;
     }
 
-    public void setCelular(String celular) {
-        this.celular = celular;
+    public String getRazaoSocialEstabelecimento() {
+        return razaoSocialEstabelecimento;
     }
 
-    public String getNomeFantasia() {
-        return nomeFantasia;
+    public void setRazaoSocialEstabelecimento(String razaoSocialEstabelecimento) {
+        this.razaoSocialEstabelecimento = razaoSocialEstabelecimento;
     }
 
-    public void setNomeFantasia(String nomeFantasia) {
-        this.nomeFantasia = nomeFantasia;
+    public String getNomeFantasiaEstabelecimento() {
+        return nomeFantasiaEstabelecimento;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public void setNomeFantasiaEstabelecimento(String nomeFantasiaEstabelecimento) {
+        this.nomeFantasiaEstabelecimento = nomeFantasiaEstabelecimento;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public String getHoraInicioEstabelecimento() {
+        return horaInicioEstabelecimento;
     }
 
-    public Date getHorarioAbertura() {
-        return horarioAbertura;
+    public void setHoraInicioEstabelecimento(String horaInicioEstabelecimento) {
+        this.horaInicioEstabelecimento = horaInicioEstabelecimento;
     }
 
-    public void setHorarioAbertura(Date horarioAbertura) {
-        this.horarioAbertura = horarioAbertura;
+    public String getHoraTerminoEstabelecimento() {
+        return horaTerminoEstabelecimento;
     }
 
-    public Date getHorarioFechamento() {
-        return horarioFechamento;
+    public void setHoraTerminoEstabelecimento(String horaTerminoEstabelecimento) {
+        this.horaTerminoEstabelecimento = horaTerminoEstabelecimento;
     }
 
-    public void setHorarioFechamento(Date horarioFechamento) {
-        this.horarioFechamento = horarioFechamento;
+    public String getDescricaoAmbienteEstabelecimento() {
+        return descricaoAmbienteEstabelecimento;
     }
 
-    public Date getDataCriacao() {
-        return dataCriacao;
+    public void setDescricaoAmbienteEstabelecimento(String descricaoAmbienteEstabelecimento) {
+        this.descricaoAmbienteEstabelecimento = descricaoAmbienteEstabelecimento;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
-        this.dataCriacao = dataCriacao;
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    public String getTelEstabelecimento() {
+        return telEstabelecimento;
+    }
+
+    public void setTelEstabelecimento(String telEstabelecimento) {
+        this.telEstabelecimento = telEstabelecimento;
+    }
+
+    public Integer getIdAutenticacao() {
+        return idAutenticacao;
+    }
+
+    public void setIdAutenticacao(Integer idAutenticacao) {
+        this.idAutenticacao = idAutenticacao;
+    }
+
+    public Integer getIdEndereco() {
+        return idEndereco;
+    }
+
+    public void setIdEndereco(Integer idEndereco) {
+        this.idEndereco = idEndereco;
+    }
+
+    public Autenticacao getAutenticacao() {
+        return autenticacao;
+    }
+
+    public void setAutenticacao(Autenticacao autenticacao) {
+        this.autenticacao = autenticacao;
     }
 
     public Endereco getEndereco() {
@@ -110,27 +129,4 @@ public class Estabelecimento extends Usuario {
         this.endereco = endereco;
     }
 
-    public List<Arquivo> getArquivos() {
-        return arquivos;
-    }
-
-    public void setArquivos(List<Arquivo> arquivos) {
-        this.arquivos = arquivos;
-    }
-
-    public List<Proposta> getPropostas() {
-        return propostas;
-    }
-
-    public void setPropostas(List<Proposta> propostas) {
-        this.propostas = propostas;
-    }
-
-    public List<Avaliacao> getAvaliacoes() {
-        return avaliacoes;
-    }
-
-    public void setAvaliacoes(List<Avaliacao> avaliacoes) {
-        this.avaliacoes = avaliacoes;
-    }
 }

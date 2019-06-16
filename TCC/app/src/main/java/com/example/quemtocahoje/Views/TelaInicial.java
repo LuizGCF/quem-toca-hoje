@@ -17,12 +17,18 @@ import android.widget.Toast;
 import com.example.quemtocahoje.DTO.AutenticacaoDTO;
 import com.example.quemtocahoje.Enum.TipoUsuario;
 import com.example.quemtocahoje.POJO.Autenticacao;
+import com.example.quemtocahoje.POJO.Espectador;
+import com.example.quemtocahoje.POJO.Estabelecimento;
+import com.example.quemtocahoje.POJO.Musico;
 import com.example.quemtocahoje.Persistencia.Banco;
 import com.example.quemtocahoje.Persistencia.Dao.AutenticacaoDao;
 import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.MusicoEntity;
-import com.example.quemtocahoje.Retrofit.AutenticacaoEndPoint;
+import com.example.quemtocahoje.Retrofit.AutenticacaoResource;
+import com.example.quemtocahoje.Retrofit.EspectadorResource;
+import com.example.quemtocahoje.Retrofit.EstabelecimentoResource;
+import com.example.quemtocahoje.Retrofit.MusicoResource;
 import com.example.quemtocahoje.Utility.AESCrypt;
 import com.example.quemtocahoje.Utility.DefinirDatas;
 import com.example.quemtocahoje.Utility.Mensagem;
@@ -115,33 +121,8 @@ public class TelaInicial extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 if(isCamposValidos(edtLogin, edtSenha)){
-                    //AutenticacaoDTO autenticacao = autenticarLogin(edtLogin, edtSenha);
-                    Autenticacao autenticacao = autenticarLogin(edtLogin,edtSenha, getApplicationContext());
+                    autenticarLogin(edtLogin,edtSenha, getApplicationContext());
 
-
-
-                    /*if(autenticacao != null){
-                        Banco.getDatabase(getApplicationContext()).autenticacaoDao().updateDataUltimoLogin(DefinirDatas.dataAtual(), autenticacao.getIdAutenticacao());
-                        if(autenticacao.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name())){
-                            String nome = Banco.getDatabase(getApplicationContext()).estabelecimentoDao().findEstabelecimentoByAutenticacao(autenticacao.getIdAutenticacao()).getNomeDono();
-                            telaInicialEstabelecimento.putExtra("nome",nome);
-                            startActivity(telaInicialEstabelecimento);
-                        }else if(autenticacao.getTipoUsuario().equals(TipoUsuario.MUSICO.name())){
-                            String nome = Banco.getDatabase(getApplicationContext()).musicoDao().findMusicoByAutenticacao(autenticacao.getIdAutenticacao()).getNome();
-                            telaInicialMusico.putExtra("nome",nome);
-                            startActivity(telaInicialMusico);
-                        }else{
-                            //System.out.println("ID: "+autenticacao.getIdAutenticacao()+"\n TIPO: "+autenticacao.getTipoUsuario());
-                            String nome = Banco.getDatabase(getApplicationContext()).espectadorDao().findEspectadorByAutenticacao(autenticacao.getIdAutenticacao()).getNomeEspectador();
-                            telaInicialEspectador.putExtra("nome",nome);
-                            startActivity(telaInicialEspectador);
-                        }
-                    }else{
-                        Mensagem.notificar(TelaInicial.this,"Usuário Inválido","Login e/ou senha incorretos");
-                    }
-                }else{
-                    Mensagem.notificar(TelaInicial.this,"Campos Inválidos","Um ou mais campos não foram preenchidos corretamente");
-                }*/
             }
             else
             {
@@ -167,48 +148,120 @@ public class TelaInicial extends AppCompatActivity {
 
     }
     //TODO Verificar como esperar o resultado da chamada assincrona
-    private Autenticacao autenticarLogin(EditText l, EditText s, Context context)
+    private void autenticarLogin(EditText l, EditText s, Context context)
     {
         final Context c = context;
-        AutenticacaoEndPoint r = RetrofitCreator.criarRetrofit().create(AutenticacaoEndPoint.class);//criando uma instancia do retrofit com a interface do autenticacao
-        Call<Autenticacao> aut = r.getAutenticaoLogin("a","a");//MOCK que faz a chamada da api que busca no banco alguem que tenha login "a" e senha "a"
+        AutenticacaoResource r = RetrofitCreator.criarRetrofit().create(AutenticacaoResource.class);//criando uma instancia do retrofit com a interface do autenticacao
+        //Call<Autenticacao> aut = r.getAutenticaoLogin("a","a");//MOCK que faz a chamada da api que busca no banco alguem que tenha login "a" e senha "a"
+        Call<Autenticacao> aut = r.getAutenticaoLogin(l.getText().toString(),s.getText().toString());
         aut.enqueue(new Callback<Autenticacao>() {//enqueue é a chamada assincrona do get nesse caso, Onresponse traz o resultado caso certo, OnFailure caso de algum problema
             @Override
             public void onResponse(Call<Autenticacao> call, Response<Autenticacao> response) {
                 if(response.isSuccessful())
                 {
                     Log.d("AUTENTICAR LOGIN", "onResponse iniciado");
-                    Autenticacao resulttest = response.body();//aqui ele já conseguiu trazer o resultado da api e esta populando na Model Autenticacao
-                    final Intent telaInicialEstabelecimento = new Intent(c, TelaInicialEstabelecimento.class);
-                    telaInicialEstabelecimento.putExtra("nome",resulttest.getLoginAutenticacao());
-                    startActivity(telaInicialEstabelecimento);
+                    Autenticacao resultado = response.body();//aqui ele já conseguiu trazer o resultado da api e esta populando na Model Autenticacao
+                    Log.d("CONDICAO1", resultado.getTipoUsuarioAutenticacao().toUpperCase());
+                    Log.d("CONDICAO2", TipoUsuario.ESTABELECIMENTO.name().toUpperCase());
+                    if(resultado.getTipoUsuarioAutenticacao().toUpperCase().equals(TipoUsuario.ESTABELECIMENTO.name().toUpperCase()))
+                    {
+                        Log.d("CONDICAO", "ESTABELECIMENTO");
+                        autenticarEstabelecimento(resultado.getIdAutenticacao());
+                    }
+                    else if(resultado.getTipoUsuarioAutenticacao().toUpperCase().equals(TipoUsuario.MUSICO.name().toUpperCase()))
+                    {
+                        Log.d("CONDICAO", "MUSICO");
+                        autenticarMusico(resultado.getIdAutenticacao());
+                    }
+                    else
+                    {
+                        Log.d("CONDICAO", "ESPECTADOR");
+                        autenticarEspectador(resultado.getIdAutenticacao());
+                    }
                 }
                 else
                 {
-                    Toast.makeText(TelaInicial.this, "Erro ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TelaInicial.this, "Login e/ou senha incorretos! ", Toast.LENGTH_SHORT).show();//nao encontrou resultados
                 }
             }
 
             @Override
             public void onFailure(Call<Autenticacao> call, Throwable t) {
-                Toast.makeText(TelaInicial.this, "Something went wrong...Please try later! "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(TelaInicial.this, "Erro: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+            private void autenticarEspectador(int idAutenticacao) {
+                EspectadorResource er = RetrofitCreator.criarRetrofit().create(EspectadorResource.class);
+                Call<Espectador> spec = er.geEspectadorByIdAutenticacao(idAutenticacao);
+                spec.enqueue(new Callback<Espectador>() {
+                    @Override
+                    public void onResponse(Call<Espectador> call, Response<Espectador> response) {
+                        if(response.isSuccessful())
+                        {
+                            Espectador espectador = response.body();
+                            Log.d("ESPECTADOR", "onResponse espectador iniciado");
+                            Log.d("ESPECTADOR body",espectador.getNomeEspectador());
+                            final Intent telaInicialEspectador = new Intent(c, TelaInicialEspectador.class);
+                            telaInicialEspectador.putExtra("nome",espectador.getNomeEspectador());
+                            startActivity(telaInicialEspectador);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Espectador> call, Throwable t) {
+                        Toast.makeText(TelaInicial.this, "Erro ao receber os dados do espectador", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            private void autenticarMusico(Integer idAutenticacao) {
+                MusicoResource er = RetrofitCreator.criarRetrofit().create(MusicoResource.class);
+                Call<Musico> music = er.getMusicoByIdAutenticacao(idAutenticacao);
+                music.enqueue(new Callback<Musico>() {
+                    @Override
+                    public void onResponse(Call<Musico> call, Response<Musico> response) {
+                        if(response.isSuccessful())
+                        {
+                            Musico musico = response.body();
+                            Log.d("MUSICO", "onResponse musico iniciado");
+
+                            final Intent telaInicialMusico = new Intent(c, TelaInicialMusico.class);
+                            telaInicialMusico.putExtra("nome",musico.getNomeMusico());//nome usuario ou artistico
+                            startActivity(telaInicialMusico);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Musico> call, Throwable t) {
+                        Toast.makeText(TelaInicial.this, "Erro ao receber os dados do musico", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            private void autenticarEstabelecimento(Integer idAutenticacao) {
+                EstabelecimentoResource er = RetrofitCreator.criarRetrofit().create(EstabelecimentoResource.class);
+                Call<Estabelecimento> estab = er.getEstabelecimentoByIdAutenticacao(idAutenticacao);
+                estab.enqueue(new Callback<Estabelecimento>() {
+                    @Override
+                    public void onResponse(Call<Estabelecimento> call, Response<Estabelecimento> response) {
+                        if(response.isSuccessful())
+                        {
+                            Estabelecimento estabelecimento = response.body();
+                            Log.d("ESPECTADOR", "onResponse espectador iniciado");
+
+                            final Intent telaInicialEstabelecimento = new Intent(c, TelaInicialEstabelecimento.class);
+                            telaInicialEstabelecimento.putExtra("nome",estabelecimento.getNomeDono());
+                            startActivity(telaInicialEstabelecimento);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Estabelecimento> call, Throwable t) {
+                        Toast.makeText(TelaInicial.this, "Erro ao receber os dados do espectador", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
-        return autenticacao;//o return aqui fora não está trazendo o resultado pois ele não espera o resultado do onResponse
     }
-    //antigo autenticar login com ROOM
-    /*private AutenticacaoDTO autenticarLogin(EditText l, EditText s){
-        try {
-            String login = l.getText().toString();
-            String senha = AESCrypt.encrypt(s.getText().toString());
-            AutenticacaoDTO dto = Banco.getDatabase(getApplicationContext()).autenticacaoDao().findAutenticacaoByLoginOuEmailESenha(login, login, senha);
-            if(dto != null)
-                return dto;
-        }catch(Exception e) {
-            e.getMessage();
-        }
-        return null;
-    }*/
 
     private boolean isCamposValidos(EditText l, EditText s){
         if(l == null || l.getText().toString().trim().equals("")

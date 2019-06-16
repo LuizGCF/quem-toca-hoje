@@ -1,33 +1,53 @@
 package com.example.quemtocahoje.POJO;
 
-import com.example.quemtocahoje.Enum.StatusProposta;
 
-import java.io.Serializable;
-import java.util.Date;
+public class Proposta {
 
-public class Proposta implements Serializable {
-
-    private Integer id;
+    private Integer idProposta;
+    private String dataProposta;
+    private Integer valorProsposta;
+    private String descricaoProposta;
+    private Integer idEvento;
     private Integer idEstabelecimento;
-    private Integer idBanda;
-    private String descricao;
-    private Double valorProposta;
-    private Endereco endereco;
 
-    public Proposta(Integer idEstabelecimento, Integer idBanda, String descricao, Double valorProposta, Endereco endereco) {
-        this.idEstabelecimento = idEstabelecimento;
-        this.idBanda = idBanda;
-        this.descricao = descricao;
-        this.valorProposta = valorProposta;
-        this.endereco = endereco;
+    public Integer getIdProposta() {
+        return idProposta;
     }
 
-    public Integer getId() {
-        return id;
+    public void setIdProposta(Integer idProposta) {
+        this.idProposta = idProposta;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public String getDataProposta() {
+        return dataProposta;
+    }
+
+    public void setDataProposta(String dataProposta) {
+        this.dataProposta = dataProposta;
+    }
+
+    public Integer getValorProsposta() {
+        return valorProsposta;
+    }
+
+    public void setValorProsposta(Integer valorProsposta) {
+        this.valorProsposta = valorProsposta;
+    }
+
+    public String getDescricaoProposta() {
+        return descricaoProposta;
+    }
+
+    public void setDescricaoProposta(String descricaoProposta) {
+        this.descricaoProposta = descricaoProposta;
+    }
+
+    public Integer getIdEvento() {
+        return idEvento;
+    }
+
+    public void setIdEvento(Integer idEvento) {
+        this.idEvento = idEvento;
     }
 
     public Integer getIdEstabelecimento() {
@@ -38,36 +58,4 @@ public class Proposta implements Serializable {
         this.idEstabelecimento = idEstabelecimento;
     }
 
-    public Integer getIdBanda() {
-        return idBanda;
-    }
-
-    public void setIdBanda(Integer idBanda) {
-        this.idBanda = idBanda;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public Double getValorProposta() {
-        return valorProposta;
-    }
-
-    public void setValorProposta(Double valorProposta) {
-        this.valorProposta = valorProposta;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
 }
-

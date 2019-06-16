@@ -16,12 +16,12 @@ namespace ApiQuemTocaHoje.Models
         public int IdMusico { get; set; }
         public string NomeMusico { get; set; }
         public string NomeArtMusico { get; set; }
-        public int idConvite { get; set; }
+        public int? idConvite { get; set; }
        
         public DateTime DataCriacao { get; set; }
         public string TelMusico { get; set; }
         public int IdAutenticacao { get; set; }
-        public int IdArquivo { get; set; }
+        public int? IdArquivo { get; set; }
         public int IdEndereco { get; set; }
 
         public virtual Arquivo Arquivo { get; set; }

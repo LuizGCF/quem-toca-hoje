@@ -9,7 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface AutenticacaoEndPoint {
+public interface AutenticacaoResource {
     @GET("autenticacao")
     Call<List<Autenticacao>> getAllAutenticacoes();
     @GET("autenticacao/{id}")

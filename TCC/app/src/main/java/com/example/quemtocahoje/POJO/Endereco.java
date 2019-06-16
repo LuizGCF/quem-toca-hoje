@@ -1,80 +1,80 @@
+
 package com.example.quemtocahoje.POJO;
 
-import java.io.Serializable;
-import java.util.Date;
 
-public class Endereco implements Serializable {
+public class Endereco {
 
-    private Integer id;
-    private String logradouro;
-    private String bairro;
-    private String complemento;
-    private String cidade;
-    private String uf;
-    private Date dataCriacao;
+    private Integer idEndereco;
+    private String logradouroEndereco;
+    private String bairroEndereco;
+    private String complementoEntedeco;
+    private String cidadeEndereco;
+    private String cepEndereco;
+    private String ufEndereco;
+    private String dataCriacao;
 
-    public Endereco(String logradouro, String bairro, String complemento, String cidade, String uf, Date dataCriacao) {
-        this.logradouro = logradouro;
-        this.bairro = bairro;
-        this.complemento = complemento;
-        this.cidade = cidade;
-        this.uf = uf;
-        this.dataCriacao = dataCriacao;
+    public Integer getIdEndereco() {
+        return idEndereco;
     }
 
-    public Integer getId() {
-        return id;
+    public void setIdEndereco(Integer idEndereco) {
+        this.idEndereco = idEndereco;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public String getLogradouroEndereco() {
+        return logradouroEndereco;
     }
 
-    public String getLogradouro() {
-        return logradouro;
+    public void setLogradouroEndereco(String logradouroEndereco) {
+        this.logradouroEndereco = logradouroEndereco;
     }
 
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
+    public String getBairroEndereco() {
+        return bairroEndereco;
     }
 
-    public String getBairro() {
-        return bairro;
+    public void setBairroEndereco(String bairroEndereco) {
+        this.bairroEndereco = bairroEndereco;
     }
 
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
+    public String getComplementoEntedeco() {
+        return complementoEntedeco;
     }
 
-    public String getComplemento() {
-        return complemento;
+    public void setComplementoEntedeco(String complementoEntedeco) {
+        this.complementoEntedeco = complementoEntedeco;
     }
 
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
+    public String getCidadeEndereco() {
+        return cidadeEndereco;
     }
 
-    public String getCidade() {
-        return cidade;
+    public void setCidadeEndereco(String cidadeEndereco) {
+        this.cidadeEndereco = cidadeEndereco;
     }
 
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
+    public String getCepEndereco() {
+        return cepEndereco;
     }
 
-    public String getUf() {
-        return uf;
+    public void setCepEndereco(String cepEndereco) {
+        this.cepEndereco = cepEndereco;
     }
 
-    public void setUf(String uf) {
-        this.uf = uf;
+    public String getUfEndereco() {
+        return ufEndereco;
     }
 
-    public Date getDataCriacao() {
+    public void setUfEndereco(String ufEndereco) {
+        this.ufEndereco = ufEndereco;
+    }
+
+    public String getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
+    public void setDataCriacao(String dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
+
 }

@@ -1,43 +1,24 @@
 package com.example.quemtocahoje.POJO;
 
-import android.util.EventLog;
-
-import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
-public class Banda implements Serializable {
+public class Banda {
 
-    private Integer id;
+    private Integer idBanda;
     private String nome;
-    private String descricao;
-    private Date dataCriacao;
+    private String generoBanda;
+    private String dataCriacao;
+    private Arquivo arquivo;
+    private Convite convite;
+    private Evento evento;
+    private List<Musico> musicos = null;
 
-    private List<Arquivo> arquivos;
-    private List<String> generos;
-    private List<Musico> membros;
-    private List<Convite> convites;
-    private List<Evento> eventos;
-    private List<Avaliacao> avaliacoes;
-
-    public Banda(String nome, String descricao, Date dataCriacao, List<Arquivo> arquivos, List<String> generos, List<Musico> membros, List<Convite> convites, List<Evento> eventos, List<Avaliacao> avaliacoes) {
-        this.nome = nome;
-        this.descricao = descricao;
-        this.dataCriacao = dataCriacao;
-        this.arquivos = arquivos;
-        this.generos = generos;
-        this.membros = membros;
-        this.convites = convites;
-        this.eventos = eventos;
-        this.avaliacoes = avaliacoes;
+    public Integer getIdBanda() {
+        return idBanda;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdBanda(Integer idBanda) {
+        this.idBanda = idBanda;
     }
 
     public String getNome() {
@@ -48,67 +29,52 @@ public class Banda implements Serializable {
         this.nome = nome;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getGeneroBanda() {
+        return generoBanda;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setGeneroBanda(String generoBanda) {
+        this.generoBanda = generoBanda;
     }
 
-    public Date getDataCriacao() {
+    public String getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
+    public void setDataCriacao(String dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    public List<String> getGeneros() {
-        return generos;
+    public Arquivo getArquivo() {
+        return arquivo;
     }
 
-    public void setGeneros(List<String> generos) {
-        this.generos = generos;
+    public void setArquivo(Arquivo arquivo) {
+        this.arquivo = arquivo;
     }
 
-    public List<Musico> getMembros() {
-        return membros;
+    public Convite getConvite() {
+        return convite;
     }
 
-    public void setMembros(List<Musico> membros) {
-        this.membros = membros;
+    public void setConvite(Convite convite) {
+        this.convite = convite;
     }
 
-    public List<Convite> getConvites() {
-        return convites;
+    public Evento getEvento() {
+        return evento;
     }
 
-    public void setConvites(List<Convite> convites) {
-        this.convites = convites;
+    public void setEvento(Evento evento) {
+        this.evento = evento;
     }
 
-    public List<Arquivo> getArquivos() {
-        return arquivos;
+    public List<Musico> getMusicos() {
+        return musicos;
     }
 
-    public void setArquivos(List<Arquivo> arquivos) {
-        this.arquivos = arquivos;
+    public void setMusicos(List<Musico> musicos) {
+        this.musicos = musicos;
     }
 
-    public List<Evento> getEventos() {
-        return eventos;
-    }
-
-    public void setEventos(List<Evento> eventos) {
-        this.eventos = eventos;
-    }
-
-    public List<Avaliacao> getAvaliacoes() {
-        return avaliacoes;
-    }
-
-    public void setAvaliacoes(List<Avaliacao> avaliacoes) {
-        this.avaliacoes = avaliacoes;
-    }
 }

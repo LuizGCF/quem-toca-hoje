@@ -70,7 +70,12 @@ namespace ApiQuemTocaHoje.Controllers
             var item = await RepositorioAutenticacao.DbSet.Where(x => x.LoginAutenticacao.Equals(login) && x.SenhaAutenticacao.Equals(senha)).SingleOrDefaultAsync();
             if (item == null)
                 return NotFound();
-
+            else
+            {
+                Contexto.Entry(item).State = EntityState.Modified;
+                item.DataUltimoLogin = DateTime.Now;
+                await Contexto.SaveChangesAsync();
+            }
             return item;
             //return "value";
         }
@@ -87,6 +92,7 @@ namespace ApiQuemTocaHoje.Controllers
                 EmailAutenticacao = values.Email,
                 LoginAutenticacao = values.Login,
                 SenhaAutenticacao = values.Senha,
+                Registro = values.Registro,
                 TipoUsuarioAutenticacao = values.TipoUsuario
             };
             RepositorioAutenticacao.DbSet.Add(item);

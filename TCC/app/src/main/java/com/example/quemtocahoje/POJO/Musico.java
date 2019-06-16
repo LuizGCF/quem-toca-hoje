@@ -2,70 +2,117 @@ package com.example.quemtocahoje.POJO;
 
 import java.util.List;
 
-public class Musico extends Usuario {
+public class Musico {
 
-    private String nomeArtistico;
+    private Integer idMusico;
     private String nomeMusico;
-    private String celular;
-    private String login;
-    private String senha;
-    private String email;
+    private String nomeArtMusico;
+    private Integer idConvite;
+    private String dataCriacao;
+    private String telMusico;
+    private Integer idAutenticacao;
+    private Integer idArquivo;
+    private Integer idEndereco;
+    private Arquivo arquivo;
+    private Autenticacao autenticacao;
+    private Convite convite;
     private Endereco endereco;
+    private List<Banda> banda = null;
 
-    private List<Arquivo> arquivos;
-    private List<Banda> bandas;
-    private List<Convite> convites;
-
-
-
-    public Musico(String nomeUsuario, Autenticacao autenticacao, Arquivo arquivo, String nomeArtistico, String celular, List<Banda> bandas, List<Convite> convites, Endereco endereco, List<Arquivo> arquivos) {
-        super(nomeUsuario, autenticacao, arquivo);
-        this.nomeArtistico = nomeArtistico;
-        this.celular = celular;
-        this.bandas = bandas;
-        this.convites = convites;
-        this.endereco = endereco;
-        this.arquivos = arquivos;
+    public Integer getIdMusico() {
+        return idMusico;
     }
 
-    public String getNomeArtistico() {
-        return nomeArtistico;
+    public void setIdMusico(Integer idMusico) {
+        this.idMusico = idMusico;
     }
 
-    public void setNomeArtistico(String nomeArtistico) {
-        this.nomeArtistico = nomeArtistico;
+    public String getNomeMusico() {
+        return nomeMusico;
     }
 
-    public String getCelular() {
-        return celular;
+    public void setNomeMusico(String nomeMusico) {
+        this.nomeMusico = nomeMusico;
     }
 
-    public void setCelular(String celular) {
-        this.celular = celular;
+    public String getNomeArtMusico() {
+        return nomeArtMusico;
     }
 
-    public List<Arquivo> getArquivos() {
-        return arquivos;
+    public void setNomeArtMusico(String nomeArtMusico) {
+        this.nomeArtMusico = nomeArtMusico;
     }
 
-    public void setArquivos(List<Arquivo> arquivos) {
-        this.arquivos = arquivos;
+    public Integer getIdConvite() {
+        return idConvite;
     }
 
-    public List<Banda> getBandas() {
-        return bandas;
+    public void setIdConvite(Integer idConvite) {
+        this.idConvite = idConvite;
     }
 
-    public void setBandas(List<Banda> bandas) {
-        this.bandas = bandas;
+    public String getDataCriacao() {
+        return dataCriacao;
     }
 
-    public List<Convite> getConvites() {
-        return convites;
+    public void setDataCriacao(String dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
 
-    public void setConvites(List<Convite> convites) {
-        this.convites = convites;
+    public String getTelMusico() {
+        return telMusico;
+    }
+
+    public void setTelMusico(String telMusico) {
+        this.telMusico = telMusico;
+    }
+
+    public Integer getIdAutenticacao() {
+        return idAutenticacao;
+    }
+
+    public void setIdAutenticacao(Integer idAutenticacao) {
+        this.idAutenticacao = idAutenticacao;
+    }
+
+    public Integer getIdArquivo() {
+        return idArquivo;
+    }
+
+    public void setIdArquivo(Integer idArquivo) {
+        this.idArquivo = idArquivo;
+    }
+
+    public Integer getIdEndereco() {
+        return idEndereco;
+    }
+
+    public void setIdEndereco(Integer idEndereco) {
+        this.idEndereco = idEndereco;
+    }
+
+    public Arquivo getArquivo() {
+        return arquivo;
+    }
+
+    public void setArquivo(Arquivo arquivo) {
+        this.arquivo = arquivo;
+    }
+
+    public Autenticacao getAutenticacao() {
+        return autenticacao;
+    }
+
+    public void setAutenticacao(Autenticacao autenticacao) {
+        this.autenticacao = autenticacao;
+    }
+
+    public Convite getConvite() {
+        return convite;
+    }
+
+    public void setConvite(Convite convite) {
+        this.convite = convite;
     }
 
     public Endereco getEndereco() {
@@ -75,4 +122,13 @@ public class Musico extends Usuario {
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
+
+    public List<Banda> getBanda() {
+        return banda;
+    }
+
+    public void setBanda(List<Banda> banda) {
+        this.banda = banda;
+    }
+
 }

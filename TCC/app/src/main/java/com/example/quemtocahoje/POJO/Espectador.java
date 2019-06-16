@@ -1,51 +1,45 @@
 package com.example.quemtocahoje.POJO;
 
-import java.util.Date;
+
+import com.example.quemtocahoje.POJO.Autenticacao;
 
 public class Espectador {
-    private int idEspectador;
-    private String NomeEspectador;
-    private Date DataCriacao;
-    private String TipoUsuario;
 
-    public Espectador(){};
+    private Integer idEspectador;
+    private String nomeEspectador;
+    private Integer idAutenticacao;
+    private Autenticacao autenticacao;
 
-    public Espectador(int idEspectador, String nomeEspectador, Date dataCriacao, String tipoUsuario) {
-        this.idEspectador = idEspectador;
-        NomeEspectador = nomeEspectador;
-        DataCriacao = dataCriacao;
-        TipoUsuario = tipoUsuario;
-    }
-
-    public void setIdEspectador(int idEspectador) {
-        this.idEspectador = idEspectador;
-    }
-
-    public void setNomeEspectador(String nomeEspectador) {
-        NomeEspectador = nomeEspectador;
-    }
-
-    public void setDataCriacao(Date dataCriacao) {
-        DataCriacao = dataCriacao;
-    }
-
-    public void setTipoUsuario(String tipoUsuario) {
-        TipoUsuario = tipoUsuario;
-    }
-
-    public int getIdEspectador() {
+    public Integer getIdEspectador() {
         return idEspectador;
     }
 
+    public void setIdEspectador(Integer idEspectador) {
+        this.idEspectador = idEspectador;
+    }
+
     public String getNomeEspectador() {
-        return NomeEspectador;
+        return nomeEspectador;
     }
 
-    public Date getDataCriacao() {
-        return DataCriacao;
+    public void setNomeEspectador(String nomeEspectador) {
+        this.nomeEspectador = nomeEspectador;
     }
 
-    public String getTipoUsuario() {
-        return TipoUsuario;
+    public Integer getIdAutenticacao() {
+        return idAutenticacao;
     }
+
+    public void setIdAutenticacao(Integer idAutenticacao) {
+        this.idAutenticacao = idAutenticacao;
+    }
+
+    public Autenticacao getAutenticacao() {
+        return autenticacao;
+    }
+
+    public void setAutenticacao(Autenticacao autenticacao) {
+        this.autenticacao = autenticacao;
+    }
+
 }

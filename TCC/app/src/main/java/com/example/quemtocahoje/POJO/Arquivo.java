@@ -1,73 +1,70 @@
 package com.example.quemtocahoje.POJO;
 
-import com.example.quemtocahoje.Enum.TipoArquivo;
-import com.example.quemtocahoje.Enum.TipoUsuario;
 
-import java.io.Serializable;
-import java.util.Date;
+public class Arquivo {
 
-public class Arquivo implements Serializable {
+    private Integer idArquivo;
+    private String anexoArquivo;
+    private String tipoArquivo;
+    private String dataCriacao;
+    private Integer idBanda;
+    private Integer idEstabelecimento;
+    private Integer idEspectador;
 
-    private Integer id;
-    private Integer idUsuario;
-    private TipoUsuario tipoUsuario;
-    private Byte[] arquivo;
-    private TipoArquivo tipoArquivo;
-    private Date dataCriacao;
-
-    public Arquivo(Integer idUsuario, TipoUsuario tipoUsuario, Byte[] arquivo, TipoArquivo tipoArquivo, Date dataCriacao) {
-        this.idUsuario = idUsuario;
-        this.tipoUsuario = tipoUsuario;
-        this.arquivo = arquivo;
-        this.tipoArquivo = tipoArquivo;
-        this.dataCriacao = dataCriacao;
+    public Integer getIdArquivo() {
+        return idArquivo;
     }
 
-    public Integer getId() {
-        return id;
+    public void setIdArquivo(Integer idArquivo) {
+        this.idArquivo = idArquivo;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public String getAnexoArquivo() {
+        return anexoArquivo;
     }
 
-    public Integer getIdUsuario() {
-        return idUsuario;
+    public void setAnexoArquivo(String anexoArquivo) {
+        this.anexoArquivo = anexoArquivo;
     }
 
-    public void setIdUsuario(Integer idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    public TipoUsuario getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    public void setTipoUsuario(TipoUsuario tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
-    }
-
-    public Byte[] getArquivo() {
-        return arquivo;
-    }
-
-    public void setArquivo(Byte[] arquivo) {
-        this.arquivo = arquivo;
-    }
-
-    public TipoArquivo getTipoArquivo() {
+    public String getTipoArquivo() {
         return tipoArquivo;
     }
 
-    public void setTipoArquivo(TipoArquivo tipoArquivo) {
+    public void setTipoArquivo(String tipoArquivo) {
         this.tipoArquivo = tipoArquivo;
     }
 
-    public Date getDataCriacao() {
+    public String getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
+    public void setDataCriacao(String dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
+
+    public Integer getIdBanda() {
+        return idBanda;
+    }
+
+    public void setIdBanda(Integer idBanda) {
+        this.idBanda = idBanda;
+    }
+
+    public Integer getIdEstabelecimento() {
+        return idEstabelecimento;
+    }
+
+    public void setIdEstabelecimento(Integer idEstabelecimento) {
+        this.idEstabelecimento = idEstabelecimento;
+    }
+
+    public Integer getIdEspectador() {
+        return idEspectador;
+    }
+
+    public void setIdEspectador(Integer idEspectador) {
+        this.idEspectador = idEspectador;
+    }
+
 }

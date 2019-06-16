@@ -9,6 +9,5 @@ namespace ApiQuemTocaHoje.ViewModels
     {
         public int IdAutenticacao { get; set; }
         public string Nome { get; set; }
-        public string TipoUsuario { get; set; }
     }
 }

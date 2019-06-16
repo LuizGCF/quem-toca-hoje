@@ -10,7 +10,7 @@ namespace ApiQuemTocaHoje.ViewModels
     {
         public string Nome { get; set; }
         public string NomeArtistico { get; set; }
-        public int IdConvite { get; set; }
+        //public int IdConvite { get; set; }
         public string Telefone { get; set; }
         public int IdAutenticacao { get; set; }
         public Endereco Endereco { get; set; }

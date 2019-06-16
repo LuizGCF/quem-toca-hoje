@@ -1,28 +1,81 @@
+
 package com.example.quemtocahoje.POJO;
 
-import com.example.quemtocahoje.Enum.StatusProposta;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
+public class Evento {
 
-public class Evento implements Serializable {
-
+    private Integer idEvento;
+    private String dataHoraInicio;
+    private String dataHoraFim;
+    private String statusEvento;
+    private String notaEstab;
+    private String notaMusico;
+    private String comentarioEstab;
+    private String comentarioMusico;
     private Integer idBanda;
-    private Date inicioEvento;
-    private Date fimEvento;
 
-    private StatusProposta statusProposta;
-    private Proposta proposta;
-    private List<Avaliacao> avaliacoes;
+    public Integer getIdEvento() {
+        return idEvento;
+    }
 
-    public Evento(Integer idBanda, Date inicioEvento, Date fimEvento, StatusProposta statusProposta, Proposta proposta, List<Avaliacao> avaliacoes) {
-        this.idBanda = idBanda;
-        this.inicioEvento = inicioEvento;
-        this.fimEvento = fimEvento;
-        this.statusProposta = statusProposta;
-        this.proposta = proposta;
-        this.avaliacoes = avaliacoes;
+    public void setIdEvento(Integer idEvento) {
+        this.idEvento = idEvento;
+    }
+
+    public String getDataHoraInicio() {
+        return dataHoraInicio;
+    }
+
+    public void setDataHoraInicio(String dataHoraInicio) {
+        this.dataHoraInicio = dataHoraInicio;
+    }
+
+    public String getDataHoraFim() {
+        return dataHoraFim;
+    }
+
+    public void setDataHoraFim(String dataHoraFim) {
+        this.dataHoraFim = dataHoraFim;
+    }
+
+    public String getStatusEvento() {
+        return statusEvento;
+    }
+
+    public void setStatusEvento(String statusEvento) {
+        this.statusEvento = statusEvento;
+    }
+
+    public String getNotaEstab() {
+        return notaEstab;
+    }
+
+    public void setNotaEstab(String notaEstab) {
+        this.notaEstab = notaEstab;
+    }
+
+    public String getNotaMusico() {
+        return notaMusico;
+    }
+
+    public void setNotaMusico(String notaMusico) {
+        this.notaMusico = notaMusico;
+    }
+
+    public String getComentarioEstab() {
+        return comentarioEstab;
+    }
+
+    public void setComentarioEstab(String comentarioEstab) {
+        this.comentarioEstab = comentarioEstab;
+    }
+
+    public String getComentarioMusico() {
+        return comentarioMusico;
+    }
+
+    public void setComentarioMusico(String comentarioMusico) {
+        this.comentarioMusico = comentarioMusico;
     }
 
     public Integer getIdBanda() {
@@ -33,43 +86,4 @@ public class Evento implements Serializable {
         this.idBanda = idBanda;
     }
 
-    public Date getInicioEvento() {
-        return inicioEvento;
-    }
-
-    public void setInicioEvento(Date inicioEvento) {
-        this.inicioEvento = inicioEvento;
-    }
-
-    public Date getFimEvento() {
-        return fimEvento;
-    }
-
-    public void setFimEvento(Date fimEvento) {
-        this.fimEvento = fimEvento;
-    }
-
-    public StatusProposta getStatusProposta() {
-        return statusProposta;
-    }
-
-    public void setStatusProposta(StatusProposta statusProposta) {
-        this.statusProposta = statusProposta;
-    }
-
-    public Proposta getProposta() {
-        return proposta;
-    }
-
-    public void setProposta(Proposta proposta) {
-        this.proposta = proposta;
-    }
-
-    public List<Avaliacao> getAvaliacoes() {
-        return avaliacoes;
-    }
-
-    public void setAvaliacoes(List<Avaliacao> avaliacoes) {
-        this.avaliacoes = avaliacoes;
-    }
 }

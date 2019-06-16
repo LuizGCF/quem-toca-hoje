@@ -17,20 +17,20 @@ namespace ApiQuemTocaHoje.Controllers
     {
         private readonly ContextoBanco Contexto;
 
-        private RepositoryBase<Estabelecimento> repositorioespectador;
+        private RepositoryBase<Estabelecimento> repositorioestabelecimento;
 
-        public RepositoryBase<Estabelecimento> RespositorioEspectador
+        public RepositoryBase<Estabelecimento> RespositorioEstabelecimento
         {
             get
             {
-                if (repositorioespectador == null)
+                if (repositorioestabelecimento == null)
                 {
-                    repositorioespectador = new RepositoryBase<Estabelecimento>(Contexto);
+                    repositorioestabelecimento = new RepositoryBase<Estabelecimento>(Contexto);
                 }
 
-                return repositorioespectador;
+                return repositorioestabelecimento;
             }
-            set { repositorioespectador = value; }
+            set { repositorioestabelecimento = value; }
         }
 
 
@@ -43,7 +43,7 @@ namespace ApiQuemTocaHoje.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Estabelecimento>> Get()
         {
-            var item = RespositorioEspectador.DbSet.ToList();
+            var item = RespositorioEstabelecimento.DbSet.ToList();
             if (item == null)
                 return NotFound();
 
@@ -54,7 +54,18 @@ namespace ApiQuemTocaHoje.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Estabelecimento>> GetAsync(int id)
         {
-            var item = await RespositorioEspectador.DbSet.FindAsync(id);
+            var item = await RespositorioEstabelecimento.DbSet.FindAsync(id);
+            if (item == null)
+                return NotFound();
+
+            return item;
+            //return "value";
+        }
+        //Não consigo trazer o que esta dentro do endereco, verificar como fazer depois 
+        [HttpGet("aut")]
+        public async Task<ActionResult<Estabelecimento>> GetPorIdAutenticacaoAsync([FromQuery] int id)
+        {
+            var item = await RespositorioEstabelecimento.DbSet.Where(x => x.IdAutenticacao.Equals(id)).FirstOrDefaultAsync();
             if (item == null)
                 return NotFound();
 
@@ -65,7 +76,7 @@ namespace ApiQuemTocaHoje.Controllers
         [HttpGet("nome")]
         public async Task<ActionResult<List<Estabelecimento>>> GetPeloNomeAsync([FromQuery] string nome)
         {
-            var item = await RespositorioEspectador.DbSet.Where(x => x.NomeFantasiaEstabelecimento.StartsWith(nome)).ToListAsync();
+            var item = await RespositorioEstabelecimento.DbSet.Where(x => x.NomeFantasiaEstabelecimento.StartsWith(nome)).ToListAsync();
             if (item == null || item.Count == 0)
                 return NotFound();
 
@@ -97,8 +108,8 @@ namespace ApiQuemTocaHoje.Controllers
                     TelEstabelecimento = values.Telefone,
                     TipoUsuario = values.TipoUsuario
                 };
-                RespositorioEspectador.DbSet.Add(item);
-                await RespositorioEspectador.Contexto.SaveChangesAsync();
+                RespositorioEstabelecimento.DbSet.Add(item);
+                await RespositorioEstabelecimento.Contexto.SaveChangesAsync();
 
                 return Ok(item);//CreatedAtAction(nameof(Endereco), new { id = item.IdEstabelecimento }, item);
             }
@@ -127,15 +138,15 @@ namespace ApiQuemTocaHoje.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAsync(int id)
         {
-            var todoItem = await RespositorioEspectador.DbSet.FindAsync(id);
+            var todoItem = await RespositorioEstabelecimento.DbSet.FindAsync(id);
 
             if (todoItem == null)
             {
                 return NotFound();
             }
 
-            RespositorioEspectador.DbSet.Remove(todoItem);
-            await RespositorioEspectador.Contexto.SaveChangesAsync();
+            RespositorioEstabelecimento.DbSet.Remove(todoItem);
+            await RespositorioEstabelecimento.Contexto.SaveChangesAsync();
 
             return NoContent();
         }

@@ -64,6 +64,18 @@ namespace ApiQuemTocaHoje.Controllers
         }
 
         // GET api/autenticacao/5
+        [HttpGet("aut")]
+        public async Task<ActionResult<Espectador>> GetPorIdAutenticacaoAsync([FromQuery] int id)
+        {
+            var item = await RespositorioEspectador.DbSet.Where(x=>x.IdAutenticacao.Equals(id)).FirstOrDefaultAsync();
+            if (item == null)
+                return NotFound();
+
+            return item;
+            //return "value";
+        }
+
+        // GET api/autenticacao/5
         [HttpGet("nome")]
         public async Task<ActionResult<List<Espectador>>> GetPorNomeAsync([FromQuery]string nome)
         {
@@ -88,15 +100,13 @@ namespace ApiQuemTocaHoje.Controllers
                 {
                     Autenticacao = autenticacao,
                     IdAutenticacao = autenticacao.IdAutenticacao,
-                    DataCriacao = DateTime.Now,
                     NomeEspectador = values.Nome,
-                    TipoUsuario = values.TipoUsuario
                 };
 
                 RespositorioEspectador.DbSet.Add(item);
                 await RespositorioEspectador.Contexto.SaveChangesAsync();
 
-                return Ok(item);//CreatedAtAction(nameof(Espectador), new { id = item.IdEspectador }, item);
+                return Ok(item);
             }
             else
             {

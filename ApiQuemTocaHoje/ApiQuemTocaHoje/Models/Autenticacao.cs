@@ -9,6 +9,7 @@ namespace ApiQuemTocaHoje.Models
     public class Autenticacao
     {
         public int IdAutenticacao { get; set; }
+        public string Registro { get; set; }
         public string EmailAutenticacao { get; set; }
         public string LoginAutenticacao { get; set; }
         public string SenhaAutenticacao { get; set; }

@@ -9,6 +9,15 @@ public class Autenticacao {
     private String tipoUsuarioAutenticacao;
     private String dataCriacao;
     private String dataUltimoLogin;
+    private String registro;
+
+    public String getRegistro() {
+        return registro;
+    }
+
+    public void setRegistro(String registro) {
+        this.registro = registro;
+    }
 
     public Integer getIdAutenticacao() {
         return idAutenticacao;
