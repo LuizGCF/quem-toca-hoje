@@ -3,7 +3,9 @@ package com.example.quemtocahoje.POJO;
 
 import com.example.quemtocahoje.POJO.Autenticacao;
 
-public class Espectador {
+import java.io.Serializable;
+
+public class Espectador implements Serializable {
 
     private Integer idEspectador;
     private String nomeEspectador;

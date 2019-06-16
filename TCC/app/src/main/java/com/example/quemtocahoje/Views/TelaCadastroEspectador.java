@@ -9,10 +9,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.quemtocahoje.Enum.TipoUsuario;
+import com.example.quemtocahoje.POJO.Autenticacao;
+import com.example.quemtocahoje.POJO.Espectador;
 import com.example.quemtocahoje.Persistencia.Banco;
 import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
 import com.example.quemtocahoje.Utility.AESCrypt;
+import com.example.quemtocahoje.Utility.CustomFirebaseMessagingService;
 import com.example.quemtocahoje.Utility.DefinirDatas;
 import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
@@ -26,6 +29,8 @@ public class TelaCadastroEspectador extends AppCompatActivity {
     private EditText confirmarSenhaEspectador;
     private Button btnCadastrarEspectador;
     private Button btnCancelarEspectador;
+
+    private CustomFirebaseMessagingService firebase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +58,8 @@ public class TelaCadastroEspectador extends AppCompatActivity {
                     if(isUsuarioUnico(loginEspectador)) {
                         if (isSenhaCorreta(senhaEspectador, confirmarSenhaEspectador)) {
                             String tipoUsuario = getIntent().getStringExtra("tipoUsuario");
-                            AutenticacaoEntity a = criarObjetoAutenticacao(edtEmailEspectador, loginEspectador, senhaEspectador, tipoUsuario);
-                            EspectadorEntity e = criarObjectoEspectador(null, nomeEspectador.getText().toString().trim(), a.getDataCriacao());
+                            Autenticacao a = criarObjetoAutenticacao(edtEmailEspectador, loginEspectador, senhaEspectador, tipoUsuario);
+                            Espectador e = criarObjectoEspectador(nomeEspectador.getText().toString().trim());
                             if(tipoUsuario.equals("ESPECTADOR")) {
                                 telaUpload.putExtra("tipoUsuario", TipoUsuario.ESPECTADOR.name());
                                 telaUpload.putExtra("objetoAutenticacao", a);
@@ -131,16 +136,20 @@ public class TelaCadastroEspectador extends AppCompatActivity {
     }
 
     //Prepara o objeto de autenticação para persistir
-    private AutenticacaoEntity criarObjetoAutenticacao(EditText edtEmailEspectador, EditText loginEspectador, EditText senhaEspectador, String tipoUsuario){
+    private Autenticacao criarObjetoAutenticacao(EditText edtEmailEspectador, EditText loginEspectador, EditText senhaEspectador, String tipoUsuario){
         String login = loginEspectador.getText().toString().trim();
         String senha = senhaEspectador.getText().toString();
         String email = edtEmailEspectador.getText().toString().trim();
+        firebase = new CustomFirebaseMessagingService();
 
-        String dataCriacao = DefinirDatas.dataAtual();
-
-        AutenticacaoEntity a = new AutenticacaoEntity(email, login, senha, tipoUsuario, dataCriacao, null);
+        Autenticacao a = new Autenticacao();
+        a.setEmailAutenticacao(email);
+        a.setLoginAutenticacao(login);
+        a.setTipoUsuarioAutenticacao(tipoUsuario);
+       // a.setRegistro(firebase.recuperarRegistroDispositivo());
+        a.setRegistro("a");
         try{
-            a.setSenha(AESCrypt.encrypt(senha));
+            a.setSenhaAutenticacao(AESCrypt.encrypt(senha));
         }catch(Exception e){
             e.getMessage();
         }
@@ -149,7 +158,9 @@ public class TelaCadastroEspectador extends AppCompatActivity {
     }
 
     //Prepara o objeto de Espectador para persistir
-    private EspectadorEntity criarObjectoEspectador(Long idAutenticacao, String nomeEspectador, String dataCriacao){
-        return new EspectadorEntity(idAutenticacao, nomeEspectador, dataCriacao);
+    private Espectador criarObjectoEspectador(String nomeEspectador){
+        Espectador espectador = new Espectador();
+        espectador.setNomeEspectador(nomeEspectador);
+        return espectador;
     }
 }

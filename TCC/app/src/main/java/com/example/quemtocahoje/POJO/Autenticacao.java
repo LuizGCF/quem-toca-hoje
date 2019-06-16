@@ -1,6 +1,8 @@
 package com.example.quemtocahoje.POJO;
 
-public class Autenticacao {
+import java.io.Serializable;
+
+public class Autenticacao implements Serializable {
     //campos com o nome igual ao que está recebendo do get da api
     private Integer idAutenticacao;
     private String emailAutenticacao;
@@ -10,6 +12,8 @@ public class Autenticacao {
     private String dataCriacao;
     private String dataUltimoLogin;
     private String registro;
+
+
 
     public String getRegistro() {
         return registro;
