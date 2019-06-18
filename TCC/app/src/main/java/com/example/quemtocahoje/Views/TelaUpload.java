@@ -79,18 +79,21 @@ public class TelaUpload extends AppCompatActivity {
                     String nome = ((EspectadorEntity) getIntent().getSerializableExtra("objetoEspectador")).getNomeEspectador();
                     telaInicialEspectador.putExtra("nome",nome);
                     startActivity(telaInicialEspectador);
+                    finishAffinity();
                 }
                 else if (tipo.equals(TipoUsuario.ESTABELECIMENTO.name()))
                 {
                     String nome = ((EstabelecimentoEntity) getIntent().getSerializableExtra("objetoEstabelecimento")).getNomeDono();
                     telaInicialEstabelecimento.putExtra("nome", nome);
                     startActivity(telaInicialEstabelecimento);
+                    finishAffinity();
                 }
                 else if(tipo.equals(TipoUsuario.MUSICO.name()))
                 {
                    String nome = ((MusicoEntity) getIntent().getSerializableExtra("objetoMusico")).getNome();
                    telaInicialMusico.putExtra("nome",nome);
                    startActivity(telaInicialMusico);
+                   finishAffinity();
                 }
             }
         });
