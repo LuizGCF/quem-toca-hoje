@@ -37,7 +37,7 @@ import java.io.ByteArrayOutputStream;
 public class TelaUpload extends AppCompatActivity {
 
     private static final int IMAGEM = 1;
-    Uri imagemUri;
+    Uri imagemUri = null;
     ByteArrayOutputStream bos = null;
     Cursor cursor = null;
 
@@ -152,10 +152,12 @@ public class TelaUpload extends AppCompatActivity {
         }
 
 
-        //TODO alterar para identificar os tipos de arquivos certos
-        bos = ConversaoArquivo.converterImagem(cursor, imagemUri);
-        ArquivoEntity arquivo = new ArquivoEntity(idUser, bos.toByteArray(), TipoArquivo.FOTO_PERFIL.name(), DefinirDatas.dataAtual());
-        Banco.getDatabase(getApplicationContext()).arquivoDao().insertArquivo(arquivo);
+        if(cursor != null || imagemUri != null) {
+            //TODO alterar para identificar os tipos de arquivos certos
+            bos = ConversaoArquivo.converterImagem(cursor, imagemUri);
+            ArquivoEntity arquivo = new ArquivoEntity(idUser, bos.toByteArray(), TipoArquivo.FOTO_PERFIL.name(), DefinirDatas.dataAtual());
+            Banco.getDatabase(getApplicationContext()).arquivoDao().insertArquivo(arquivo);
+        }
     }
 
     private void verificarVisibilidadeImagensDemonstracao()
