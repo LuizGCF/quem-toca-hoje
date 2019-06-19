@@ -30,7 +30,7 @@ import com.example.quemtocahoje.Persistencia.Entity.TokenEntity;
         , EstabelecimentoEntity.class
         , MusicoEntity.class
         , ConviteEntity.class}
-        , version = 1)
+        , version = 2)
 public abstract class Banco extends RoomDatabase {
 
     private static Banco INSTANCIA;
@@ -49,6 +49,7 @@ public abstract class Banco extends RoomDatabase {
             INSTANCIA =
                     Room.databaseBuilder(context.getApplicationContext(), Banco.class, "tcc-database")
                             .allowMainThreadQueries()
+                            .fallbackToDestructiveMigration()
                             .build();
         }
         return INSTANCIA;
@@ -57,4 +58,7 @@ public abstract class Banco extends RoomDatabase {
     public static void destruirInstancia() {
         INSTANCIA = null;
     }
+
+
+
 }

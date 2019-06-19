@@ -17,6 +17,7 @@ import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EnderecoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
 import com.example.quemtocahoje.Utility.DefinirDatas;
+import com.example.quemtocahoje.Utility.MaskEditUtil;
 import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.quemtocahoje.Utility.ServicoCEP.Endereco;
 import com.example.quemtocahoje.Utility.ServicoCEP.PostmonService;
@@ -52,7 +53,8 @@ public class TelaEndereco extends AppCompatActivity {
         edtCEPEndereco = findViewById(R.id.edtCEPEndereco);
         edtUFEndereco = findViewById(R.id.edtUFEndereco);
 
-
+        // Aplicação de mascara
+        edtCEPEndereco.addTextChangedListener(MaskEditUtil.mask(edtCEPEndereco,MaskEditUtil.FORMAT_CEP));
 
         btnConfirmarEndereco = findViewById(R.id.btnConfirmarEndereco);
 
@@ -144,7 +146,7 @@ public class TelaEndereco extends AppCompatActivity {
                 ,edtBairroEndereco.getText().toString()
                 ,edtCidadeEndereco.getText().toString()
                 ,edtComplementoEndereco.getText().toString()
-                ,Integer.parseInt(edtCEPEndereco.getText().toString())
+                ,edtCEPEndereco.getText().toString()
                 ,edtUFEndereco.getText().toString()
                 ,DefinirDatas.dataAtual()
         );

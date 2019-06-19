@@ -2,7 +2,8 @@ package com.example.quemtocahoje.DTO;
 
 import android.graphics.Bitmap;
 
-public class ItensListaBuscaDTO {
+public class
+ItensListaBuscaDTO {
     Bitmap imagem;
     String nome;
     String descricao;
