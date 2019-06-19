@@ -80,6 +80,7 @@ public class TelaCadastroMusico extends AppCompatActivity {
                 ,edtNomeArtisticoMusico.getText().toString().trim()
                 ,edtCelularMusico.getText().toString().trim()
                 ,es.getDataCriacao()
+                ,edtDescricaoMusico.getText().toString().trim()
         );
 
         return m;

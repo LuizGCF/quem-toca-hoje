@@ -21,6 +21,7 @@ public class MusicoEntity implements Serializable {
     private String nomeArtistico;
     private String telefone;
     private String dataCriacao;
+    private String descricao;
 
     //usado só pra carregar os convites que ele possui, a tabela de convite possui o id fk do musico
     @Ignore
@@ -31,12 +32,13 @@ public class MusicoEntity implements Serializable {
     private List<BandaEntity> bandas;
     */
 
-    public MusicoEntity(Long autenticacao_id, String nome, String nomeArtistico, String telefone, String dataCriacao) {
+    public MusicoEntity(Long autenticacao_id, String nome, String nomeArtistico, String telefone, String dataCriacao, String descricao) {
         this.autenticacao_id = autenticacao_id;
         this.nome = nome;
         this.nomeArtistico = nomeArtistico;
         this.telefone = telefone;
         this.dataCriacao = dataCriacao;
+        this.descricao = descricao;
     }
 
     public Long getAutenticacao_id() {
@@ -93,5 +95,13 @@ public class MusicoEntity implements Serializable {
 
     public void setIdMusico(Long idMusico) {
         this.idMusico = idMusico;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }

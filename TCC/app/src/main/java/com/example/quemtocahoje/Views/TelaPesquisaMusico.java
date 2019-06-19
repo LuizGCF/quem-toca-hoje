@@ -79,7 +79,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
                 {
                     imagem = ConversaoArquivo.getImagem(TipoArquivo.FOTO_PERFIL.name(),TelaPesquisaMusico.this,autenticacaoEntity.getIdAutenticacao());
                 }
-                allItens.add(new ItensListaBuscaDTO(null,estabelecimento.getNomeFantasia(),estabelecimento.getDescricao()));
+                allItens.add(new ItensListaBuscaDTO(imagem  ,estabelecimento.getNomeFantasia(),estabelecimento.getDescricao()));
 
             }
             for(MusicoEntity musico : musicos)
