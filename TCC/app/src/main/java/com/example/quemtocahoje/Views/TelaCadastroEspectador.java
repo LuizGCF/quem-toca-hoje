@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.quemtocahoje.Enum.TipoUsuario;
@@ -26,6 +28,7 @@ public class TelaCadastroEspectador extends AppCompatActivity {
     private EditText confirmarSenhaEspectador;
     private Button btnCadastrarEspectador;
     private Button btnCancelarEspectador;
+    private RadioGroup rgpPerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class TelaCadastroEspectador extends AppCompatActivity {
         senhaEspectador = findViewById(R.id.edtSenhaEspectador);
         confirmarSenhaEspectador = findViewById(R.id.edtConfirmarSenhaEspectador);
         btnCancelarEspectador = findViewById(R.id.btnCancelarEspectador);
+        rgpPerfil = findViewById(R.id.rgpPerfil);
 
         btnCadastrarEspectador.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -52,24 +56,22 @@ public class TelaCadastroEspectador extends AppCompatActivity {
                 if(isCamposValidos(nomeEspectador, edtEmailEspectador, loginEspectador, senhaEspectador, confirmarSenhaEspectador)){
                     if(isUsuarioUnico(loginEspectador)) {
                         if (isSenhaCorreta(senhaEspectador, confirmarSenhaEspectador)) {
-                            String tipoUsuario = getIntent().getStringExtra("tipoUsuario");
+                            String tipoUsuario = definirTipoUsuario(rgpPerfil);
                             AutenticacaoEntity a = criarObjetoAutenticacao(edtEmailEspectador, loginEspectador, senhaEspectador, tipoUsuario);
                             EspectadorEntity e = criarObjectoEspectador(null, nomeEspectador.getText().toString().trim(), a.getDataCriacao());
                             if(tipoUsuario.equals("ESPECTADOR")) {
-                                telaUpload.putExtra("tipoUsuario", TipoUsuario.ESPECTADOR.name());
+                                telaUpload.putExtra("tipoUsuario", tipoUsuario);
                                 telaUpload.putExtra("objetoAutenticacao", a);
                                 telaUpload.putExtra("objetoEspectador", e);
                                 startActivity(telaUpload);
 
-                                //Coloquei a mensagem de sucesso no Toast mesmo
-//                                Toast.makeText(TelaCadastroEspectador.this, "Sucesso!", Toast.LENGTH_LONG).show();
-                            }else if(getIntent().getStringExtra("tipoUsuario").equals("ESTABELECIMENTO")){
+                            }else if(tipoUsuario.equals("ESTABELECIMENTO")){
                                 telaCadEstab.putExtra("objetoAutenticacao", a);
                                 telaCadEstab.putExtra("objetoEspectador", e);
                                 startActivity(telaCadEstab);
-                            }else if(getIntent().getStringExtra("tipoUsuario").equals("MUSICO")){
+                            }else if(tipoUsuario.equals("MUSICO")){
                                 //TODO ações de musico e passar o tipo de usuário pelo intent pra verificação na tela de upload
-                                telaCadMusico.putExtra("tipoUsuario", TipoUsuario.MUSICO.name());
+                                telaCadMusico.putExtra("tipoUsuario", tipoUsuario);
                                 telaCadMusico.putExtra("objetoAutenticacao", a);
                                 telaCadMusico.putExtra("objetoEspectador", e);
                                 startActivity(telaCadMusico);
@@ -151,5 +153,15 @@ public class TelaCadastroEspectador extends AppCompatActivity {
     //Prepara o objeto de Espectador para persistir
     private EspectadorEntity criarObjectoEspectador(Long idAutenticacao, String nomeEspectador, String dataCriacao){
         return new EspectadorEntity(idAutenticacao, nomeEspectador, dataCriacao);
+    }
+
+    private String definirTipoUsuario(RadioGroup rgpPerfil) {
+        RadioButton r = findViewById(rgpPerfil.getCheckedRadioButtonId());
+        if (r.getText().toString().toUpperCase().equals(TipoUsuario.ESPECTADOR.name())) {
+            return TipoUsuario.ESPECTADOR.name();
+        } else if (r.getText().toString().toUpperCase().equals(TipoUsuario.ESTABELECIMENTO.name())) {
+            return TipoUsuario.ESTABELECIMENTO.name();
+        } else
+            return TipoUsuario.MUSICO.name();
     }
 }

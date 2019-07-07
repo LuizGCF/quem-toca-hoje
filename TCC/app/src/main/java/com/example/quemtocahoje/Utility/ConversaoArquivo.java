@@ -54,7 +54,7 @@ public class ConversaoArquivo {
         return bos;
     }
 
-    protected Bitmap getImagem(String tipoArquivo, Context context, Long idUser){
+    public static Bitmap getImagem(String tipoArquivo, Context context, Long idUser){
         byte[] b = Banco.getDatabase(context).arquivoDao().findAnexoArquivoById(idUser, tipoArquivo);
         ByteArrayInputStream imageStream = new ByteArrayInputStream(b);
         Bitmap imagem = BitmapFactory.decodeStream(imageStream);

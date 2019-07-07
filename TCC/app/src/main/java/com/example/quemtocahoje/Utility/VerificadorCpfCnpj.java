@@ -23,7 +23,7 @@ public class VerificadorCpfCnpj {
         return cpf.equals(cpf.substring(0,9) + digito1.toString() + digito2.toString());
     }
 
-    public static boolean isCNPJValido(String cnpj) {
+  public static boolean isCNPJValido(String cnpj) {
         if ((cnpj==null)||(cnpj.length()!=14)) return false;
 
         Integer digito1 = calcularDigito(cnpj.substring(0,12), pesoCNPJ);

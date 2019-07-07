@@ -30,6 +30,9 @@ public interface AutenticacaoDao {
     @Query("SELECT * FROM autenticacao WHERE idAutenticacao = :id")
     public LiveData<AutenticacaoEntity> findAutenticacaoById(Long id);
 
+    @Query("SELECT * FROM autenticacao WHERE idAutenticacao = :id")
+    public AutenticacaoEntity findAutenticacaoId(Long id);
+
     @Query("SELECT idAutenticacao FROM autenticacao WHERE email = :emailEspec OR login = :loginEspec")
     public AutenticacaoEntity findAutenticacaoByEmailLogin(String emailEspec, String loginEspec);
 

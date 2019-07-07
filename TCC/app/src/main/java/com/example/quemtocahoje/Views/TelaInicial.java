@@ -35,7 +35,7 @@ public class TelaInicial extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final Intent telaEscolhaCadastro = new Intent(this, TelaEscolhaCadastro.class);
+        final Intent telaCadastroEspectador = new Intent(this, TelaCadastroEspectador.class);
         final Intent telaEsqueciSenha = new Intent(this, TelaEsqueceuaSenha.class);
         final Intent telaInicialEstabelecimento = new Intent(this, TelaInicialEstabelecimento.class);
         final Intent telaInicialMusico = new Intent(this, TelaInicialMusico.class);
@@ -83,7 +83,7 @@ public class TelaInicial extends AppCompatActivity {
             public void onClick(View v) {
                 //passando da tela inicial para a segunda tela
 
-                startActivity (telaEscolhaCadastro);
+                startActivity (telaCadastroEspectador);
             }
         });
 

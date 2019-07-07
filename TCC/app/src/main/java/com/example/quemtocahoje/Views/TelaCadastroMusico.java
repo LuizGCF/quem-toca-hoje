@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.quemtocahoje.Enum.TipoUsuario;
 import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
 import com.example.quemtocahoje.Persistencia.Entity.MusicoEntity;
+import com.example.quemtocahoje.Utility.MaskEditUtil;
 import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
 
@@ -38,6 +39,9 @@ public class TelaCadastroMusico extends AppCompatActivity {
 
         btnCadastrarMusico = findViewById(R.id.btnCadastrarMusico);
         btnCancelarMusico = findViewById(R.id.btnCancelarMusico);
+
+        // Aplicação da mascara
+        edtCelularMusico.addTextChangedListener(MaskEditUtil.mask(edtCelularMusico,MaskEditUtil.FORMAT_CELULAR));
 
         btnCadastrarMusico.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +84,7 @@ public class TelaCadastroMusico extends AppCompatActivity {
                 ,edtNomeArtisticoMusico.getText().toString().trim()
                 ,edtCelularMusico.getText().toString().trim()
                 ,es.getDataCriacao()
+                ,edtDescricaoMusico.getText().toString().trim()
         );
 
         return m;

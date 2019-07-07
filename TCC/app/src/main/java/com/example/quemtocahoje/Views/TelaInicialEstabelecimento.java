@@ -22,7 +22,7 @@ public class TelaInicialEstabelecimento extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_inicial_estabelecimento);
         final Intent telaLogin = new Intent(this, TelaInicial.class);
-        final Intent telaPesquisaEstabelecimento = new Intent(this,TelaPesquisaEstabelecimento.class);
+        final Intent telaPesquisaMusico = new Intent(this,TelaPesquisaMusico.class);
         final Intent telaProposta = new Intent(this,TelaProposta.class);
         txtNomeEstabelecimento = findViewById(R.id.txtNomeEstabelecimento);
         txtPesquisarInicialEstabelecimento = findViewById(R.id.txtPesquisarInicialEstabelecimento);
@@ -36,7 +36,7 @@ public class TelaInicialEstabelecimento extends AppCompatActivity {
         txtPesquisarInicialEstabelecimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(telaPesquisaEstabelecimento);
+                startActivity(telaPesquisaMusico);
             }
         });
 

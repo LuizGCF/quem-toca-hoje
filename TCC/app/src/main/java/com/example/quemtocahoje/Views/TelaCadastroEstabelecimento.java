@@ -14,6 +14,7 @@ import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
 import com.example.quemtocahoje.Utility.DefinirDatas;
+import com.example.quemtocahoje.Utility.MaskEditUtil;
 import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.quemtocahoje.Utility.VerificadorCpfCnpj;
 import com.example.tcc.R;
@@ -21,7 +22,7 @@ import com.example.tcc.R;
 public class TelaCadastroEstabelecimento extends AppCompatActivity {
 
     private EditText edtRazaoSocial;
-    private EditText edtCNPJ;
+    public EditText edtCNPJ;
     private EditText edtNomeFantasia;
     private EditText edtTelefone;
     private EditText edtInicioExpediente;
@@ -46,12 +47,26 @@ public class TelaCadastroEstabelecimento extends AppCompatActivity {
         btnCadastrarEstabelecimento = findViewById(R.id.btnCadastrarEstabelecimento);
         btnCancelarEstabelecimento = findViewById(R.id.btnCancelarEstabelecimento);
 
+        // Aplicação das mascaras
+        edtCNPJ.addTextChangedListener(MaskEditUtil.mask(edtCNPJ,MaskEditUtil.FORMAT_CNPJ));
+        edtTelefone.addTextChangedListener(MaskEditUtil.mask(edtTelefone,MaskEditUtil.FORMAT_FONE));
+        edtInicioExpediente.addTextChangedListener(MaskEditUtil.mask(edtInicioExpediente,MaskEditUtil.FORMAT_HORA));
+        edtFimExpediente.addTextChangedListener(MaskEditUtil.mask(edtFimExpediente,MaskEditUtil.FORMAT_HORA));
+
+
+
+
         btnCadastrarEstabelecimento.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+
+                String s = edtCNPJ.getText().toString();
+                s = s.replace("-","").replace("/","").replace(".","");
+
                 if(isCamposValidos(edtRazaoSocial,edtCNPJ,edtNomeFantasia,edtTelefone,edtInicioExpediente,edtFimExpediente,edtDescricao))
                 {
-                    if(VerificadorCpfCnpj.isCNPJValido(edtCNPJ.getText().toString()))
+
+                    if(VerificadorCpfCnpj.isCNPJValido(s))
                     {
                         if(!isCnpjCadastrado()) {
                             EstabelecimentoEntity e = prepararObjetoEstabelecimento();
@@ -117,4 +132,5 @@ public class TelaCadastroEstabelecimento extends AppCompatActivity {
                 ,es.getDataCriacao());
         return e;
     }
+
 }

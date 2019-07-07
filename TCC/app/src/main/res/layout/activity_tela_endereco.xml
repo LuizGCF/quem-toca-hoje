@@ -21,16 +21,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right">
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="43dp"
                 android:layout_height="match_parent"
-                android:text="CEP"
-                android:gravity="center" />
+                android:layout_marginRight="0dp"
+                android:gravity="center"
+                android:text="CEP" />
+
             <EditText
-                android:layout_marginRight="20dp"
-                android:layout_width="250dp"
+                android:id="@+id/edtCEPEndereco"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/edtCEPEndereco"/>
+                android:layout_marginRight="00dp" />
+
+            <Button
+                android:id="@+id/btnBuscarCep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="50dp"
+                android:background="@color/colorPrimary"
+                android:text="Buscar"
+                android:textColor="#FDFDFD"
+                android:textSize="8sp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
