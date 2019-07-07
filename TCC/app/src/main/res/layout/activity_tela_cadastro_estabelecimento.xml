@@ -49,7 +49,8 @@
                 android:id="@+id/edtCNPJ"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:width="200dp" />
+                android:width="200dp"
+                android:inputType="number"/>
         </LinearLayout>
 
         <LinearLayout
@@ -81,13 +82,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Telefone" />
+                android:text="Telefone"
+                />
 
             <EditText
                 android:id="@+id/edtTelefoneEstabelecimento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:width="200dp" />
+                android:width="200dp"
+                android:inputType="number"/>
         </LinearLayout>
 
         <LinearLayout
@@ -106,7 +109,8 @@
                 android:id="@+id/edtInicioExpediente"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:width="200dp" />
+                android:width="200dp"
+                android:inputType="number"/>
         </LinearLayout>
 
         <LinearLayout
@@ -125,7 +129,8 @@
                 android:id="@+id/edtFimExpediente"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:width="200dp" />
+                android:width="200dp"
+                android:inputType="number"/>
         </LinearLayout>
 
         <LinearLayout
