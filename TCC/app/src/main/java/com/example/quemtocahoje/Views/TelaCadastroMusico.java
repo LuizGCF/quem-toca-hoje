@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.quemtocahoje.Enum.TipoUsuario;
@@ -21,6 +23,7 @@ public class TelaCadastroMusico extends AppCompatActivity {
     private EditText edtCelularMusico;
     private EditText edtCidadeMusico;
     private EditText edtDescricaoMusico;
+    private RadioGroup rgpArtistaSolo;
 
     private Button btnCadastrarMusico;
     private Button btnCancelarMusico;
@@ -36,6 +39,7 @@ public class TelaCadastroMusico extends AppCompatActivity {
         edtCelularMusico = findViewById(R.id.edtCelularMusico);
         edtCidadeMusico = findViewById(R.id.edtCidadeMusico);
         edtDescricaoMusico = findViewById(R.id.edtDescricaoMusico);
+        rgpArtistaSolo = findViewById(R.id.rgpCarreiraSolo);
 
         btnCadastrarMusico = findViewById(R.id.btnCadastrarMusico);
         btnCancelarMusico = findViewById(R.id.btnCancelarMusico);
@@ -78,6 +82,9 @@ public class TelaCadastroMusico extends AppCompatActivity {
     }
 
     private MusicoEntity prepararObjetoMusico(){
+        RadioButton r = findViewById(rgpArtistaSolo.getCheckedRadioButtonId());
+        boolean valorArtistaSolo = r.getText().toString().equals("Sim")? true : false;
+
         EspectadorEntity es = (EspectadorEntity) getIntent().getSerializableExtra("objetoEspectador");
         MusicoEntity m = new MusicoEntity(null
                 ,es.getNomeEspectador()
@@ -85,6 +92,7 @@ public class TelaCadastroMusico extends AppCompatActivity {
                 ,edtCelularMusico.getText().toString().trim()
                 ,es.getDataCriacao()
                 ,edtDescricaoMusico.getText().toString().trim()
+                ,valorArtistaSolo
         );
 
         return m;
