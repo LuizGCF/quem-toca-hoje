@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,8 +32,16 @@ import com.example.quemtocahoje.Persistencia.Entity.MusicoEntity;
 import com.example.quemtocahoje.Utility.ConversaoArquivo;
 import com.example.quemtocahoje.Utility.DefinirDatas;
 import com.example.tcc.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 
 public class TelaUpload extends AppCompatActivity {
 
@@ -40,6 +49,9 @@ public class TelaUpload extends AppCompatActivity {
     Uri imagemUri = null;
     ByteArrayOutputStream bos = null;
     Cursor cursor = null;
+
+    FirebaseAuth auth;
+    DatabaseReference reference;
 
     private int STORAGE_PERMISSION_CODE = 23;
     private TextView txtNomeUsuarioUpload;
@@ -55,6 +67,8 @@ public class TelaUpload extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_upload);
+
+        auth = FirebaseAuth.getInstance();
 
         final Intent telaInicialEspectador = new Intent(this,TelaInicialEspectador.class);
         final Intent telaInicialEstabelecimento = new Intent(this,TelaInicialEstabelecimento.class);
@@ -136,6 +150,7 @@ public class TelaUpload extends AppCompatActivity {
             EspectadorEntity e = (EspectadorEntity) getIntent().getSerializableExtra("objetoEspectador");
             e.setAutenticacao_id(idUser);
             bd.espectadorDao().insertEspectador(e);
+            registrar(a.getLogin(),a.getEmail(),a.getSenha(),TipoUsuario.ESPECTADOR);
         }else if(tipo.equals(TipoUsuario.ESTABELECIMENTO.name())){
             EnderecoEntity end = (EnderecoEntity) getIntent().getSerializableExtra("objetoEndereco");
             Long idEndereco = bd.enderecoDao().insertEndereco(end);
@@ -193,6 +208,44 @@ public class TelaUpload extends AppCompatActivity {
             pessoa = e.getNomeEspectador();
         }
         return pessoa;
+    }
+
+    private void registrar(final String usuario, String email, String senha, final TipoUsuario tipoUsuario)
+    {
+        auth.createUserWithEmailAndPassword(email,senha)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        FirebaseUser usuariofirebase = auth.getCurrentUser();
+                        String idusuario = usuariofirebase.getUid();
+
+                        reference = FirebaseDatabase.getInstance().getReference("Usuarios");//.child(idusuario);
+
+                        HashMap<String,String> hashMap = new HashMap<>();
+
+                        hashMap.put("id",idusuario);
+                        hashMap.put("usuario",usuario);
+                        hashMap.put("tipoUsuario",tipoUsuario.name());
+                        //hashMap.put("id",idusuario);//colocaria as outras informaçoes abaixo atraves desse hash para cadastrar no firebase?
+                        reference.setValue(hashMap)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                            }
+                        });
+                               /* .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful())
+                                {
+
+                                }
+                            }
+                        })*/
+
+                    }
+                });
     }
 
 }
