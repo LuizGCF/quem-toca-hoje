@@ -159,11 +159,13 @@ public class TelaUpload extends AppCompatActivity {
             estab.setAutenticacao_id(idUser);
             estab.setEndereco_id(idEndereco);
             bd.estabelecimentoDao().insertEstabelecimento(estab);
+            registrar(a.getLogin(),a.getEmail(),a.getSenha(),TipoUsuario.ESTABELECIMENTO);
         }else if(tipo.equals(TipoUsuario.MUSICO.name())){
             MusicoEntity m = (MusicoEntity) getIntent().getSerializableExtra("objetoMusico");
             m.setAutenticacao_id(idUser);
 
             bd.musicoDao().insertMusico(m);
+            registrar(a.getLogin(),a.getEmail(),a.getSenha(),TipoUsuario.MUSICO);
         }
 
 
@@ -219,7 +221,7 @@ public class TelaUpload extends AppCompatActivity {
                         FirebaseUser usuariofirebase = auth.getCurrentUser();
                         String idusuario = usuariofirebase.getUid();
 
-                        reference = FirebaseDatabase.getInstance().getReference("Usuarios");//.child(idusuario);
+                        reference = FirebaseDatabase.getInstance().getReference("Usuarios").child(idusuario);
 
                         HashMap<String,String> hashMap = new HashMap<>();
 
