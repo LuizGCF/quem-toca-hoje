@@ -31,6 +31,7 @@ import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.MusicoEntity;
 import com.example.quemtocahoje.Utility.ConversaoArquivo;
 import com.example.quemtocahoje.Utility.DefinirDatas;
+import com.example.quemtocahoje.Utility.FirebaseRegistro;
 import com.example.tcc.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -53,6 +54,8 @@ public class TelaUpload extends AppCompatActivity {
     FirebaseAuth auth;
     DatabaseReference reference;
 
+    private FirebaseRegistro registro;
+
     private int STORAGE_PERMISSION_CODE = 23;
     private TextView txtNomeUsuarioUpload;
     private AppCompatImageView imgFotoUsuarioUpload;
@@ -67,8 +70,8 @@ public class TelaUpload extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_upload);
-
-        auth = FirebaseAuth.getInstance();
+        registro = new FirebaseRegistro(auth, reference);
+       // auth = FirebaseAuth.getInstance();
 
         final Intent telaInicialEspectador = new Intent(this,TelaInicialEspectador.class);
         final Intent telaInicialEstabelecimento = new Intent(this,TelaInicialEstabelecimento.class);
@@ -149,8 +152,8 @@ public class TelaUpload extends AppCompatActivity {
         if(tipo.equals(TipoUsuario.ESPECTADOR.name())){
             EspectadorEntity e = (EspectadorEntity) getIntent().getSerializableExtra("objetoEspectador");
             e.setAutenticacao_id(idUser);
-            bd.espectadorDao().insertEspectador(e);
-            registrar(a.getLogin(),a.getEmail(),a.getSenha(),TipoUsuario.ESPECTADOR);
+//            bd.espectadorDao().insertEspectador(e);
+            registro.registro(a.getLogin(),TipoUsuario.ESPECTADOR.name(),a.getEmail(),a.getSenha());
         }else if(tipo.equals(TipoUsuario.ESTABELECIMENTO.name())){
             EnderecoEntity end = (EnderecoEntity) getIntent().getSerializableExtra("objetoEndereco");
             Long idEndereco = bd.enderecoDao().insertEndereco(end);
@@ -158,14 +161,15 @@ public class TelaUpload extends AppCompatActivity {
             EstabelecimentoEntity estab = (EstabelecimentoEntity) getIntent().getSerializableExtra("objetoEstabelecimento");
             estab.setAutenticacao_id(idUser);
             estab.setEndereco_id(idEndereco);
-            bd.estabelecimentoDao().insertEstabelecimento(estab);
+//            bd.estabelecimentoDao().insertEstabelecimento(estab);
             registrar(a.getLogin(),a.getEmail(),a.getSenha(),TipoUsuario.ESTABELECIMENTO);
         }else if(tipo.equals(TipoUsuario.MUSICO.name())){
             MusicoEntity m = (MusicoEntity) getIntent().getSerializableExtra("objetoMusico");
-            m.setAutenticacao_id(idUser);
+            registro.registroMusico(m, a.getLogin(), a.getEmail(), a.getSenha());
+//           m.setAutenticacao_id(idUser);
 
-            bd.musicoDao().insertMusico(m);
-            registrar(a.getLogin(),a.getEmail(),a.getSenha(),TipoUsuario.MUSICO);
+//            bd.musicoDao().insertMusico(m);
+//           registrar(a.getLogin(),a.getEmail(),a.getSenha(),TipoUsuario.MUSICO);
         }
 
 
