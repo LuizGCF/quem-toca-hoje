@@ -9,10 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.quemtocahoje.Enum.StatusToken;
-import com.example.quemtocahoje.Persistencia.Banco;
 import com.example.quemtocahoje.Persistencia.Entity.TokenEntity;
 import com.example.quemtocahoje.Utility.DefinirDatas;
 import com.example.quemtocahoje.Utility.Email;
@@ -80,15 +78,17 @@ public class TelaEsqueceuaSenha extends AppCompatActivity {
         return true;
     }
 
+    //TODO reimplementar com Firebase
     protected Long isUsuarioCadastrado(EditText email){
         String e = email.getText().toString();
-        Long id = Banco.getDatabase(getApplicationContext()).autenticacaoDao().findAutenticacaoByEmail(e);
+        Long id = 0L; //dado do firebase;
         if(id != null)
             return id;
 
         return null;
     }
 
+    //TODO reimplementar com Firebase
     private void enviarEmail(Long idUser) {
         //Conteudo do email
         String destinatario = email.getText().toString().trim();
@@ -103,18 +103,20 @@ public class TelaEsqueceuaSenha extends AppCompatActivity {
         sm.execute();
     }
 
+    //TODO reimplementar com Firebase
     private boolean validarToken(Long idEspec){
-        Long id = Banco.getDatabase(getApplicationContext()).tokenDao().findAutenticacaoIdByToken(token.getText().toString());
+        Long id = 0L; // Banco.getDatabase(getApplicationContext()).tokenDao().findAutenticacaoIdByToken(token.getText().toString());
         if(id == idEspec){
-            Banco.getDatabase(getApplicationContext()).tokenDao().updateTokenValido(StatusToken.INATIVO.name(), token.getText().toString());
+            //Banco.getDatabase(getApplicationContext()).tokenDao().updateTokenValido(StatusToken.INATIVO.name(), token.getText().toString());
             return true;
         }
         return false;
 
     }
 
+    //TODO reimplementar com Firebase
     private void persistirToken(Long idUser, String email, String token){
         TokenEntity tokenEntity = new TokenEntity(idUser,email, token, StatusToken.ABERTO.name(), DefinirDatas.dataAtual());
-        Banco.getDatabase(getApplicationContext()).tokenDao().insertToken(tokenEntity);
+//        Banco.getDatabase(getApplicationContext()).tokenDao().insertToken(tokenEntity);
     }
 }

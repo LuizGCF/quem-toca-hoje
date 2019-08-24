@@ -7,10 +7,8 @@ import android.arch.persistence.room.PrimaryKey;
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity(tableName = "autenticacao")
 public class AutenticacaoEntity implements Serializable {
 
-    @PrimaryKey
     private Long idAutenticacao;
 
     private String email;

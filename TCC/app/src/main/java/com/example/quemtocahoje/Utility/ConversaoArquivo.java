@@ -7,10 +7,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-import com.example.quemtocahoje.Enum.TipoArquivo;
-import com.example.quemtocahoje.Persistencia.Banco;
-import com.example.quemtocahoje.Views.TelaUpload;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -54,8 +50,9 @@ public class ConversaoArquivo {
         return bos;
     }
 
+    //TODO atualizar com dados do Firebase
     public static Bitmap getImagem(String tipoArquivo, Context context, Long idUser){
-        byte[] b = Banco.getDatabase(context).arquivoDao().findAnexoArquivoById(idUser, tipoArquivo);
+        byte[] b = null; //retorno do banco
         ByteArrayInputStream imageStream = new ByteArrayInputStream(b);
         Bitmap imagem = BitmapFactory.decodeStream(imageStream);
         return imagem;

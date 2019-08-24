@@ -1,31 +1,25 @@
 package com.example.quemtocahoje.Persistencia.Entity;
 
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
-
 import java.io.Serializable;
 import java.util.List;
 
-@Entity(tableName = "musico"
-        ,foreignKeys = @ForeignKey(entity = AutenticacaoEntity.class, parentColumns = "idAutenticacao", childColumns = "autenticacao_id"))
 public class MusicoEntity implements Serializable {
 
-    @PrimaryKey
-    private Long idMusico;
-    private Long autenticacao_id;
+    private Long idqualquer;
+
+    private String idMusico;
+    private String autenticacao_id;
 
     private String nome;
     private String nomeArtistico;
     private String telefone;
     private String dataCriacao;
     private String descricao;
+    private String cidade;
     private boolean carreiraSoloAtiva;
 
     //usado só pra carregar os convites que ele possui, a tabela de convite possui o id fk do musico
-    @Ignore
     private List<String> convites;
 
     /*
@@ -33,7 +27,7 @@ public class MusicoEntity implements Serializable {
     private List<BandaEntity> bandas;
     */
 
-    public MusicoEntity(Long autenticacao_id, String nome, String nomeArtistico, String telefone, String dataCriacao, String descricao, boolean carreiraSoloAtiva) {
+    public MusicoEntity(String autenticacao_id, String nome, String nomeArtistico, String telefone, String dataCriacao, String descricao, String cidade, boolean carreiraSoloAtiva) {
         this.autenticacao_id = autenticacao_id;
         this.nome = nome;
         this.nomeArtistico = nomeArtistico;
@@ -41,14 +35,23 @@ public class MusicoEntity implements Serializable {
         this.dataCriacao = dataCriacao;
         this.descricao = descricao;
         this.carreiraSoloAtiva = carreiraSoloAtiva;
+        this.cidade = cidade;
     }
 
-    public Long getAutenticacao_id() {
+    public String getAutenticacao_id() {
         return autenticacao_id;
     }
 
-    public void setAutenticacao_id(Long autenticacao_id) {
+    public void setAutenticacao_id(String autenticacao_id) {
         this.autenticacao_id = autenticacao_id;
+    }
+
+    public Long getIdqualquer() {
+        return idqualquer;
+    }
+
+    public void setIdqualquer(Long idqualquer) {
+        this.idqualquer = idqualquer;
     }
 
     public String getNome() {
@@ -91,11 +94,11 @@ public class MusicoEntity implements Serializable {
         this.convites = convites;
     }
 
-    public Long getIdMusico() {
+    public String getIdMusico() {
         return idMusico;
     }
 
-    public void setIdMusico(Long idMusico) {
+    public void setIdMusico(String idMusico) {
         this.idMusico = idMusico;
     }
 
@@ -113,5 +116,13 @@ public class MusicoEntity implements Serializable {
 
     public void setCarreiraSoloAtiva(boolean carreiraSoloAtiva) {
         this.carreiraSoloAtiva = carreiraSoloAtiva;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 }

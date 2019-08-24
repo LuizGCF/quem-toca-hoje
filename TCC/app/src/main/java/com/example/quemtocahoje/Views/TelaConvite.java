@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.quemtocahoje.Enum.StatusConvite;
-import com.example.quemtocahoje.Persistencia.Banco;
 import com.example.quemtocahoje.Persistencia.Entity.ConviteEntity;
 import com.example.quemtocahoje.Utility.DefinirDatas;
 import com.example.quemtocahoje.Utility.Email;
@@ -56,14 +55,15 @@ public class TelaConvite extends AppCompatActivity {
     }
 
     private void notificarUsuario(){
-        if(Banco.getDatabase(getApplicationContext()).autenticacaoDao().findAutenticacaoByEmail(edtEmailConvite.getText().toString()) == null){
+        //TODO verificar se o convidado não é cadastrado no banco do Firebase
+        //if(Banco.getDatabase(getApplicationContext()).autenticacaoDao().findAutenticacaoByEmail(edtEmailConvite.getText().toString()) == null){
             String destinatario = edtEmailConvite.getText().toString().trim();
             String subject = "Convite para juntar-se à banda";
             String message = "Você foi convidado para uma banda. Instale nosso aplicativo para integrá-la!";
 
             Email sm = new Email(this, destinatario, subject, message);
             sm.execute();
-        }
+        //}
 
         //TODO alterar o banda_id quando a tabela dela estiver pronta
         ConviteEntity c = new ConviteEntity(null
@@ -71,7 +71,8 @@ public class TelaConvite extends AppCompatActivity {
                 , StatusConvite.ABERTO.name()
                 , DefinirDatas.dataAtual()
         );
-        Banco.getDatabase(getApplicationContext()).conviteDao().insertConvite(c);
+        //TODO persistir convite
+        //Banco.getDatabase(getApplicationContext()).conviteDao().insertConvite(c);
         Toast.makeText(TelaConvite.this,"Convite enviado!",Toast.LENGTH_LONG).show();
     }
 

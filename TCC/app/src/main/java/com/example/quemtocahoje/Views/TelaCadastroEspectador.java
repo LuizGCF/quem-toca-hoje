@@ -8,10 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.example.quemtocahoje.Enum.TipoUsuario;
-import com.example.quemtocahoje.Persistencia.Banco;
 import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
 import com.example.quemtocahoje.Utility.AESCrypt;
@@ -54,7 +52,7 @@ public class TelaCadastroEspectador extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(isCamposValidos(nomeEspectador, edtEmailEspectador, loginEspectador, senhaEspectador, confirmarSenhaEspectador)){
-                    if(isUsuarioUnico(loginEspectador)) {
+                   // if(isUsuarioUnico(loginEspectador)) {
                         if (isSenhaCorreta(senhaEspectador, confirmarSenhaEspectador)) {
                             String tipoUsuario = definirTipoUsuario(rgpPerfil);
                             AutenticacaoEntity a = criarObjetoAutenticacao(edtEmailEspectador, loginEspectador, senhaEspectador, tipoUsuario);
@@ -80,9 +78,9 @@ public class TelaCadastroEspectador extends AppCompatActivity {
                         } else {
                             Mensagem.notificar(TelaCadastroEspectador.this,"Senhas diferentes","As senhas diferem uma da outra.");
                         }
-                    }else{
+                    /*}else{
                         Mensagem.notificar(TelaCadastroEspectador.this,"Login existente","O login ou email digitado já existe em nosso banco de dados.");
-                    }
+                    }*/
                 }else{
                     Mensagem.notificar(TelaCadastroEspectador.this,"Campos invalidos","Um ou mais campos não foram preenchidos corretamente.");
                 }
@@ -106,8 +104,9 @@ public class TelaCadastroEspectador extends AppCompatActivity {
         confirmarSenhaEspectador.setText("");
     }
 
+    //TODO implementar com dados do room
     private boolean isUsuarioUnico(EditText loginEspectador) {
-        if(Banco.getDatabase(getApplicationContext()).autenticacaoDao().findAutenticacaoByEmailLogin(edtEmailEspectador.getText().toString(), loginEspectador.getText().toString()) != null)
+        if(false)
             return false;
 
         return true;
@@ -151,7 +150,7 @@ public class TelaCadastroEspectador extends AppCompatActivity {
     }
 
     //Prepara o objeto de Espectador para persistir
-    private EspectadorEntity criarObjectoEspectador(Long idAutenticacao, String nomeEspectador, String dataCriacao){
+    private EspectadorEntity criarObjectoEspectador(String idAutenticacao, String nomeEspectador, String dataCriacao){
         return new EspectadorEntity(idAutenticacao, nomeEspectador, dataCriacao);
     }
 

@@ -1,15 +1,10 @@
 package com.example.quemtocahoje.Views;
 
 import android.Manifest;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,28 +15,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.quemtocahoje.Enum.TipoArquivo;
 import com.example.quemtocahoje.Enum.TipoUsuario;
-import com.example.quemtocahoje.Persistencia.Banco;
-import com.example.quemtocahoje.Persistencia.Entity.ArquivoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EnderecoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.MusicoEntity;
 import com.example.quemtocahoje.Utility.ConversaoArquivo;
-import com.example.quemtocahoje.Utility.DefinirDatas;
+import com.example.quemtocahoje.Model.FirebaseRegistro;
 import com.example.tcc.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
 
 public class TelaUpload extends AppCompatActivity {
 
@@ -53,6 +39,8 @@ public class TelaUpload extends AppCompatActivity {
     FirebaseAuth auth;
     DatabaseReference reference;
 
+    private FirebaseRegistro registro;
+
     private int STORAGE_PERMISSION_CODE = 23;
     private TextView txtNomeUsuarioUpload;
     private AppCompatImageView imgFotoUsuarioUpload;
@@ -61,14 +49,13 @@ public class TelaUpload extends AppCompatActivity {
     private AppCompatImageView imgImagemUsuarioUpload3;
     private Button btnEncerrar;
     private LinearLayout linearImagensDemonstracao;
-    Long idUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_upload);
-
-        auth = FirebaseAuth.getInstance();
+        registro = new FirebaseRegistro(auth, reference);
+       // auth = FirebaseAuth.getInstance();
 
         final Intent telaInicialEspectador = new Intent(this,TelaInicialEspectador.class);
         final Intent telaInicialEstabelecimento = new Intent(this,TelaInicialEstabelecimento.class);
@@ -141,39 +128,27 @@ public class TelaUpload extends AppCompatActivity {
 
     private void persistirNovoUsuario(){
 
-        Banco bd = Banco.getDatabase(getApplicationContext());
         String tipo = getIntent().getStringExtra("tipoUsuario");
         AutenticacaoEntity a = (AutenticacaoEntity) getIntent().getSerializableExtra("objetoAutenticacao");
-        idUser = bd.autenticacaoDao().insertAutenticacao(a);
 
         if(tipo.equals(TipoUsuario.ESPECTADOR.name())){
             EspectadorEntity e = (EspectadorEntity) getIntent().getSerializableExtra("objetoEspectador");
-            e.setAutenticacao_id(idUser);
-            bd.espectadorDao().insertEspectador(e);
-            registrar(a.getLogin(),a.getEmail(),a.getSenha(),TipoUsuario.ESPECTADOR);
+            registro.registroEspectador(e,a.getLogin(),a.getEmail(),a.getSenha());
         }else if(tipo.equals(TipoUsuario.ESTABELECIMENTO.name())){
             EnderecoEntity end = (EnderecoEntity) getIntent().getSerializableExtra("objetoEndereco");
-            Long idEndereco = bd.enderecoDao().insertEndereco(end);
-
             EstabelecimentoEntity estab = (EstabelecimentoEntity) getIntent().getSerializableExtra("objetoEstabelecimento");
-            estab.setAutenticacao_id(idUser);
-            estab.setEndereco_id(idEndereco);
-            bd.estabelecimentoDao().insertEstabelecimento(estab);
-            registrar(a.getLogin(),a.getEmail(),a.getSenha(),TipoUsuario.ESTABELECIMENTO);
+            registro.registrarEstabelecimento(estab, end, a.getLogin(),a.getEmail(),a.getSenha());
         }else if(tipo.equals(TipoUsuario.MUSICO.name())){
             MusicoEntity m = (MusicoEntity) getIntent().getSerializableExtra("objetoMusico");
-            m.setAutenticacao_id(idUser);
-
-            bd.musicoDao().insertMusico(m);
-            registrar(a.getLogin(),a.getEmail(),a.getSenha(),TipoUsuario.MUSICO);
+            registro.registroMusico(m, a.getLogin(), a.getEmail(), a.getSenha());
         }
 
-
+        //TODO reimplementar com Firebase
         if(cursor != null || imagemUri != null) {
             //TODO alterar para identificar os tipos de arquivos certos
             bos = ConversaoArquivo.converterImagem(cursor, imagemUri);
-            ArquivoEntity arquivo = new ArquivoEntity(idUser, bos.toByteArray(), TipoArquivo.FOTO_PERFIL.name(), DefinirDatas.dataAtual());
-            Banco.getDatabase(getApplicationContext()).arquivoDao().insertArquivo(arquivo);
+            //ArquivoEntity arquivo = new ArquivoEntity(idUser, bos.toByteArray(), TipoArquivo.FOTO_PERFIL.name(), DefinirDatas.dataAtual());
+            //Banco.getDatabase(getApplicationContext()).arquivoDao().insertArquivo(arquivo);
         }
     }
 
@@ -211,43 +186,4 @@ public class TelaUpload extends AppCompatActivity {
         }
         return pessoa;
     }
-
-    private void registrar(final String usuario, String email, String senha, final TipoUsuario tipoUsuario)
-    {
-        auth.createUserWithEmailAndPassword(email,senha)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        FirebaseUser usuariofirebase = auth.getCurrentUser();
-                        String idusuario = usuariofirebase.getUid();
-
-                        reference = FirebaseDatabase.getInstance().getReference("Usuarios").child(idusuario);
-
-                        HashMap<String,String> hashMap = new HashMap<>();
-
-                        hashMap.put("id",idusuario);
-                        hashMap.put("usuario",usuario);
-                        hashMap.put("tipoUsuario",tipoUsuario.name());
-                        //hashMap.put("id",idusuario);//colocaria as outras informaçoes abaixo atraves desse hash para cadastrar no firebase?
-                        reference.setValue(hashMap)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-
-                            }
-                        });
-                               /* .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful())
-                                {
-
-                                }
-                            }
-                        })*/
-
-                    }
-                });
-    }
-
 }
