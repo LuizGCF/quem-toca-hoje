@@ -6,14 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.quemtocahoje.Enum.TipoUsuario;
-import com.example.quemtocahoje.Persistencia.Banco;
-import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
-import com.example.quemtocahoje.Utility.DefinirDatas;
 import com.example.quemtocahoje.Utility.MaskEditUtil;
 import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.quemtocahoje.Utility.VerificadorCpfCnpj;
@@ -68,16 +64,16 @@ public class TelaCadastroEstabelecimento extends AppCompatActivity {
 
                     if(VerificadorCpfCnpj.isCNPJValido(s))
                     {
-                        if(!isCnpjCadastrado()) {
+                        //if(!isCnpjCadastrado()) {
                             EstabelecimentoEntity e = prepararObjetoEstabelecimento();
                             telaEndereco.putExtra("tipoUsuario", TipoUsuario.ESTABELECIMENTO.name());
                             telaEndereco.putExtra("objetoAutenticacao", getIntent().getSerializableExtra("objetoAutenticacao"));
                             telaEndereco.putExtra("objetoEstabelecimento", e);
 
                             startActivity(telaEndereco);
-                        }else{
+                       /* }else{
                             Mensagem.notificar(TelaCadastroEstabelecimento.this, "CNPJ Cadastrado", "Esse CNPJ já foi cadastrado");
-                        }
+                        }*/
                     }
                     else
                         Mensagem.notificar(TelaCadastroEstabelecimento.this,"CNPJ Inválido","CNPJ não existente.");
@@ -109,8 +105,9 @@ public class TelaCadastroEstabelecimento extends AppCompatActivity {
         return true;
     }
 
+    //TODO reimplementar com dados do Firebase
     private boolean isCnpjCadastrado(){
-        if(Banco.getDatabase(getApplicationContext()).estabelecimentoDao().findEstabelecimentoByCNPJ(edtCNPJ.getText().toString()) != null)
+        if(true)
             return true;
 
         return false;
@@ -128,7 +125,6 @@ public class TelaCadastroEstabelecimento extends AppCompatActivity {
                 ,edtFimExpediente.getText().toString().trim()
                 ,edtTelefone.getText().toString().trim()
                 ,edtDescricao.getText().toString().trim()
-                ,TipoUsuario.ESTABELECIMENTO.name()
                 ,es.getDataCriacao());
         return e;
     }

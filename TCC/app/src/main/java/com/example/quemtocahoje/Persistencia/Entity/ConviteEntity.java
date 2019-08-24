@@ -1,13 +1,8 @@
 package com.example.quemtocahoje.Persistencia.Entity;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 
-//TODO FK de banda quando a tabela dela estiver pronta
-@Entity(tableName = "convite")
 public class ConviteEntity {
 
-    @PrimaryKey
     private Long idConvite;
     private Long banda_id;
 

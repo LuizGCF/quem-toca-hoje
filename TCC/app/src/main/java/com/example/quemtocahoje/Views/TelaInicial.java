@@ -1,9 +1,6 @@
 package com.example.quemtocahoje.Views;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,11 +10,6 @@ import android.widget.TextView;
 
 import com.example.quemtocahoje.DTO.AutenticacaoDTO;
 import com.example.quemtocahoje.Enum.TipoUsuario;
-import com.example.quemtocahoje.Persistencia.Banco;
-import com.example.quemtocahoje.Persistencia.Dao.AutenticacaoDao;
-import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
-import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
-import com.example.quemtocahoje.Persistencia.Entity.MusicoEntity;
 import com.example.quemtocahoje.Utility.AESCrypt;
 import com.example.quemtocahoje.Utility.DefinirDatas;
 import com.example.quemtocahoje.Utility.Mensagem;
@@ -54,18 +46,22 @@ public class TelaInicial extends AppCompatActivity {
                 if(isCamposValidos(edtLogin, edtSenha)){
                     AutenticacaoDTO autenticacao = autenticarLogin(edtLogin, edtSenha);
                     if(autenticacao != null){
-                        Banco.getDatabase(getApplicationContext()).autenticacaoDao().updateDataUltimoLogin(DefinirDatas.dataAtual(), autenticacao.getIdAutenticacao());
+                        //TODO atualizar último login no Firebase
+                        //Banco.getDatabase(getApplicationContext()).autenticacaoDao().updateDataUltimoLogin(DefinirDatas.dataAtual(), autenticacao.getIdAutenticacao());
                         if(autenticacao.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name())){
-                            String nome = Banco.getDatabase(getApplicationContext()).estabelecimentoDao().findEstabelecimentoByAutenticacao(autenticacao.getIdAutenticacao()).getNomeDono();
+                            //TODO retornar nome do usuário do Firebase
+                            String nome = "Nome Genérico"; // Banco.getDatabase(getApplicationContext()).estabelecimentoDao().findEstabelecimentoByAutenticacao(autenticacao.getIdAutenticacao()).getNomeDono();
                             telaInicialEstabelecimento.putExtra("nome",nome);
                             startActivity(telaInicialEstabelecimento);
                         }else if(autenticacao.getTipoUsuario().equals(TipoUsuario.MUSICO.name())){
-                            String nome = Banco.getDatabase(getApplicationContext()).musicoDao().findMusicoByAutenticacao(autenticacao.getIdAutenticacao()).getNome();
+                            //TODO retornar nome do usuário do Firebase
+                            String nome = "Nome Genérico"; //Banco.getDatabase(getApplicationContext()).musicoDao().findMusicoByAutenticacao(autenticacao.getIdAutenticacao()).getNome();
                             telaInicialMusico.putExtra("nome",nome);
                             startActivity(telaInicialMusico);
                         }else{
                             //System.out.println("ID: "+autenticacao.getIdAutenticacao()+"\n TIPO: "+autenticacao.getTipoUsuario());
-                            String nome = Banco.getDatabase(getApplicationContext()).espectadorDao().findEspectadorByAutenticacao(autenticacao.getIdAutenticacao()).getNomeEspectador();
+                            //TODO retornar nome do usuário do Firebase
+                            String nome = "Nome Genérico";//Banco.getDatabase(getApplicationContext()).espectadorDao().findEspectadorByAutenticacao(autenticacao.getIdAutenticacao()).getNomeEspectador();
                             telaInicialEspectador.putExtra("nome",nome);
                             startActivity(telaInicialEspectador);
                         }
@@ -96,8 +92,9 @@ public class TelaInicial extends AppCompatActivity {
 
     }
 
+    //TODO reimplementar com dados do Firebase
     private AutenticacaoDTO autenticarLogin(EditText l, EditText s){
-        try {
+       /*try {
             String login = l.getText().toString();
             String senha = AESCrypt.encrypt(s.getText().toString());
             AutenticacaoDTO dto = Banco.getDatabase(getApplicationContext()).autenticacaoDao().findAutenticacaoByLoginOuEmailESenha(login, login, senha);
@@ -106,7 +103,8 @@ public class TelaInicial extends AppCompatActivity {
         }catch(Exception e) {
             e.getMessage();
         }
-        return null;
+        return null;*/
+       return new AutenticacaoDTO(0L, TipoUsuario.ESPECTADOR.name());
     }
 
     private boolean isCamposValidos(EditText l, EditText s){

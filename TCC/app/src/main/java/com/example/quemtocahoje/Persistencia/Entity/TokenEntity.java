@@ -1,16 +1,9 @@
 package com.example.quemtocahoje.Persistencia.Entity;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.PrimaryKey;
-
 import java.io.Serializable;
 
-@Entity(tableName = "token"
-        ,foreignKeys = @ForeignKey(entity = AutenticacaoEntity.class, parentColumns = "idAutenticacao", childColumns ="autenticacao_id"))
 public class TokenEntity implements Serializable {
 
-    @PrimaryKey
     private Long idToken;
     private Long autenticacao_id;
 

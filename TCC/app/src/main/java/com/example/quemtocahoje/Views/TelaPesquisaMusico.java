@@ -15,20 +15,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.quemtocahoje.DTO.ItensListaBuscaDTO;
 import com.example.quemtocahoje.Enum.TipoArquivo;
-import com.example.quemtocahoje.POJO.Autenticacao;
-import com.example.quemtocahoje.POJO.Banda;
-import com.example.quemtocahoje.POJO.Musico;
-import com.example.quemtocahoje.Persistencia.Banco;
-import com.example.quemtocahoje.Persistencia.Entity.ArquivoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.MusicoEntity;
@@ -51,7 +44,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_pesquisa_musico);
 
-        carregarDados();
+        //carregarDados();
         carregarRecyclerView();
 
     }
@@ -64,11 +57,12 @@ public class TelaPesquisaMusico extends AppCompatActivity {
         lstResultadoPesquisaMusico.setLayoutManager(layoutManager);
         lstResultadoPesquisaMusico.setAdapter(adapter);
     }
-    private void carregarDados() {
+    //TODO reimplementar com Firebase
+    /*private void carregarDados() {
         allItens = new ArrayList<>();
-        Banco bd = Banco.getDatabase(getApplicationContext());
-        List<EstabelecimentoEntity> estabelecimentos =  bd.estabelecimentoDao().findAllEstabelecimentos();
-        List<MusicoEntity> musicos =  bd.musicoDao().findAllMusicos();
+        //Banco bd = Banco.getDatabase(getApplicationContext());
+        List<EstabelecimentoEntity> estabelecimentos =  //bd.estabelecimentoDao().findAllEstabelecimentos();
+        List<MusicoEntity> musicos =  //bd.musicoDao().findAllMusicos();
         try{
             for(EstabelecimentoEntity estabelecimento : estabelecimentos)
             {
@@ -99,9 +93,9 @@ public class TelaPesquisaMusico extends AppCompatActivity {
             Log.d("ERRO",e.getMessage());
         }
         //mock sem a imagem
-        /*allItens.add(new ItensListaBuscaDTO( null,"Titulo", "Subtitulo"));
-        allItens.add(new ItensListaBuscaDTO(null,"AA", "BB"));*/
-    }
+       //allItens.add(new ItensListaBuscaDTO( null,"Titulo", "Subtitulo"));
+       // allItens.add(new ItensListaBuscaDTO(null,"AA", "BB"));
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

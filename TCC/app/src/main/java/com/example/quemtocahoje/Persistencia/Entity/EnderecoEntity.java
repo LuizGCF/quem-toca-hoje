@@ -1,15 +1,11 @@
 package com.example.quemtocahoje.Persistencia.Entity;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(tableName = "endereco")
 public class EnderecoEntity implements Serializable {
 
-    @PrimaryKey
-    private Long idEndereco;
+    private String idEndereco;
 
     private String logradouro;
     private String bairro;
@@ -29,11 +25,11 @@ public class EnderecoEntity implements Serializable {
         this.dataCriacao = dataCriacao;
     }
 
-    public Long getIdEndereco() {
+    public String getIdEndereco() {
         return idEndereco;
     }
 
-    public void setIdEndereco(Long idEndereco) {
+    public void setIdEndereco(String idEndereco) {
         this.idEndereco = idEndereco;
     }
 

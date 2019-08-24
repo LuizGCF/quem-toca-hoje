@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.quemtocahoje.Persistencia.Banco;
 import com.example.quemtocahoje.Utility.AESCrypt;
 import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
@@ -64,12 +63,12 @@ public class TelaRedefinirSenha extends AppCompatActivity {
 
         return false;
     }
-
+    //TODo reimplementar com Firebase
     private void atualizarSenha(){
         try {
             Long idUser = getIntent().getLongExtra("idUser", -1L);
             String senha = AESCrypt.encrypt(novaSenha.getText().toString());
-            Banco.getDatabase(getApplicationContext()).autenticacaoDao().updateSenhaById(senha, idUser);
+            //Banco.getDatabase(getApplicationContext()).autenticacaoDao().updateSenhaById(senha, idUser);
         }catch(Exception e) {
             e.getMessage();
         }

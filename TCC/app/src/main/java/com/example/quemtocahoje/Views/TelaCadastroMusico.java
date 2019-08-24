@@ -92,6 +92,7 @@ public class TelaCadastroMusico extends AppCompatActivity {
                 ,edtCelularMusico.getText().toString().trim()
                 ,es.getDataCriacao()
                 ,edtDescricaoMusico.getText().toString().trim()
+                ,edtCidadeMusico.getText().toString().trim()
                 ,valorArtistaSolo
         );
 

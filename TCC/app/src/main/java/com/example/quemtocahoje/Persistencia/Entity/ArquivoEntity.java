@@ -1,17 +1,10 @@
 package com.example.quemtocahoje.Persistencia.Entity;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.PrimaryKey;
 
 import java.io.Serializable;
-import java.sql.Blob;
 
-@Entity(tableName = "arquivo",
-        foreignKeys = @ForeignKey(entity = AutenticacaoEntity.class, parentColumns = "idAutenticacao", childColumns = "autenticacao_id"))
 public class ArquivoEntity implements Serializable {
 
-    @PrimaryKey
     private Long idArquivo;
     private Long autenticacao_id;
 

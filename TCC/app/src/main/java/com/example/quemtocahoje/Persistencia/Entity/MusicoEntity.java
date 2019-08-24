@@ -1,19 +1,11 @@
 package com.example.quemtocahoje.Persistencia.Entity;
 
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
-
 import java.io.Serializable;
 import java.util.List;
 
-@Entity(tableName = "musico"
-        ,foreignKeys = @ForeignKey(entity = AutenticacaoEntity.class, parentColumns = "idAutenticacao", childColumns = "autenticacao_id"))
 public class MusicoEntity implements Serializable {
 
-    @PrimaryKey
     private Long idqualquer;
 
     private String idMusico;
@@ -24,10 +16,10 @@ public class MusicoEntity implements Serializable {
     private String telefone;
     private String dataCriacao;
     private String descricao;
+    private String cidade;
     private boolean carreiraSoloAtiva;
 
     //usado só pra carregar os convites que ele possui, a tabela de convite possui o id fk do musico
-    @Ignore
     private List<String> convites;
 
     /*
@@ -35,7 +27,7 @@ public class MusicoEntity implements Serializable {
     private List<BandaEntity> bandas;
     */
 
-    public MusicoEntity(String autenticacao_id, String nome, String nomeArtistico, String telefone, String dataCriacao, String descricao, boolean carreiraSoloAtiva) {
+    public MusicoEntity(String autenticacao_id, String nome, String nomeArtistico, String telefone, String dataCriacao, String descricao, String cidade, boolean carreiraSoloAtiva) {
         this.autenticacao_id = autenticacao_id;
         this.nome = nome;
         this.nomeArtistico = nomeArtistico;
@@ -43,6 +35,7 @@ public class MusicoEntity implements Serializable {
         this.dataCriacao = dataCriacao;
         this.descricao = descricao;
         this.carreiraSoloAtiva = carreiraSoloAtiva;
+        this.cidade = cidade;
     }
 
     public String getAutenticacao_id() {
@@ -123,5 +116,13 @@ public class MusicoEntity implements Serializable {
 
     public void setCarreiraSoloAtiva(boolean carreiraSoloAtiva) {
         this.carreiraSoloAtiva = carreiraSoloAtiva;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 }

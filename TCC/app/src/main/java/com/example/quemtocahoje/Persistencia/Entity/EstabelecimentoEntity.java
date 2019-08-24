@@ -1,24 +1,14 @@
 package com.example.quemtocahoje.Persistencia.Entity;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.PrimaryKey;
 
 
 import java.io.Serializable;
 
-@Entity(tableName = "estabelecimento"
-        ,foreignKeys =
-        {
-         @ForeignKey(entity = AutenticacaoEntity.class, parentColumns = "idAutenticacao", childColumns = "autenticacao_id")
-        ,@ForeignKey(entity = EnderecoEntity.class, parentColumns = "idEndereco", childColumns = "endereco_id")
-        })
 public class EstabelecimentoEntity implements Serializable {
 
-    @PrimaryKey
-    private Long idEstabelecimento;
-    private Long autenticacao_id;
-    private Long endereco_id;
+    private String idEstabelecimento;
+    private String autenticacao_id;
+    private String endereco_id;
 
     private String nomeDono;
     private String razaoSocial;
@@ -28,12 +18,11 @@ public class EstabelecimentoEntity implements Serializable {
     private String horaTermino;
     private String telefone;
     private String descricao;
-    private String tipoUsuario;
 
     private String dataCriacao;
 
 
-    public EstabelecimentoEntity(Long autenticacao_id, Long endereco_id, String nomeDono, String razaoSocial, String cnpj, String nomeFantasia, String horaInicio, String horaTermino, String telefone, String descricao, String tipoUsuario, String dataCriacao) {
+    public EstabelecimentoEntity(String autenticacao_id, String endereco_id, String nomeDono, String razaoSocial, String cnpj, String nomeFantasia, String horaInicio, String horaTermino, String telefone, String descricao, String dataCriacao) {
         this.autenticacao_id = autenticacao_id;
         this.endereco_id = endereco_id;
         this.nomeDono = nomeDono;
@@ -44,7 +33,6 @@ public class EstabelecimentoEntity implements Serializable {
         this.horaTermino = horaTermino;
         this.telefone = telefone;
         this.descricao = descricao;
-        this.tipoUsuario = tipoUsuario;
         this.dataCriacao = dataCriacao;
     }
 
@@ -56,11 +44,11 @@ public class EstabelecimentoEntity implements Serializable {
         this.dataCriacao = dataCriacao;
     }
 
-    public Long getIdEstabelecimento() {
+    public String getIdEstabelecimento() {
         return idEstabelecimento;
     }
 
-    public void setIdEstabelecimento(Long idEstabelecimento) {
+    public void setIdEstabelecimento(String idEstabelecimento) {
         this.idEstabelecimento = idEstabelecimento;
     }
 
@@ -72,19 +60,19 @@ public class EstabelecimentoEntity implements Serializable {
         this.nomeDono = nomeDono;
     }
 
-    public Long getAutenticacao_id() {
+    public String getAutenticacao_id() {
         return autenticacao_id;
     }
 
-    public void setAutenticacao_id(Long autenticacao_id) {
+    public void setAutenticacao_id(String autenticacao_id) {
         this.autenticacao_id = autenticacao_id;
     }
 
-    public Long getEndereco_id() {
+    public String getEndereco_id() {
         return endereco_id;
     }
 
-    public void setEndereco_id(Long endereco_id) {
+    public void setEndereco_id(String endereco_id) {
         this.endereco_id = endereco_id;
     }
 
@@ -110,14 +98,6 @@ public class EstabelecimentoEntity implements Serializable {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
-    }
-
-    public String getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    public void setTipoUsuario(String tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
     }
 
     public String getNomeFantasia() {
