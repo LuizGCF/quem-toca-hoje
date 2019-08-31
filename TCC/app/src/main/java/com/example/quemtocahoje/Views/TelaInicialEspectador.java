@@ -3,10 +3,16 @@ package com.example.quemtocahoje.Views;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.example.tcc.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class TelaInicialEspectador extends AppCompatActivity {
     private TextView txtNomeEspectador;
@@ -14,10 +20,16 @@ public class TelaInicialEspectador extends AppCompatActivity {
     private TextView txtPerfilInicialEspectador;
     private TextView txtSairInicialEstabelecimento;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_inicial_espectador);
+
+        //Toolbar para fazer o logout
+        //Toolbar toolbar = findViewById(R.id.);
+
         final Intent telaLogin = new Intent(this, TelaInicial.class);
         txtNomeEspectador = findViewById(R.id.txtNomeEspectador);
         txtPesquisaInicialEspectador = findViewById(R.id.txtPesquisaInicialEspectador);
@@ -33,6 +45,35 @@ public class TelaInicialEspectador extends AppCompatActivity {
                 finishAffinity();
             }
         });
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        /*MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_login, menu);
+        Button a = (Button) menu.findItem(R.id.logout);
+        a.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });*/
+
+        getMenuInflater().inflate(R.menu.menu_login,menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(this,TelaInicial.class));
+                finish();
+                return true;
+        }
+        return false;
     }
 
     private String preencherNomeUsuario()

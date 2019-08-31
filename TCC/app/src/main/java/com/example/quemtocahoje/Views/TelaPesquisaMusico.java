@@ -97,7 +97,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
        // allItens.add(new ItensListaBuscaDTO(null,"AA", "BB"));
     }*/
 
-    @Override
+   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_toolbar, menu);
@@ -122,7 +122,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
         return true;
     }
 
-/*class CustomAdapter extends BaseAdapter{
+/*class CustomAdapter exte nds BaseAdapter{
 
         @Override
         public int getCount() {

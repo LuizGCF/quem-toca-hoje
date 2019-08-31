@@ -92,7 +92,7 @@ public class FirebaseRegistro implements Serializable {
                         HashMap<String,String> hashMap = new HashMap<>();
 
                         hashMap.put("idEspectador", idespectador);
-                        hashMap.put("autenticacaoId",espectador.getAutenticacao_id());
+                        hashMap.put("autenticacao_id",espectador.getAutenticacao_id());
                         hashMap.put("nomeEspectador",espectador.getNomeEspectador());
                         hashMap.put("dataCriacao", DefinirDatas.dataAtual());
                         //hashMap.put("id",idusuario);//colocaria as outras informaçoes abaixo atraves desse hash para cadastrar no firebase?

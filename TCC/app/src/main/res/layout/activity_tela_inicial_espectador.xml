@@ -4,7 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.quemtocahoje.Views.TelaInicialEspectador">
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+    >
+    <!--<android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarEspectador"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark">
+
+    </android.support.v7.widget.Toolbar>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
