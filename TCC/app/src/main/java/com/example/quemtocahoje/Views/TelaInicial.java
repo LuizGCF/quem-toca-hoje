@@ -10,15 +10,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.quemtocahoje.DTO.AutenticacaoDAO;
 import com.example.quemtocahoje.DTO.AutenticacaoDTO;
-import com.example.quemtocahoje.DTO.TestDAO;
-import com.example.quemtocahoje.DTO.TestDTO;
-import com.example.quemtocahoje.Enum.TabelasFirebase;
 import com.example.quemtocahoje.Enum.TipoUsuario;
-import com.example.quemtocahoje.POJO.Espectador;
-import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
 import com.example.quemtocahoje.Utility.AESCrypt;
-import com.example.quemtocahoje.Utility.DefinirDatas;
 import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,11 +21,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class TelaInicial extends AppCompatActivity {
 
@@ -87,8 +79,10 @@ public class TelaInicial extends AppCompatActivity {
                 if(isCamposValidos(edtLogin, edtSenha)){
                     try
                     {
+                        AutenticacaoDAO a = new AutenticacaoDAO();
+                        a.autenticar();//
                         final String s = AESCrypt.encrypt(edtSenha.getText().toString());
-                        auth.signInWithEmailAndPassword(edtLogin.getText().toString(), s)
+                        /*auth.signInWithEmailAndPassword(edtLogin.getText().toString(), s)
                                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -96,8 +90,9 @@ public class TelaInicial extends AppCompatActivity {
 
                                             FirebaseUser user = auth.getCurrentUser();
 
-                                            TestDAO test = new TestDAO(FirebaseDatabase.getInstance(),reference,user);
-                                            TestDTO d = test.recuperarAutenticacao(edtLogin.getText().toString(),s);
+
+                                            //AutenticacaoDAO test = new AutenticacaoDAO(FirebaseDatabase.getInstance(),reference,user);
+                                            //AutenticacaoDTO d = test.recuperarAutenticacao(edtLogin.getText().toString(),s);
 
                                             telaInicialEspectador.putExtra("nome","Nome Mockado sucesso login");
                                             startActivity(telaInicialEspectador);
@@ -113,14 +108,14 @@ public class TelaInicial extends AppCompatActivity {
                                                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                                                 }
-                                            });*/
+                                            });//
                                         } else {
                                             Toast.makeText(TelaInicial.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                         }
 
                                     }
                                 });
-
+*/
                     }
                     catch (Exception e)
                     {
@@ -188,7 +183,7 @@ public class TelaInicial extends AppCompatActivity {
             e.getMessage();
         }
         return null;*/
-       return new AutenticacaoDTO(0L, TipoUsuario.ESPECTADOR.name());
+       return new AutenticacaoDTO();//AutenticacaoDTO(0L, TipoUsuario.ESPECTADOR.name());
     }
 
     private boolean isCamposValidos(EditText l, EditText s){

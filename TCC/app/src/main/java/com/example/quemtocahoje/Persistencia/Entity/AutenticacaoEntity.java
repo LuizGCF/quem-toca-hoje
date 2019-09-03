@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class AutenticacaoEntity implements Serializable {
 
-    private Long idAutenticacao;
+    private String id;
 
     private String email;
     private String login;
@@ -18,7 +18,9 @@ public class AutenticacaoEntity implements Serializable {
     private String dataCriacao;
     private String dataUltimoLogin;
 
+    public AutenticacaoEntity(){
 
+    }
 
     public AutenticacaoEntity(String email, String login, String senha, String tipoUsuario, String dataCriacao, String dataUltimoLogin) {
         this.email = email;
@@ -37,12 +39,12 @@ public class AutenticacaoEntity implements Serializable {
         this.email = email;
     }
 
-    public Long getIdAutenticacao() {
-        return idAutenticacao;
+    public String getId() {
+        return id;
     }
 
-    public void setIdAutenticacao(Long idAutenticacao) {
-        this.idAutenticacao = idAutenticacao;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getLogin() {
