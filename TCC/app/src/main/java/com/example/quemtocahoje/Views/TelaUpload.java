@@ -55,7 +55,6 @@ public class TelaUpload extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_upload);
         registro = new FirebaseRegistro(auth, reference);
-       // auth = FirebaseAuth.getInstance();
 
         final Intent telaInicialEspectador = new Intent(this,TelaInicialEspectador.class);
         final Intent telaInicialEstabelecimento = new Intent(this,TelaInicialEstabelecimento.class);
@@ -133,14 +132,14 @@ public class TelaUpload extends AppCompatActivity {
 
         if(tipo.equals(TipoUsuario.ESPECTADOR.name())){
             EspectadorEntity e = (EspectadorEntity) getIntent().getSerializableExtra("objetoEspectador");
-            registro.registroEspectador(e,a.getLogin(),a.getEmail(),a.getSenha());
+            registro.registro(a.getLogin(),tipo,a.getEmail(),a.getSenha(),e, null, null, null);
         }else if(tipo.equals(TipoUsuario.ESTABELECIMENTO.name())){
             EnderecoEntity end = (EnderecoEntity) getIntent().getSerializableExtra("objetoEndereco");
             EstabelecimentoEntity estab = (EstabelecimentoEntity) getIntent().getSerializableExtra("objetoEstabelecimento");
-            registro.registrarEstabelecimento(estab, end, a.getLogin(),a.getEmail(),a.getSenha());
+            registro.registro(a.getLogin(),tipo, a.getEmail(),a.getSenha(), null, null, estab, end);
         }else if(tipo.equals(TipoUsuario.MUSICO.name())){
             MusicoEntity m = (MusicoEntity) getIntent().getSerializableExtra("objetoMusico");
-            registro.registroMusico(m, a.getLogin(), a.getEmail(), a.getSenha());
+            registro.registro(a.getLogin(), tipo, a.getEmail(), a.getSenha(),null, m, null, null);
         }
 
         //TODO reimplementar com Firebase

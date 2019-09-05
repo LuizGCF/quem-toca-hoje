@@ -18,9 +18,7 @@ public class AutenticacaoEntity implements Serializable {
     private String dataCriacao;
     private String dataUltimoLogin;
 
-    public AutenticacaoEntity(){
-
-    }
+    public AutenticacaoEntity(){}
 
     public AutenticacaoEntity(String email, String login, String senha, String tipoUsuario, String dataCriacao, String dataUltimoLogin) {
         this.email = email;

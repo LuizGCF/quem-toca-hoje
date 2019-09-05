@@ -15,6 +15,10 @@ public class AutenticacaoDTO {
         this.senha = senha;
         this.nome = nome;
         this.tipoUsuario = tipoUsuario;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+
     }
 
     public String getIdAutenticacao() {
@@ -56,4 +60,5 @@ public class AutenticacaoDTO {
     public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
+
 }

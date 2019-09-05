@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +32,8 @@ public class TelaInicial extends AppCompatActivity {
     private TextView txtEsqueceuSuaSenha;
     private EditText edtLogin;
     private EditText edtSenha;
+
+    private AutenticacaoDAO dao;
 
     FirebaseUser firebaseUser;
     FirebaseAuth auth;
@@ -65,6 +68,7 @@ public class TelaInicial extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
+        dao = new AutenticacaoDAO();
 
         setContentView(R.layout.activity_tela_inicial);
         btnLogin = findViewById(R.id.btnLogin);
@@ -96,11 +100,6 @@ public class TelaInicial extends AppCompatActivity {
 
                                             telaInicialEspectador.putExtra("nome","Nome Mockado sucesso login");
                                             startActivity(telaInicialEspectador);
-                                           /* reference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Usuarios.name()).child(TipoUsuario.ESPECTADOR.name()).child(user.getUid());
-                                            reference.addValueEventListener(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                    EspectadorEntity e = dataSnapshot.getValue(EspectadorEntity.class);
 
                                                 }
 
@@ -124,7 +123,7 @@ public class TelaInicial extends AppCompatActivity {
 
                     /*
                     AutenticacaoDTO autenticacao = autenticarLogin(edtLogin, edtSenha);
-                    if(autenticacao != null){
+                    if(autenticacao.getTipoUsuario() != null){
                         //TODO atualizar último login no Firebase
                         //Banco.getDatabase(getApplicationContext()).autenticacaoDao().updateDataUltimoLogin(DefinirDatas.dataAtual(), autenticacao.getIdAutenticacao());
                         if(autenticacao.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name())){
@@ -173,12 +172,11 @@ public class TelaInicial extends AppCompatActivity {
 
     //TODO reimplementar com dados do Firebase
     private AutenticacaoDTO autenticarLogin(EditText l, EditText s){
-       /*try {
+        /*AutenticacaoDTO dto = new AutenticacaoDTO();
+        try {
             String login = l.getText().toString();
             String senha = AESCrypt.encrypt(s.getText().toString());
-            AutenticacaoDTO dto = Banco.getDatabase(getApplicationContext()).autenticacaoDao().findAutenticacaoByLoginOuEmailESenha(login, login, senha);
-            if(dto != null)
-                return dto;
+            dto = dao.recuperarAutenticacao(login, senha);
         }catch(Exception e) {
             e.getMessage();
         }
