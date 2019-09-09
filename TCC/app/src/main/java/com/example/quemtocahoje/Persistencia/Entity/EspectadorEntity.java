@@ -11,6 +11,8 @@ public class EspectadorEntity implements Serializable {
     private String nomeEspectador;
     private String dataCriacao;
 
+    public EspectadorEntity(){}
+
     public EspectadorEntity(String autenticacao_id, String nomeEspectador, String dataCriacao) {
         this.autenticacao_id = autenticacao_id;
         this.nomeEspectador = nomeEspectador;

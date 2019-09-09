@@ -6,7 +6,7 @@ import java.util.List;
 
 public class MusicoEntity implements Serializable {
 
-    private Long idqualquer;
+    //private Long idqualquer;
 
     private String idMusico;
     private String autenticacao_id;
@@ -38,6 +38,8 @@ public class MusicoEntity implements Serializable {
         this.cidade = cidade;
     }
 
+    public MusicoEntity(){}
+
     public String getAutenticacao_id() {
         return autenticacao_id;
     }
@@ -46,13 +48,13 @@ public class MusicoEntity implements Serializable {
         this.autenticacao_id = autenticacao_id;
     }
 
-    public Long getIdqualquer() {
+    /*public Long getIdqualquer() {
         return idqualquer;
     }
 
     public void setIdqualquer(Long idqualquer) {
         this.idqualquer = idqualquer;
-    }
+    }*/
 
     public String getNome() {
         return nome;

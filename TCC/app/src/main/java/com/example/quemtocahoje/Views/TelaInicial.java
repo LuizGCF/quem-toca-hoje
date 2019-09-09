@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.quemtocahoje.DTO.AutenticacaoDAO;
 import com.example.quemtocahoje.DTO.AutenticacaoDTO;
 import com.example.quemtocahoje.Enum.TipoUsuario;
+import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
 import com.example.quemtocahoje.Utility.AESCrypt;
 import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
@@ -22,8 +23,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class TelaInicial extends AppCompatActivity {
 
@@ -44,18 +48,49 @@ public class TelaInicial extends AppCompatActivity {
     public void onStart() {
         super.onStart();
 
-        final Intent telaCadastroEspectador = new Intent(this, TelaCadastroEspectador.class);
-        final Intent telaEsqueciSenha = new Intent(this, TelaEsqueceuaSenha.class);
-        final Intent telaInicialEstabelecimento = new Intent(this, TelaInicialEstabelecimento.class);
-        final Intent telaInicialMusico = new Intent(this, TelaInicialMusico.class);
-        final Intent telaInicialEspectador = new Intent(this, TelaInicialEspectador.class);
-
         firebaseUser = auth.getCurrentUser();
-        if(firebaseUser!=null)
+        final AutenticacaoDAO a = new AutenticacaoDAO();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Autenticacao");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){//para cada usuario no autenticacao, verificar login/senha para
+                    final AutenticacaoEntity entidade = snapshot.getValue(AutenticacaoEntity.class);
+                    if(firebaseUser != null)
+                    {
+                        if(entidade.getId().equals(firebaseUser.getUid()))
+                        {
+                            if(entidade.getTipoUsuario().equals(TipoUsuario.MUSICO.name()))
+                            {
+                                a.loginMusico(entidade.getId(),getApplicationContext());
+                            }
+                            else if(entidade.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name()))
+                            {
+                                a.loginEstabelecimento(entidade.getId(),getApplicationContext());
+                            }
+                            else if(entidade.getTipoUsuario().equals(TipoUsuario.ESPECTADOR.name()))
+                            {
+                                a.loginEspectador(entidade.getId(),getApplicationContext());
+                            }
+                        }
+                    }
+                    else
+                        break;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        /*if(firebaseUser!=null)
         {
-            telaInicialEspectador.putExtra("nome","Nome Mockado sucesso login");
+            telaInicialEspectador.putExtra("nome",auth.getCurrentUser().getDisplayName());
             startActivity(telaInicialEspectador);
-        }
+        }*/
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +119,9 @@ public class TelaInicial extends AppCompatActivity {
                     try
                     {
                         AutenticacaoDAO a = new AutenticacaoDAO();
-                        a.autenticar();//
                         final String s = AESCrypt.encrypt(edtSenha.getText().toString());
+                        a.autenticar(edtLogin.getText().toString(),s,auth,getApplicationContext());//
+
                         /*auth.signInWithEmailAndPassword(edtLogin.getText().toString(), s)
                                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                     @Override

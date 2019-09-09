@@ -36,6 +36,8 @@ public class EstabelecimentoEntity implements Serializable {
         this.dataCriacao = dataCriacao;
     }
 
+    public EstabelecimentoEntity(){}
+
     public String getDataCriacao() {
         return dataCriacao;
     }
