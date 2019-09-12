@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import com.example.quemtocahoje.DTO.AutenticacaoDTO;
 import com.example.tcc.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -78,6 +79,7 @@ public class TelaInicialEspectador extends AppCompatActivity {
 
     private String preencherNomeUsuario()
     {
-        return getIntent().getStringExtra("nome");
+       AutenticacaoDTO dto = (AutenticacaoDTO) getIntent().getSerializableExtra("dtoAutenticacao");
+        return dto.getNome();
     }
 }

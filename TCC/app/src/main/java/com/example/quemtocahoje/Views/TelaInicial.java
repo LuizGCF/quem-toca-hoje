@@ -11,11 +11,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.quemtocahoje.DTO.AutenticacaoDAO;
+import com.example.quemtocahoje.Model.AutenticacaoDAO;
 import com.example.quemtocahoje.DTO.AutenticacaoDTO;
 import com.example.quemtocahoje.Enum.TipoUsuario;
 import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
 import com.example.quemtocahoje.Utility.AESCrypt;
+import com.example.quemtocahoje.Utility.GenericCallback;
 import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,7 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class TelaInicial extends AppCompatActivity {
+public class TelaInicial extends AppCompatActivity{
 
     private Button btnLogin;
     private TextView txtCadastro;
@@ -120,71 +121,18 @@ public class TelaInicial extends AppCompatActivity {
                     {
                         AutenticacaoDAO a = new AutenticacaoDAO();
                         final String s = AESCrypt.encrypt(edtSenha.getText().toString());
-                        a.autenticar(edtLogin.getText().toString(),s,auth,getApplicationContext());//
+                        a.autenticar(edtLogin.getText().toString(),s,auth,TelaInicial.this);
 
-                        /*auth.signInWithEmailAndPassword(edtLogin.getText().toString(), s)
-                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
-
-                                            FirebaseUser user = auth.getCurrentUser();
-
-
-                                            //AutenticacaoDAO test = new AutenticacaoDAO(FirebaseDatabase.getInstance(),reference,user);
-                                            //AutenticacaoDTO d = test.recuperarAutenticacao(edtLogin.getText().toString(),s);
-
-                                            telaInicialEspectador.putExtra("nome","Nome Mockado sucesso login");
-                                            startActivity(telaInicialEspectador);
-
-                                                }
-
-                                                @Override
-                                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                                }
-                                            });//
-                                        } else {
-                                            Toast.makeText(TelaInicial.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                                        }
-
-                                    }
-                                });
-*/
                     }
                     catch (Exception e)
                     {
                         e.printStackTrace();
                     }
 
-                    /*
-                    AutenticacaoDTO autenticacao = autenticarLogin(edtLogin, edtSenha);
-                    if(autenticacao.getTipoUsuario() != null){
-                        //TODO atualizar último login no Firebase
-                        //Banco.getDatabase(getApplicationContext()).autenticacaoDao().updateDataUltimoLogin(DefinirDatas.dataAtual(), autenticacao.getIdAutenticacao());
-                        if(autenticacao.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name())){
-                            //TODO retornar nome do usuário do Firebase
-                            String nome = "Nome Genérico"; // Banco.getDatabase(getApplicationContext()).estabelecimentoDao().findEstabelecimentoByAutenticacao(autenticacao.getIdAutenticacao()).getNomeDono();
-                            //telaInicialEstabelecimento.putExtra("nome",nome);
-                            //startActivity(telaInicialEstabelecimento);
-                        }else if(autenticacao.getTipoUsuario().equals(TipoUsuario.MUSICO.name())){
-                            //TODO retornar nome do usuário do Firebase
-                            String nome = "Nome Genérico"; //Banco.getDatabase(getApplicationContext()).musicoDao().findMusicoByAutenticacao(autenticacao.getIdAutenticacao()).getNome();
-                            //telaInicialMusico.putExtra("nome",nome);
-                            startActivity(telaInicialMusico);
-                        }else{
-                            //System.out.println("ID: "+autenticacao.getIdAutenticacao()+"\n TIPO: "+autenticacao.getTipoUsuario());
-                            //TODO retornar nome do usuário do Firebase
-                            String nome = "Nome Genérico";//Banco.getDatabase(getApplicationContext()).espectadorDao().findEspectadorByAutenticacao(autenticacao.getIdAutenticacao()).getNomeEspectador();
-                            //telaInicialEspectador.putExtra("nome",nome);
-                            //startActivity(telaInicialEspectador);
-                        }
-                    }else{
-                        Mensagem.notificar(TelaInicial.this,"Usuário Inválido","Login e/ou senha incorretos");
-                    }*/
-                }else{
-                    Mensagem.notificar(TelaInicial.this,"Campos Inválidos","Um ou mais campos não foram preenchidos corretamente");
-                }
+                    //TODO atualizar último login no Firebase
+                    }else {
+                        Mensagem.notificar(TelaInicial.this, "Campos Inválidos", "Um ou mais campos não foram preenchidos corretamente");
+                    }
             }
         });
 
@@ -204,20 +152,6 @@ public class TelaInicial extends AppCompatActivity {
             }
         });
 
-    }
-
-    //TODO reimplementar com dados do Firebase
-    private AutenticacaoDTO autenticarLogin(EditText l, EditText s){
-        /*AutenticacaoDTO dto = new AutenticacaoDTO();
-        try {
-            String login = l.getText().toString();
-            String senha = AESCrypt.encrypt(s.getText().toString());
-            dto = dao.recuperarAutenticacao(login, senha);
-        }catch(Exception e) {
-            e.getMessage();
-        }
-        return null;*/
-       return new AutenticacaoDTO();//AutenticacaoDTO(0L, TipoUsuario.ESPECTADOR.name());
     }
 
     private boolean isCamposValidos(EditText l, EditText s){
