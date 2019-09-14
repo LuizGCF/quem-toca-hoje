@@ -77,7 +77,7 @@ public class TelaInicialEspectador extends AppCompatActivity {
         return false;
     }
 
-    private String preencherNomeUsuario()
+    private String preencherNomeUsuario()//passar o intent assim ao cadastrar tbm
     {
        AutenticacaoDTO dto = (AutenticacaoDTO) getIntent().getSerializableExtra("dtoAutenticacao");
         return dto.getNome();

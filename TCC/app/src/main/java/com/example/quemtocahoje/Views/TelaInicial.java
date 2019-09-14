@@ -16,7 +16,7 @@ import com.example.quemtocahoje.DTO.AutenticacaoDTO;
 import com.example.quemtocahoje.Enum.TipoUsuario;
 import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
 import com.example.quemtocahoje.Utility.AESCrypt;
-import com.example.quemtocahoje.Utility.GenericCallback;
+
 import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -44,6 +44,7 @@ public class TelaInicial extends AppCompatActivity{
     FirebaseAuth auth;
     DatabaseReference reference;
 
+    /*
     //login automatico caso o usuario nao se deslogue
     @Override
     public void onStart() {
@@ -87,12 +88,12 @@ public class TelaInicial extends AppCompatActivity{
         });
 
 
-        /*if(firebaseUser!=null)
+        if(firebaseUser!=null)
         {
             telaInicialEspectador.putExtra("nome",auth.getCurrentUser().getDisplayName());
             startActivity(telaInicialEspectador);
-        }*/
-    }
+        }
+    }*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

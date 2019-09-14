@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.quemtocahoje.DTO.AutenticacaoDTO;
 import com.example.tcc.R;
 
 public class TelaInicialMusico extends AppCompatActivity {
@@ -67,6 +68,7 @@ public class TelaInicialMusico extends AppCompatActivity {
     }
     private String preencherNomeUsuario()
     {
-        return getIntent().getStringExtra("nome");
+        AutenticacaoDTO dto = (AutenticacaoDTO) getIntent().getSerializableExtra("dtoAutenticacao");
+        return dto.getNome();
     }
 }

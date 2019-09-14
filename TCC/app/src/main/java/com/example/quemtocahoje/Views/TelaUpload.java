@@ -15,7 +15,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.quemtocahoje.Adapter.AutenticacaoDTOAdapter;
+import com.example.quemtocahoje.DTO.AutenticacaoDTO;
 import com.example.quemtocahoje.Enum.TipoUsuario;
+import com.example.quemtocahoje.POJO.Estabelecimento;
 import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EnderecoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
@@ -77,21 +80,24 @@ public class TelaUpload extends AppCompatActivity {
                 String tipo = getIntent().getStringExtra("tipoUsuario");
                 if (tipo.equals(TipoUsuario.ESPECTADOR.name())) {
                     String nome = ((EspectadorEntity) getIntent().getSerializableExtra("objetoEspectador")).getNomeEspectador();
-                    telaInicialEspectador.putExtra("nome",nome);
+                    AutenticacaoDTO dto =  AutenticacaoDTOAdapter.espectadorToAutenticacaoDTO((EspectadorEntity) getIntent().getSerializableExtra("objetoEspectador"));
+                    telaInicialEspectador.putExtra("dtoAutenticacao",dto);
                     startActivity(telaInicialEspectador);
                     finishAffinity();
                 }
                 else if (tipo.equals(TipoUsuario.ESTABELECIMENTO.name()))
                 {
                     String nome = ((EstabelecimentoEntity) getIntent().getSerializableExtra("objetoEstabelecimento")).getNomeDono();
-                    telaInicialEstabelecimento.putExtra("nome", nome);
+                    AutenticacaoDTO dto =  AutenticacaoDTOAdapter.estabelecimentoToAutenticacaoDTO((EstabelecimentoEntity) getIntent().getSerializableExtra("objetoEstabelecimento"));
+                    telaInicialEstabelecimento.putExtra("dtoAutenticacao", dto);
                     startActivity(telaInicialEstabelecimento);
                     finishAffinity();
                 }
                 else if(tipo.equals(TipoUsuario.MUSICO.name()))
                 {
                    String nome = ((MusicoEntity) getIntent().getSerializableExtra("objetoMusico")).getNome();
-                   telaInicialMusico.putExtra("nome",nome);
+                   AutenticacaoDTO dto =  AutenticacaoDTOAdapter.musicoToAutenticacaoDTO((MusicoEntity) getIntent().getSerializableExtra("objetoMusico"));
+                   telaInicialMusico.putExtra("dtoAutenticacao",dto);
                    startActivity(telaInicialMusico);
                    finishAffinity();
                 }

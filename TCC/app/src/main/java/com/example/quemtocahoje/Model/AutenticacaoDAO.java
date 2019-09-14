@@ -84,7 +84,7 @@ public class AutenticacaoDAO {
 
                 }
                 //if(dataSnapshot.getChildrenCount() == getValor() && !isFlag()){
-                    Mensagem.notificar(ctx,"Usuário Inválido","Login e/ou senha incorretos");
+                    //Mensagem.notificar(ctx,"Usuário Inválido","Login e/ou senha incorretos");
                 //}
             }
 
@@ -140,9 +140,10 @@ public class AutenticacaoDAO {
                         Log.d("DENTROUSUARIO",entidade.getNome());
                         Log.d("DENTROUSUARIO",entidade.getNomeArtistico());
 
+                        AutenticacaoDTO dto = AutenticacaoDTOAdapter.musicoToAutenticacaoDTO(entidade);
                         Intent telaInicialMusico = new Intent(ctx, TelaInicialMusico.class);
                         telaInicialMusico.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        telaInicialMusico.putExtra("nome",entidade.getNomeArtistico());//nome ou nome artistico aqui?
+                        telaInicialMusico.putExtra("dtoAutenticacao",dto);
                         ctx.startActivity(telaInicialMusico);
                         break;
                     }
@@ -169,9 +170,10 @@ public class AutenticacaoDAO {
                         Log.d("DENTROUSUARIO",entidade.getNomeDono());
                         Log.d("DENTROUSUARIO",entidade.getNomeFantasia());
 
+                        AutenticacaoDTO dto = AutenticacaoDTOAdapter.estabelecimentoToAutenticacaoDTO(entidade);
                         Intent telaInicialEstabelecimento = new Intent(ctx, TelaInicialEstabelecimento.class);
                         telaInicialEstabelecimento.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        telaInicialEstabelecimento.putExtra("nome",entidade.getNomeFantasia());//nome dono ou fantasia aqui?
+                        telaInicialEstabelecimento.putExtra("dtoAutenticacao",dto);
                         ctx.startActivity(telaInicialEstabelecimento);
                         break;
                     }

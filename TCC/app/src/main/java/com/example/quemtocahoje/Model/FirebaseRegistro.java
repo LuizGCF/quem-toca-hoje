@@ -41,34 +41,37 @@ public class FirebaseRegistro implements Serializable {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        final FirebaseUser usuariofirebase = auth.getCurrentUser();
-                        String idusuario = usuariofirebase.getUid();//getIdToken(false).toString();
+                        if(task.isSuccessful())
+                        {
+                            final FirebaseUser usuariofirebase = auth.getCurrentUser();
+                            String idusuario = usuariofirebase.getUid();//getIdToken(false).toString();
 
-                        reference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Autenticacao.name()).child(idusuario);
+                            reference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Autenticacao.name()).child(idusuario);
 
-                        HashMap<String,String> hashMap = new HashMap<>();
+                            HashMap<String,String> hashMap = new HashMap<>();
 
-                        hashMap.put("id", idusuario);
-                        hashMap.put("login",login);
-                        hashMap.put("email", email);
-                        hashMap.put("tipoUsuario",tipoUsuario);
-                        hashMap.put("senha", senha);
-                        Log.d("FIM HASH", "FIM HASH");
+                            hashMap.put("id", idusuario);
+                            hashMap.put("login",login);
+                            hashMap.put("email", email);
+                            hashMap.put("tipoUsuario",tipoUsuario);
+                            hashMap.put("senha", senha);
+                            Log.d("FIM HASH", "FIM HASH");
 
-                        //hashMap.put("id",idusuario);//colocaria as outras informaçoes abaixo atraves desse hash para cadastrar no firebase?
-                        reference.setValue(hashMap)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        Log.d("ON COMPLETE", "aaa");
-                                        if(tipoUsuario.equals(TipoUsuario.ESPECTADOR.name()))
-                                           registroEspectador(e, usuariofirebase.getUid());
-                                        else if(tipoUsuario.equals(TipoUsuario.MUSICO.name()))
-                                            registroMusico(m, usuariofirebase.getUid());
-                                        else if(tipoUsuario.equals(TipoUsuario.ESTABELECIMENTO.name()))
-                                            registrarEstabelecimento(estab,endereco, usuariofirebase.getUid());
-                                    }
-                                });
+                            //hashMap.put("id",idusuario);//colocaria as outras informaçoes abaixo atraves desse hash para cadastrar no firebase?
+                            reference.setValue(hashMap)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            Log.d("ON COMPLETE", "aaa");
+                                            if(tipoUsuario.equals(TipoUsuario.ESPECTADOR.name()))
+                                               registroEspectador(e, usuariofirebase.getUid());
+                                            else if(tipoUsuario.equals(TipoUsuario.MUSICO.name()))
+                                                registroMusico(m, usuariofirebase.getUid());
+                                            else if(tipoUsuario.equals(TipoUsuario.ESTABELECIMENTO.name()))
+                                                registrarEstabelecimento(estab,endereco, usuariofirebase.getUid());
+                                        }
+                                    });
+                        }
                     }
                 }
                 );
