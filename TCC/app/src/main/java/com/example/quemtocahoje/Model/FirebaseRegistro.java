@@ -62,6 +62,8 @@ public class FirebaseRegistro implements Serializable {
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful())
+                                            {
                                             Log.d("ON COMPLETE", "aaa");
                                             if(tipoUsuario.equals(TipoUsuario.ESPECTADOR.name()))
                                                registroEspectador(e, usuariofirebase.getUid());
@@ -69,6 +71,7 @@ public class FirebaseRegistro implements Serializable {
                                                 registroMusico(m, usuariofirebase.getUid());
                                             else if(tipoUsuario.equals(TipoUsuario.ESTABELECIMENTO.name()))
                                                 registrarEstabelecimento(estab,endereco, usuariofirebase.getUid());
+                                            }
                                         }
                                     });
                         }
@@ -98,13 +101,13 @@ public class FirebaseRegistro implements Serializable {
         HashMap<String,String> hashMap = new HashMap<>();
 
         hashMap.put("idMusico", idmusico);
-        hashMap.put("autenticacaoId",idmusico);
+        hashMap.put("autenticacao_id",idmusico);
         hashMap.put("nome",musico.getNome());
         hashMap.put("nomeArtistico", musico.getNomeArtistico());
         hashMap.put("telefone", musico.getTelefone());
         hashMap.put("cidade", musico.getCidade());
         hashMap.put("descricao", musico.getDescricao());
-        hashMap.put("carreiraSoloAtiva", musico.isCarreiraSoloAtiva()?"SIM":"NÃO");
+        hashMap.put("carreiraSoloAtiva", musico.isCarreiraSoloAtiva());
         hashMap.put("dataCriacao", DefinirDatas.dataAtual());
         reference.setValue(hashMap);
     }
@@ -118,7 +121,7 @@ public class FirebaseRegistro implements Serializable {
         HashMap<String,String> hashMap = new HashMap<>();
 
         hashMap.put("idEstabelecimento", idEstab);
-        hashMap.put("autenticacaoId",idEstab);
+        hashMap.put("autenticacao_id",idEstab);
         hashMap.put("enderecoId",estab.getEndereco_id());
         hashMap.put("nomeDono",estab.getNomeDono());
         hashMap.put("razaoSocial", estab.getRazaoSocial());
@@ -133,7 +136,8 @@ public class FirebaseRegistro implements Serializable {
             .addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                    registrarEndereco(endereco, idEstab);
+                    if(task.isSuccessful())
+                        registrarEndereco(endereco, idEstab);
                 }
             });
 

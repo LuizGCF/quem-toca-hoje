@@ -33,6 +33,7 @@ public class AutenticacaoDAO {
     private FirebaseDatabase database;
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
+    private Long contador;
 
     public AutenticacaoDAO(FirebaseDatabase database, DatabaseReference reference, FirebaseUser firebaseUser) {
         this.database = database;
@@ -44,52 +45,47 @@ public class AutenticacaoDAO {
 
     public void autenticar(final String login, final String senha, final FirebaseAuth auth, final Context ctx){
         //final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Autenticacao");
 
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Autenticacao.name());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                setContador(0L);
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){//para cada usuario no autenticacao, verificar login/senha para
                     final AutenticacaoEntity entidade = snapshot.getValue(AutenticacaoEntity.class);
-                    if(entidade.getLogin().equals(login) && entidade.getSenha().equals(senha))
+                    setContador(getContador()+1);
+
+                    if((entidade.getLogin().equals(login) || entidade.getEmail().equals(login))&& entidade.getSenha().equals(senha))
                     {
                         auth.signInWithEmailAndPassword(entidade.getEmail(),senha)
                                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
-                                        FirebaseUser user = auth.getCurrentUser();
-                                        if(entidade.getTipoUsuario().equals(TipoUsuario.MUSICO.name()))
-                                        {
-                                            loginMusico(user.getUid(),ctx);
+                                        if (task.isSuccessful()) {
+                                            FirebaseUser user = auth.getCurrentUser();
+                                            if (entidade.getTipoUsuario().equals(TipoUsuario.MUSICO.name())) {
+                                                loginMusico(user.getUid(), ctx);
+                                            } else if (entidade.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name())) {
+                                                loginEstabelecimento(user.getUid(), ctx);
+                                            } else if (entidade.getTipoUsuario().equals(TipoUsuario.ESPECTADOR.name())) {
+                                                loginEspectador(user.getUid(), ctx);
+                                            }
                                         }
-                                        else if(entidade.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name()))
-                                        {
-                                            loginEstabelecimento(user.getUid(),ctx);
-                                        }
-                                        else if(entidade.getTipoUsuario().equals(TipoUsuario.ESPECTADOR.name()))
-                                        {
-                                            loginEspectador(user.getUid(),ctx);
-                                        }
-                                        Log.d("PORLOGIN",user.getEmail());
-                                        Log.d("PORLOGIN",user.getUid());
                                     }
-
                                 });
+                        break;
+                    }else if(getContador() == dataSnapshot.getChildrenCount()){
+                        Mensagem.notificar(ctx, "Usuário Inválido", "Login e/ou senha incorretos.");
                     }
 
-                    Log.d("MOCK",entidade.getLogin());
-                    Log.d("MOCK",entidade.getSenha());
-                    Log.d("MOCK",entidade.getEmail());
-                    Log.d("MOCK",entidade.getTipoUsuario());
-
                 }
-                //if(dataSnapshot.getChildrenCount() == getValor() && !isFlag()){
-                    //Mensagem.notificar(ctx,"Usuário Inválido","Login e/ou senha incorretos");
-                //}
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                Mensagem.notificar(ctx, "Erro na aplicação", "Ocorreu um erro ao efetuar o login do usuário.");
+                Log.d("ERRO FIREBASE", databaseError.getDetails());
 
             }
         });
@@ -97,26 +93,20 @@ public class AutenticacaoDAO {
 
     public void loginEspectador(final String id, final Context ctx){
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Usuarios.name());
-        databaseReference = databaseReference.child(TipoUsuario.ESPECTADOR.name());
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference = databaseReference.child(TipoUsuario.ESPECTADOR.name()).child(id);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                if(dataSnapshot.getValue() != null)
                 {
-                    EspectadorEntity entidade = snapshot.getValue(EspectadorEntity.class);
-                    if(entidade.getAutenticacao_id().equals(id))
-                    {
-                        Log.d("DENTROUSUARIO",entidade.getNomeEspectador());
-                        Log.d("DENTROUSUARIO",entidade.getAutenticacao_id());
-                        Log.d("DENTROUSUARIO",entidade.getDataCriacao());
-                        AutenticacaoDTO dto = AutenticacaoDTOAdapter.espectadorToAutenticacaoDTO(entidade);
-                        Intent telaInicialEspectador = new Intent(ctx, TelaInicialEspectador.class);
-                        telaInicialEspectador.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        telaInicialEspectador.putExtra("dtoAutenticacao", dto);
-                        ctx.startActivity(telaInicialEspectador );
-                        break;
-                    }
+                    EspectadorEntity entidade = dataSnapshot.getValue(EspectadorEntity.class);
 
+                    AutenticacaoDTO dto = AutenticacaoDTOAdapter.espectadorToAutenticacaoDTO(entidade);
+                    Intent telaInicialEspectador = new Intent(ctx, TelaInicialEspectador.class);
+                    telaInicialEspectador.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    telaInicialEspectador.putExtra("dtoAutenticacao", dto);
+                    ctx.startActivity(telaInicialEspectador );
                 }
             }
 
@@ -128,13 +118,13 @@ public class AutenticacaoDAO {
     }
 
     public void loginMusico(final String id, final Context ctx){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Usuarios.name());
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Usuarios.name()).child(TipoUsuario.MUSICO.name()).child(id);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                if(dataSnapshot.getValue()!= null)
                 {
-                    MusicoEntity entidade = snapshot.getValue(MusicoEntity.class);
+                    MusicoEntity entidade = dataSnapshot.getValue(MusicoEntity.class);
                     if (entidade.getAutenticacao_id().equals(id))
                     {
                         Log.d("DENTROUSUARIO",entidade.getNome());
@@ -145,7 +135,6 @@ public class AutenticacaoDAO {
                         telaInicialMusico.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         telaInicialMusico.putExtra("dtoAutenticacao",dto);
                         ctx.startActivity(telaInicialMusico);
-                        break;
                     }
                 }
             }
@@ -158,13 +147,13 @@ public class AutenticacaoDAO {
     }
 
     public void loginEstabelecimento(final String id, final Context ctx){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Usuarios.name());
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Usuarios.name()).child(TipoUsuario.ESTABELECIMENTO.name()).child(id);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                if(dataSnapshot.getValue()!=null)
                 {
-                    EstabelecimentoEntity entidade = snapshot.getValue(EstabelecimentoEntity.class);
+                    EstabelecimentoEntity entidade = dataSnapshot.getValue(EstabelecimentoEntity.class);
                     if (entidade.getAutenticacao_id().equals(id))
                     {
                         Log.d("DENTROUSUARIO",entidade.getNomeDono());
@@ -175,7 +164,6 @@ public class AutenticacaoDAO {
                         telaInicialEstabelecimento.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         telaInicialEstabelecimento.putExtra("dtoAutenticacao",dto);
                         ctx.startActivity(telaInicialEstabelecimento);
-                        break;
                     }
                 }
             }
@@ -223,4 +211,11 @@ public class AutenticacaoDAO {
         return dto;
     }*/
 
+    public Long getContador() {
+        return contador;
+    }
+
+    public void setContador(Long contador) {
+        this.contador = contador;
+    }
 }

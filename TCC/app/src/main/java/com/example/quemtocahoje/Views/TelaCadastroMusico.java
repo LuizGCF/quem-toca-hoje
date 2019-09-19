@@ -83,7 +83,7 @@ public class TelaCadastroMusico extends AppCompatActivity {
 
     private MusicoEntity prepararObjetoMusico(){
         RadioButton r = findViewById(rgpArtistaSolo.getCheckedRadioButtonId());
-        boolean valorArtistaSolo = r.getText().toString().equals("Sim")? true : false;
+        String valorArtistaSolo = r.getText().toString().toUpperCase();
 
         EspectadorEntity es = (EspectadorEntity) getIntent().getSerializableExtra("objetoEspectador");
         MusicoEntity m = new MusicoEntity(null

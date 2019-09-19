@@ -17,7 +17,7 @@ public class MusicoEntity implements Serializable {
     private String dataCriacao;
     private String descricao;
     private String cidade;
-    private boolean carreiraSoloAtiva;
+    private String carreiraSoloAtiva;
 
     //usado só pra carregar os convites que ele possui, a tabela de convite possui o id fk do musico
     private List<String> convites;
@@ -27,7 +27,7 @@ public class MusicoEntity implements Serializable {
     private List<BandaEntity> bandas;
     */
 
-    public MusicoEntity(String autenticacao_id, String nome, String nomeArtistico, String telefone, String dataCriacao, String descricao, String cidade, boolean carreiraSoloAtiva) {
+    public MusicoEntity(String autenticacao_id, String nome, String nomeArtistico, String telefone, String dataCriacao, String descricao, String cidade, String carreiraSoloAtiva) {
         this.autenticacao_id = autenticacao_id;
         this.nome = nome;
         this.nomeArtistico = nomeArtistico;
@@ -112,11 +112,11 @@ public class MusicoEntity implements Serializable {
         this.descricao = descricao;
     }
 
-    public boolean isCarreiraSoloAtiva() {
+    public String isCarreiraSoloAtiva() {
         return carreiraSoloAtiva;
     }
 
-    public void setCarreiraSoloAtiva(boolean carreiraSoloAtiva) {
+    public void setCarreiraSoloAtiva(String carreiraSoloAtiva) {
         this.carreiraSoloAtiva = carreiraSoloAtiva;
     }
 
