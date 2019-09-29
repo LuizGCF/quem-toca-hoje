@@ -13,6 +13,7 @@ import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.MusicoEntity;
+import com.example.quemtocahoje.Utility.EncodeBase64;
 import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.quemtocahoje.Views.TelaInicial;
 import com.example.quemtocahoje.Views.TelaInicialEspectador;
@@ -55,7 +56,7 @@ public class AutenticacaoDAO {
                     final AutenticacaoEntity entidade = snapshot.getValue(AutenticacaoEntity.class);
                     setContador(getContador()+1);
 
-                    if((entidade.getLogin().equals(login) || entidade.getEmail().equals(login))&& entidade.getSenha().equals(senha))
+                    if((entidade.getLogin().equals(login) || entidade.getEmail().equals(login)) && entidade.getSenha().equals(senha))
                     {
                         auth.signInWithEmailAndPassword(entidade.getEmail(),senha)
                                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -64,11 +65,11 @@ public class AutenticacaoDAO {
                                         if (task.isSuccessful()) {
                                             FirebaseUser user = auth.getCurrentUser();
                                             if (entidade.getTipoUsuario().equals(TipoUsuario.MUSICO.name())) {
-                                                loginMusico(user.getUid(), ctx);
+                                                loginMusico(EncodeBase64.toBase64(entidade.getEmail()), ctx);
                                             } else if (entidade.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name())) {
-                                                loginEstabelecimento(user.getUid(), ctx);
+                                                loginEstabelecimento(EncodeBase64.toBase64(entidade.getEmail()), ctx);
                                             } else if (entidade.getTipoUsuario().equals(TipoUsuario.ESPECTADOR.name())) {
-                                                loginEspectador(user.getUid(), ctx);
+                                                loginEspectador(EncodeBase64.toBase64(entidade.getEmail()), ctx);
                                             }
                                         }
                                     }

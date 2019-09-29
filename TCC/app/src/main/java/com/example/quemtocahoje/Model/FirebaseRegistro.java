@@ -10,6 +10,7 @@ import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.MusicoEntity;
 import com.example.quemtocahoje.Utility.DefinirDatas;
+import com.example.quemtocahoje.Utility.EncodeBase64;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -44,7 +45,7 @@ public class FirebaseRegistro implements Serializable {
                         if(task.isSuccessful())
                         {
                             final FirebaseUser usuariofirebase = auth.getCurrentUser();
-                            String idusuario = usuariofirebase.getUid();//getIdToken(false).toString();
+                            String idusuario = EncodeBase64.toBase64(email);//getIdToken(false).toString();
 
                             reference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Autenticacao.name()).child(idusuario);
 
@@ -57,7 +58,6 @@ public class FirebaseRegistro implements Serializable {
                             hashMap.put("senha", senha);
                             Log.d("FIM HASH", "FIM HASH");
 
-                            //hashMap.put("id",idusuario);//colocaria as outras informaçoes abaixo atraves desse hash para cadastrar no firebase?
                             reference.setValue(hashMap)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
@@ -66,11 +66,11 @@ public class FirebaseRegistro implements Serializable {
                                             {
                                             Log.d("ON COMPLETE", "aaa");
                                             if(tipoUsuario.equals(TipoUsuario.ESPECTADOR.name()))
-                                               registroEspectador(e, usuariofirebase.getUid());
+                                               registroEspectador(e, idusuario);
                                             else if(tipoUsuario.equals(TipoUsuario.MUSICO.name()))
-                                                registroMusico(m, usuariofirebase.getUid());
+                                                registroMusico(m, idusuario);
                                             else if(tipoUsuario.equals(TipoUsuario.ESTABELECIMENTO.name()))
-                                                registrarEstabelecimento(estab,endereco, usuariofirebase.getUid());
+                                                registrarEstabelecimento(estab,endereco, idusuario);
                                             }
                                         }
                                     });
