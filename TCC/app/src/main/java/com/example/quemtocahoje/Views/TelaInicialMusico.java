@@ -22,6 +22,7 @@ public class TelaInicialMusico extends AppCompatActivity {
     private TextView txtVisualizacaoInicialMusico;
     private TextView txtSairInicialMusico;
     private TextView txtConviteInicialMusico;
+    private TextView txtCadastrarBandaInicialMusico;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +30,7 @@ public class TelaInicialMusico extends AppCompatActivity {
 
         final Intent telaPesquisaMusico = new Intent(this,TelaPesquisaMusico.class);
         final Intent telaLogin = new Intent(this, TelaInicial.class);
+        final Intent telaNovaBanda = new Intent(this, TelaCriacaoBanda.class);
 
         txtNomeMusico = findViewById(R.id.txtNomeMusico);
         txtNomeBandaInicialMusico = findViewById(R.id.txtNomeBandaInicialMusico);
@@ -40,8 +42,11 @@ public class TelaInicialMusico extends AppCompatActivity {
         txtVisualizacaoInicialMusico = findViewById(R.id.txtVisualizacaoInicialMusico);
         txtSairInicialMusico = findViewById(R.id.txtSairInicialMusico);
         txtConviteInicialMusico = findViewById(R.id.txtConviteInicialMusico);
+        txtCadastrarBandaInicialMusico = findViewById(R.id.txtCadastrarBandaInicialMusico);
 
-        txtNomeMusico.setText("Olá " + preencherNomeUsuario() + "!");
+        AutenticacaoDTO dto = (AutenticacaoDTO) getIntent().getSerializableExtra("dtoAutenticacao");
+
+        txtNomeMusico.setText("Olá " + dto.getNome() + "!");
 
         final Intent convidarMembro = new Intent(this, TelaConvite.class);
 
@@ -49,6 +54,14 @@ public class TelaInicialMusico extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(convidarMembro);
+            }
+        });
+
+        txtCadastrarBandaInicialMusico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                telaNovaBanda.putExtra("idUsuario", dto.getIdAutenticacao());
+                startActivity(telaNovaBanda);
             }
         });
 
@@ -65,10 +78,5 @@ public class TelaInicialMusico extends AppCompatActivity {
                 finishAffinity();
             }
         });
-    }
-    private String preencherNomeUsuario()
-    {
-        AutenticacaoDTO dto = (AutenticacaoDTO) getIntent().getSerializableExtra("dtoAutenticacao");
-        return dto.getNome();
     }
 }
