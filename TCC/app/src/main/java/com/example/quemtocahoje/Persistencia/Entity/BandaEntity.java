@@ -1,5 +1,7 @@
 package com.example.quemtocahoje.Persistencia.Entity;
 
+import com.example.quemtocahoje.POJO.Convite;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,15 +13,17 @@ public class BandaEntity implements Serializable {
     private String dataCriacao;
     private List<String> generos;
     private List<String> integrantes;
+    private List<ConviteEntity> convites;
     private String bandaAtiva;
 
-    public BandaEntity(String nome, String idCriador, String dataCriacao, List<String> generos, List<String> integrantes, String bandaAtiva) {
+    public BandaEntity(String nome, String idCriador, String dataCriacao, List<String> generos, List<String> integrantes, String bandaAtiva, List<ConviteEntity> convites) {
         this.nome = nome;
         this.idCriador = idCriador;
         this.dataCriacao = dataCriacao;
         this.generos = generos;
         this.integrantes = integrantes;
         this.bandaAtiva = bandaAtiva;
+        this.convites = convites;
     }
 
     public BandaEntity() {
@@ -81,14 +85,25 @@ public class BandaEntity implements Serializable {
         this.bandaAtiva = bandaAtiva;
     }
 
+    public List<ConviteEntity> getConvites() {
+        return convites;
+    }
+
+    public void setConvites(List<ConviteEntity> convites) {
+        this.convites = convites;
+    }
+
     @Override
     public String toString() {
         return "BandaEntity{" +
-                "nome='" + nome + '\'' +
+                "banda_id='" + banda_id + '\'' +
+                ", idCriador='" + idCriador + '\'' +
+                ", nome='" + nome + '\'' +
                 ", dataCriacao='" + dataCriacao + '\'' +
                 ", generos=" + generos +
                 ", integrantes=" + integrantes +
-                ", bandaAtiva=" + bandaAtiva +
+                ", convites=" + convites +
+                ", bandaAtiva='" + bandaAtiva + '\'' +
                 '}';
     }
 }

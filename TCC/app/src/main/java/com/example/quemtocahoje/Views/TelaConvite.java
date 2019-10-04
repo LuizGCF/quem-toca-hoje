@@ -66,8 +66,8 @@ public class TelaConvite extends AppCompatActivity {
         //}
 
         //TODO alterar o banda_id quando a tabela dela estiver pronta
-        ConviteEntity c = new ConviteEntity(null
-                ,edtEmailConvite.getText().toString().trim()
+        ConviteEntity c = new ConviteEntity(
+                edtEmailConvite.getText().toString().trim()
                 , StatusConvite.ABERTO.name()
                 , DefinirDatas.dataAtual()
         );

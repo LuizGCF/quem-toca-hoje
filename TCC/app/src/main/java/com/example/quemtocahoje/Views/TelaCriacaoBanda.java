@@ -14,8 +14,10 @@ import android.widget.ListView;
 
 import com.example.quemtocahoje.DTO.AutenticacaoDTO;
 import com.example.quemtocahoje.Enum.GeneroMusical;
+import com.example.quemtocahoje.Enum.StatusConvite;
 import com.example.quemtocahoje.Model.BandaDAO;
 import com.example.quemtocahoje.Persistencia.Entity.BandaEntity;
+import com.example.quemtocahoje.Persistencia.Entity.ConviteEntity;
 import com.example.quemtocahoje.Spinner.MultiSelectionSpinner;
 import com.example.quemtocahoje.Utility.DefinirDatas;
 import com.example.quemtocahoje.Utility.Mensagem;
@@ -24,6 +26,7 @@ import com.example.tcc.R;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TelaCriacaoBanda extends AppCompatActivity {
 
@@ -98,8 +101,7 @@ public class TelaCriacaoBanda extends AppCompatActivity {
                 AlertDialog.Builder adb=new AlertDialog.Builder(TelaCriacaoBanda.this);
                 String item = adapterIntegrantes.getItem(position);
                 adb.setTitle("Remover convidado?");
-                adb.setMessage("Deseja remover o email " + item + " da lista?");
-                final int positionToRemove = position;
+                adb.setMessage("Deseja remover " + item + " da lista?");
                 adb.setNegativeButton("Cancel", null);
                 adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -140,17 +142,24 @@ public class TelaCriacaoBanda extends AppCompatActivity {
 
     private BandaEntity montarObjeto(){
         List<String> integrantes = new ArrayList<>();
+
         for(int i = 0; i < adapterIntegrantes.getCount(); i++){
             integrantes.add(adapterIntegrantes.getItem(i));
         }
 
+        List<ConviteEntity> convite = integrantes.stream().map(e -> new ConviteEntity(
+                e, StatusConvite.ABERTO.name(), DefinirDatas.dataAtual()
+        )).collect(Collectors.toList());
+
+
         return new BandaEntity(
-                edtNomeBanda.getText().toString().trim(),
-                getIntent().getStringExtra("idUsuario"),
-                DefinirDatas.dataAtual(),
-                spnGeneroBanda.getSelectedStrings(),
-                integrantes,
-                "SIM"
+                edtNomeBanda.getText().toString().trim()
+                ,getIntent().getStringExtra("idUsuario")
+                ,DefinirDatas.dataAtual()
+                ,spnGeneroBanda.getSelectedStrings()
+                ,new ArrayList<>()
+                ,"SIM"
+                ,convite
         );
     }
 }
