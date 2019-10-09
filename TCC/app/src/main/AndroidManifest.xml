@@ -13,15 +13,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="com.example.quemtocahoje.Chat.Activitys.ConversaActivity">
         <activity android:name="com.example.quemtocahoje.Views.TelaCriacaoBanda">
-
-        </activity>
-        <activity android:name="com.example.quemtocahoje.Views.TelaInicialEspectador" />
         <activity android:name="com.example.quemtocahoje.Views.TelaEndereco" />
         <activity android:name="com.example.quemtocahoje.Views.TelaInicialEstabelecimento" />
         <activity android:name="com.example.quemtocahoje.Views.TelaInicialMusico" />
         <activity android:name="com.example.quemtocahoje.Views.TelaPesquisaEstabelecimento" />
-        <activity android:name="com.example.quemtocahoje.Views.TelaPesquisaMusico" />
+        <activity android:name="com.example.quemtocahoje.Views.TelaPesquisaMusico" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name="com.example.quemtocahoje.Views.TelaConvite" />
         <activity android:name="com.example.quemtocahoje.Views.TelaProposta" />
         <activity android:name="com.example.quemtocahoje.Views.TelaUpload" />
@@ -30,11 +34,7 @@
         <activity android:name="com.example.quemtocahoje.Views.TelaCadastroEspectador" />
         <activity android:name="com.example.quemtocahoje.Views.TelaEscolhaCadastro" />
         <activity android:name="com.example.quemtocahoje.Views.TelaInicial">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name="com.example.quemtocahoje.Views.TelaEsqueceuaSenha" />
         <activity android:name="com.example.quemtocahoje.Views.TelaRedefinirSenha" />

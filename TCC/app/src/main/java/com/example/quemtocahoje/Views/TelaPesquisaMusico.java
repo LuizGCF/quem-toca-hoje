@@ -21,33 +21,111 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.quemtocahoje.DTO.ItensListaBuscaDTO;
+import com.example.quemtocahoje.Enum.TabelasFirebase;
 import com.example.quemtocahoje.Enum.TipoArquivo;
+import com.example.quemtocahoje.Enum.TipoUsuario;
+import com.example.quemtocahoje.POJO.Estabelecimento;
 import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.MusicoEntity;
 import com.example.quemtocahoje.Utility.ConversaoArquivo;
 import com.example.tcc.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TelaPesquisaMusico extends AppCompatActivity {
 
-    //MOCK
-    //TODO mudar o resultado da list para o resultado do select que vir do ROOM
-    //List<Musico> musicos = new ArrayList<Musico>();
+    FirebaseUser firebaseUser;
+    FirebaseAuth auth;
+    DatabaseReference reference;
+
     private CustomAdapter adapter;
     private List<ItensListaBuscaDTO> allItens;
-
+    //TODO Carregar a imagem de cada um dos tipos de usuario
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_pesquisa_musico);
+        auth = FirebaseAuth.getInstance();
+        firebaseUser = auth.getCurrentUser();
 
-        //carregarDados();
-        carregarRecyclerView();
+        carregarDados();
 
     }
+    private void carregarDados(){
+        allItens = new ArrayList<>();
+        listarMusicos();
+    }
+//Cadastrar um estabelecimento pra testar depois
+    private void listarEstabelecimentos() {
+        reference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Usuarios.name()).child(TipoUsuario.ESPECTADOR.name());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren())
+                {
+                    EstabelecimentoEntity e = snapshot.getValue(EstabelecimentoEntity.class);
+                    allItens.add(new ItensListaBuscaDTO(null,e.getNomeFantasia(),e.getDescricao()));
+                }
+                listarBandas();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void listarBandas(){
+        reference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Usuarios.name()).child(TipoUsuario.MUSICO.name());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren())
+                {
+                    //Utilizar a BandaEntity para adicionalas aqui
+                }
+                carregarRecyclerView();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+    private void listarMusicos() {
+        reference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Usuarios.name()).child(TipoUsuario.MUSICO.name());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren())
+                {
+                    MusicoEntity m = snapshot.getValue(MusicoEntity.class);
+                    if(m.isCarreiraSoloAtiva().equals("SIM"))
+                        allItens.add(new ItensListaBuscaDTO(null,m.getNomeArtistico(),m.getDescricao()));
+                }
+                listarEstabelecimentos();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void carregarRecyclerView() {
         RecyclerView lstResultadoPesquisaMusico = lstResultadoPesquisaMusico = findViewById(R.id.lstResultadoPesquisaMusico);
         lstResultadoPesquisaMusico.setHasFixedSize(true);
@@ -57,7 +135,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
         lstResultadoPesquisaMusico.setLayoutManager(layoutManager);
         lstResultadoPesquisaMusico.setAdapter(adapter);
     }
-    //TODO reimplementar com Firebase
+
     /*private void carregarDados() {
         allItens = new ArrayList<>();
         //Banco bd = Banco.getDatabase(getApplicationContext());
@@ -216,7 +294,7 @@ class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ExampleViewHolder
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (ItensListaBuscaDTO item : exampleListFull) {
-                    if (item.getNome().toLowerCase().contains(filterPattern)) {
+                    if (item.getDescricao().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
                 }
