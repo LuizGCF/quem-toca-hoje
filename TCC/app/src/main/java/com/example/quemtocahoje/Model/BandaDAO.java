@@ -61,7 +61,7 @@ public class BandaDAO {
                     hashMap.put("nome", banda.getNome());
                     hashMap.put("dataCriacao", banda.getDataCriacao());
                     hashMap.put("bandaAtiva", banda.isBandaAtiva());
-                    hashMap.put("generos", banda.getGeneros().stream().collect(Collectors.joining(",")));
+                    hashMap.put("generos", banda.getGeneros());
 
                     databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

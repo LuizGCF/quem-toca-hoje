@@ -156,7 +156,7 @@ public class TelaCriacaoBanda extends AppCompatActivity {
                 edtNomeBanda.getText().toString().trim()
                 ,getIntent().getStringExtra("idUsuario")
                 ,DefinirDatas.dataAtual()
-                ,spnGeneroBanda.getSelectedStrings()
+                ,spnGeneroBanda.getSelectedStrings().stream().collect(Collectors.joining(","))
                 ,new ArrayList<>()
                 ,"SIM"
                 ,convite

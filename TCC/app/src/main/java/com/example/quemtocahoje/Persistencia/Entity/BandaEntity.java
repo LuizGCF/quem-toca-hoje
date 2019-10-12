@@ -11,12 +11,12 @@ public class BandaEntity implements Serializable {
     private String idCriador;
     private String nome;
     private String dataCriacao;
-    private List<String> generos;
+    private String generos;
     private List<String> integrantes;
     private List<ConviteEntity> convites;
     private String bandaAtiva;
 
-    public BandaEntity(String nome, String idCriador, String dataCriacao, List<String> generos, List<String> integrantes, String bandaAtiva, List<ConviteEntity> convites) {
+    public BandaEntity(String nome, String idCriador, String dataCriacao, String generos, List<String> integrantes, String bandaAtiva, List<ConviteEntity> convites) {
         this.nome = nome;
         this.idCriador = idCriador;
         this.dataCriacao = dataCriacao;
@@ -61,11 +61,11 @@ public class BandaEntity implements Serializable {
         this.dataCriacao = dataCriacao;
     }
 
-    public List<String> getGeneros() {
+    public String getGeneros() {
         return generos;
     }
 
-    public void setGeneros(List<String> generos) {
+    public void setGeneros(String generos) {
         this.generos = generos;
     }
 
