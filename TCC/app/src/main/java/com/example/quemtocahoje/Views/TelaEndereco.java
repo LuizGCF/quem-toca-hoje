@@ -31,7 +31,7 @@ public class TelaEndereco extends AppCompatActivity {
     private EditText edtComplementoEndereco;
     private EditText edtCEPEndereco;
     private EditText edtUFEndereco;
-
+    private  Button btnVoltar;
     private Button btnConfirmarEndereco;
 
     // Mudanças  para buscar cep
@@ -43,8 +43,11 @@ public class TelaEndereco extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_endereco);
+        getSupportActionBar().hide();
+
 
         final Intent telaUpload = new Intent(this, TelaUpload.class);
+        final Intent telaCadEstab = new Intent(this, TelaCadastroEstabelecimento.class);
 
         edtLogradouroEndereco = findViewById(R.id.edtLogradouroEndereco);
         edtBairroEndereco = findViewById(R.id.edtBairroEndereco);
@@ -53,10 +56,13 @@ public class TelaEndereco extends AppCompatActivity {
         edtCEPEndereco = findViewById(R.id.edtCEPEndereco);
         edtUFEndereco = findViewById(R.id.edtUFEndereco);
 
+        btnBuscarCep = findViewById(R.id.btnBuscarCep);
+        btnConfirmarEndereco = findViewById(R.id.btnConfirmarEndereco);
+        btnVoltar = findViewById(R.id.btnVoltar);
+
+
         // Aplicação de mascara
         edtCEPEndereco.addTextChangedListener(MaskEditUtil.mask(edtCEPEndereco,MaskEditUtil.FORMAT_CEP));
-
-        btnConfirmarEndereco = findViewById(R.id.btnConfirmarEndereco);
 
         btnConfirmarEndereco.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,11 +84,16 @@ public class TelaEndereco extends AppCompatActivity {
         });
 
 
+            btnVoltar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+
+                  finish();
+                }
+            });
 
         // Configuração para buscar cep
-
-        btnBuscarCep = findViewById(R.id.btnBuscarCep);
-
         btnBuscarCep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -95,7 +106,6 @@ public class TelaEndereco extends AppCompatActivity {
                 .baseUrl("http://api.postmon.com.br/v1/cep/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
     }
 
     private void solicitarEndereco()
@@ -152,4 +162,5 @@ public class TelaEndereco extends AppCompatActivity {
         );
         return end;
     }
+
 }

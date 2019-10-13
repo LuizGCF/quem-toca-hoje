@@ -4,143 +4,196 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/estilo_tela"
     tools:context="com.example.quemtocahoje.Views.TelaCadastroEspectador">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center">
+        android:padding="10dp"
+        >
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            app:srcCompat="@drawable/logoaplicativo" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:paddingTop="10dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Perfil: "/>
+                android:textSize="16dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:text="Perfil:"/>
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text"
                 android:id="@+id/rgpPerfil"
                 android:orientation="horizontal"
+                android:backgroundTint="#fff"
                 android:checkedButton="@+id/rbMusico" >
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/rbMusico"
-                    android:text="Músico" />
+                    android:text="Músico"
+                    android:textSize="15dp"
+                    android:textColor="#F5F7F7"
+                    android:textStyle="bold"/>
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/rbEstabelecimento"
-                    android:text="Estabelecimento" />
+                    android:text="Estabelecimento"
+                    android:textSize="15dp"
+                    android:textColor="#F5F7F7"
+                    android:textStyle="bold"/>
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/rbEspectador"
-                    android:text="Espectador" />
+                    android:text="Espectador"
+                    android:textSize="15dp"
+                    android:textColor="#F5F7F7"
+                    android:textStyle="bold"/>
             </RadioGroup>
         </LinearLayout>
+
+
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:paddingRight="50dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nome: "/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="16dp">
+
             <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="200dp"
-                android:id="@+id/edtNomeEspectador"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:paddingRight="50dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email: "/>
+                android:id="@+id/edtNomeEspectador"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:cursorVisible="true"
+                android:gravity="center"
+                android:hint="Nome"
+                android:inputType="text"
+                android:textColor="#000"
+                android:textCursorDrawable="@drawable/estilo_cursor"
+                android:background="@drawable/estilo_edittext_cadastros"
+                android:textColorHint="#000"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                />
+
             <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="200dp"
-                android:id="@+id/edtEmailEspectador"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:paddingRight="50dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Login: "/>
+                android:id="@+id/edtEmailEspectador"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:cursorVisible="true"
+                android:gravity="center"
+                android:hint="E-mail"
+                android:inputType="textEmailAddress"
+                android:textColor="#000"
+                android:background="@drawable/estilo_edittext_cadastros"
+                android:textCursorDrawable="@drawable/estilo_cursor"
+                android:textColorHint="#000"
+                android:textSize="15dp"
+                android:textStyle="bold" />
             <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="200dp"
-                android:id="@+id/edtLoginEspectador"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:paddingRight="50dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Senha: "/>
+                android:id="@+id/edtLoginEspectador"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:cursorVisible="true"
+                android:gravity="center"
+                android:hint="Login"
+                android:inputType="text"
+                android:textColor="#000"
+                android:background="@drawable/estilo_edittext_cadastros"
+                android:textCursorDrawable="@drawable/estilo_cursor"
+                android:textColorHint="#000"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                />
             <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="200dp"
+                android:id="@+id/edtSenhaEspectador"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:cursorVisible="true"
+                android:gravity="center"
+                android:hint="Senha"
                 android:inputType="textPassword"
-                android:id="@+id/edtSenhaEspectador"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:paddingRight="50dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Confirmar Senha: "/>
+                android:textColor="#000"
+                android:background="@drawable/estilo_edittext_cadastros"
+                android:textCursorDrawable="@drawable/estilo_cursor"
+                android:textColorHint="#000"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                />
             <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="200dp"
+                android:id="@+id/edtConfirmarSenhaEspectador"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:cursorVisible="true"
+                android:gravity="center"
+                android:hint="Confirmar Senha"
                 android:inputType="textPassword"
-                android:id="@+id/edtConfirmarSenhaEspectador"/>
+                android:textColor="#000"
+                android:background="@drawable/estilo_edittext_cadastros"
+                android:textCursorDrawable="@drawable/estilo_cursor"
+                android:textColorHint="#000"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnCadastrarEspectador"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/estilo_botao"
+                    android:textColor="#F5F7F7"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:text="Cadastrar" />
+
+                <Button
+                    android:id="@+id/btnCancelarEspectador"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/estilo_botao"
+                    android:textColor="#F5F7F7"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:text="Voltar"/>
+
+            </LinearLayout>
+
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cadastrar"
-                android:id="@+id/btnCadastrarEspectador"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Voltar"
-                android:id="@+id/btnCancelarEspectador"/>
-        </LinearLayout>
+
+
     </LinearLayout>
+
+
+
+
 </android.support.constraint.ConstraintLayout>

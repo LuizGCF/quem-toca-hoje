@@ -6,7 +6,6 @@ import java.io.Serializable;
 public class EnderecoEntity implements Serializable {
 
     private String idEndereco;
-
     private String logradouro;
     private String bairro;
     private String cidade;

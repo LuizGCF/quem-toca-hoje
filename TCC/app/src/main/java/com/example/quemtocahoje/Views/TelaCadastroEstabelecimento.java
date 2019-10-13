@@ -30,6 +30,7 @@ public class TelaCadastroEstabelecimento extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_cadastro_estabelecimento);
+        getSupportActionBar().hide();
 
         final Intent telaEndereco = new Intent(this, TelaEndereco.class);
 

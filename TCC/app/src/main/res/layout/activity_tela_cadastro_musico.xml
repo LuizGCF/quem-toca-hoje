@@ -1,25 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/estilo_tela"
     tools:context="com.example.quemtocahoje.Views.TelaCadastroMusico">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:padding="16dp"
         android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            app:srcCompat="@drawable/logoaplicativo" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:padding="10dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
                 android:text="Exibir perfil solo em pesquisas: "/>
+
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -30,99 +46,127 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
                     android:id="@+id/rbSoloSim"
                     android:text="Sim" />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
                     android:id="@+id/rbSoloNao"
                     android:text="Não" />
             </RadioGroup>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="right"
-            android:paddingRight="50dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nome Artistico: "
-                android:id="@+id/txtNomeArtisticoMusico"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:orientation="vertical">
+
             <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="200dp"
-                android:id="@+id/edtNomeArtisticoMusico"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="right"
-            android:paddingRight="50dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Celular: "
-                android:id="@+id/txtCelularMusico"/>
+                android:id="@+id/edtNomeArtisticoMusico"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:cursorVisible="true"
+                android:gravity="center"
+                android:hint="Nome Artistico"
+                android:inputType="text"
+                android:textColor="#000"
+                android:textCursorDrawable="@drawable/estilo_cursor"
+                android:background="@drawable/estilo_edittext_cadastros"
+                android:textColorHint="#000"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                />
+
             <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="200dp"
+                android:id="@+id/edtCelularMusico"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:cursorVisible="true"
+                android:gravity="center"
+                android:hint="Celular"
                 android:inputType="number"
-                android:id="@+id/edtCelularMusico"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="right"
-            android:paddingRight="50dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cidade: "
-                android:id="@+id/txtCidadeMusico"/>
+                android:textColor="#000"
+                android:textCursorDrawable="@drawable/estilo_cursor"
+                android:background="@drawable/estilo_edittext_cadastros"
+                android:textColorHint="#000"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                />
+
             <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="200dp"
-                android:id="@+id/edtCidadeMusico"/>
+                android:id="@+id/edtCidadeMusico"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:cursorVisible="true"
+                android:gravity="center"
+                android:inputType="text"
+                android:hint="Cidade"
+                android:textColor="#000"
+                android:textCursorDrawable="@drawable/estilo_cursor"
+                android:background="@drawable/estilo_edittext_cadastros"
+                android:textColorHint="#000"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                />
+
+            <EditText
+                android:id="@+id/edtDescricaoMusico"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:cursorVisible="true"
+                android:gravity="center"
+                android:textColor="#000"
+                android:hint="Descrição"
+                android:inputType="text"
+                android:textCursorDrawable="@drawable/estilo_cursor"
+                android:background="@drawable/estilo_edittext_cadastros"
+                android:textColorHint="#000"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="16dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnCadastrarMusico"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/estilo_botao"
+                    android:textColor="#F5F7F7"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:text="Cadastrar" />
+
+                <Button
+                    android:id="@+id/btnCancelarMusico"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/estilo_botao"
+                    android:textColor="#F5F7F7"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:text="Voltar"/>
+
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Descricao: "
-                android:id="@+id/txtDescricaoMusico"/>
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lines="3"
-                android:width="200dp"
-                android:id="@+id/edtDescricaoMusico"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/btnCadastrarMusico"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cadastrar" />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnCancelarMusico"
-                android:text="Voltar"/>
-        </LinearLayout>
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -6,13 +6,18 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.tcc"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 28
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    compileOptions
+            {
+                sourceCompatibility JavaVersion.VERSION_1_8
+                targetCompatibility JavaVersion.VERSION_1_8
+            }
     buildTypes {
         release {
             minifyEnabled false

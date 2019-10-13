@@ -4,25 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+    android:background="@drawable/estilo_tela"
     >
-    <!--<android.support.v7.widget.Toolbar
-        android:id="@+id/toolbarEspectador"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark">
 
-    </android.support.v7.widget.Toolbar>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="10dp"
         android:orientation="vertical">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="7dp"
+            app:srcCompat="@drawable/logoaplicativo" />
         <TextView
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Olá Fulano!"
-            android:textSize="35dp"
+            android:textSize="25dp"
+            android:textColor="#fff"
+            android:textStyle="bold"
             android:layout_gravity="center_horizontal"
             android:id="@+id/txtNomeEspectador"/>
 
@@ -30,9 +33,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:text="Pesquisar"
+            android:textStyle="bold"
             android:textSize="20dp"
+            android:textColor="#fff"
             android:id="@+id/txtPesquisaInicialEspectador"/>
         <TextView
             android:layout_width="wrap_content"
@@ -40,7 +45,9 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
             android:text="Editar Perfil"
+            android:textStyle="bold"
             android:textSize="20dp"
+            android:textColor="#fff"
             android:id="@+id/txtPerfilInicialEspectador"/>
         <TextView
             android:layout_width="wrap_content"
@@ -48,7 +55,9 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
             android:text="Sair"
+            android:textStyle="bold"
             android:textSize="20dp"
+            android:textColor="#fff"
             android:id="@+id/txtSairInicialEstabelecimento"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

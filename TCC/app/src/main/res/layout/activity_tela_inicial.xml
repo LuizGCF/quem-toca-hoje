@@ -4,54 +4,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/estilo_tela"
     tools:context="com.example.quemtocahoje.Views.TelaInicial">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center_vertical">
-        <LinearLayout
+        android:padding="16dp"
+        android:gravity="center"
+       >
+
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:paddingBottom="25dp"
+            app:srcCompat="@drawable/logoaplicativo" />
+
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
-            <android.support.v7.widget.AppCompatEditText
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/edtLogin"
-                android:hint="LOGIN"
-                android:layout_gravity="center_horizontal"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
-            <android.support.v7.widget.AppCompatEditText
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/edtSenha"
-                android:hint="SENHA"
-                android:inputType="textPassword"
-                android:layout_gravity="center_horizontal"/>
-        </LinearLayout>
-        <android.support.v7.widget.AppCompatButton
+            android:layout_gravity="center_horizontal"
+            android:textSize="20dp"
+            android:paddingBottom="10dp"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:text="Quem toca hoje?"/>
+
+        <EditText
+            android:id="@+id/edtLogin"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:cursorVisible="true"
+            android:gravity="center"
+            android:hint="Login"
+            android:inputType="text"
+            android:textColor="#000"
+            android:background="@drawable/estilo_edittext_cadastros"
+            android:textCursorDrawable="@drawable/estilo_cursor"
+
+            android:textColorHint="#000"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            />
+        <EditText
+            android:id="@+id/edtSenha"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:cursorVisible="true"
+            android:gravity="center"
+            android:hint="Senha"
+            android:inputType="textPassword"
+            android:textColor="#000"
+            android:background="@drawable/estilo_edittext_cadastros"
+            android:textCursorDrawable="@drawable/estilo_cursor"
+            android:textColorHint="#000"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            />
+
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="LOGIN"
-            android:id="@+id/btnLogin"
-            android:layout_gravity="center"/>
+            android:background="@drawable/estilo_botao"
+            android:textColor="#F5F7F7"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:layout_marginTop="15dp"
+            android:id="@+id/btnLogin" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Esqueceu sua senha?"
             android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:textSize="15dp"
+            android:textColor="#F5F7F7"
+            android:textStyle="bold"
             android:id="@+id/txtEsqueceuSuaSenha"/>
         <TextView
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Criar uma nova conta"
+            android:textSize="15dp"
+            android:textColor="#F5F7F7"
+            android:textStyle="bold"
             android:id="@+id/txtCadastro"
             android:layout_gravity="center"/>
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

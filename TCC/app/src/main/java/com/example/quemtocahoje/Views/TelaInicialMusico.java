@@ -22,15 +22,23 @@ public class TelaInicialMusico extends AppCompatActivity {
     private TextView txtVisualizacaoInicialMusico;
     private TextView txtSairInicialMusico;
     private TextView txtConviteInicialMusico;
+
     private TextView txtCadastrarBandaInicialMusico;
+
+    private TextView txtAvaliacaoEstabelecimento;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_inicial_musico);
+        getSupportActionBar().hide();
 
         final Intent telaPesquisaMusico = new Intent(this,TelaPesquisaMusico.class);
         final Intent telaLogin = new Intent(this, TelaInicial.class);
+
         final Intent telaNovaBanda = new Intent(this, TelaCriacaoBanda.class);
+
+        final Intent telaAvaliacaoEstabelecimento = new Intent(this, TelaAvalicaoEstabelecimento.class);
 
         txtNomeMusico = findViewById(R.id.txtNomeMusico);
         txtNomeBandaInicialMusico = findViewById(R.id.txtNomeBandaInicialMusico);
@@ -42,7 +50,10 @@ public class TelaInicialMusico extends AppCompatActivity {
         txtVisualizacaoInicialMusico = findViewById(R.id.txtVisualizacaoInicialMusico);
         txtSairInicialMusico = findViewById(R.id.txtSairInicialMusico);
         txtConviteInicialMusico = findViewById(R.id.txtConviteInicialMusico);
+
         txtCadastrarBandaInicialMusico = findViewById(R.id.txtCadastrarBandaInicialMusico);
+
+        txtAvaliacaoEstabelecimento = findViewById(R.id.txtAvaliacaoEstabelecimento);
 
         AutenticacaoDTO dto = (AutenticacaoDTO) getIntent().getSerializableExtra("dtoAutenticacao");
 
@@ -76,6 +87,14 @@ public class TelaInicialMusico extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(telaLogin);
                 finishAffinity();
+            }
+        });
+
+        txtAvaliacaoEstabelecimento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(telaAvaliacaoEstabelecimento);
             }
         });
     }

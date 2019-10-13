@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.quemtocahoje.Enum.TabelasFirebase;
 import com.example.quemtocahoje.Enum.TipoUsuario;
+import com.example.quemtocahoje.Persistencia.Entity.AvaliacaoMusicoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EnderecoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EspectadorEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
@@ -159,4 +160,23 @@ public class FirebaseRegistro implements Serializable {
         reference.setValue(hashMap);
     }
 
+    private void persistirAvaliacaoMusico(final AvaliacaoMusicoEntity avaliacao, String idAvaliacaoMusico) {
+        reference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.AvaliacaoMusico.name()).child(idAvaliacaoMusico);
+
+        HashMap<String, String> hashMap = new HashMap<>();
+
+        hashMap.put("idAvaliacaoMusico", idAvaliacaoMusico);
+        hashMap.put("estilo", avaliacao.getEstilo());
+        hashMap.put("musicalidade", avaliacao.getMusicalidade());
+        hashMap.put("performance", avaliacao.getPerformance());
+        hashMap.put("txtComentario", avaliacao.getTxtComentario());
+        reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful())
+                    persistirAvaliacaoMusico(avaliacao, idAvaliacaoMusico);
+            }
+        });
+
+    }
 }

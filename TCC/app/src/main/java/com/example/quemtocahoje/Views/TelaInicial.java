@@ -97,6 +97,9 @@ public class TelaInicial extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_tela_inicial);
+        getSupportActionBar().hide(); // Esconde a label
+
         final Intent telaCadastroEspectador = new Intent(this, TelaCadastroEspectador.class);
         final Intent telaEsqueciSenha = new Intent(this, TelaEsqueceuaSenha.class);
         final Intent telaInicialEstabelecimento = new Intent(this, TelaInicialEstabelecimento.class);
@@ -107,7 +110,9 @@ public class TelaInicial extends AppCompatActivity{
         firebaseUser = auth.getCurrentUser();
         dao = new AutenticacaoDAO();
 
-        setContentView(R.layout.activity_tela_inicial);
+
+
+
         btnLogin = findViewById(R.id.btnLogin);
         txtCadastro = findViewById(R.id.txtCadastro);
         txtEsqueceuSuaSenha = findViewById(R.id.txtEsqueceuSuaSenha);

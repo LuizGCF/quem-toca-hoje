@@ -4,33 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/estilo_tela"
     tools:context="com.example.quemtocahoje.Views.TelaInicialMusico">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     android:orientation="vertical">
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        app:srcCompat="@drawable/logoaplicativo" />
     <TextView
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Olá Fulano!"
-        android:textSize="35dp"
+        android:textSize="25dp"
+        android:textColor="#F5F7F7"
+        android:textStyle="bold"
         android:layout_gravity="center_horizontal"
         android:id="@+id/txtNomeMusico"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <TextView
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
+            android:textColor="#F5F7F7"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
             android:text="Visualizando como:"
             android:textSize="20dp"/>
         <TextView
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
             android:layout_width="wrap_content"
+            android:textColor="#F5F7F7"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:text="NomeBanda"
@@ -41,7 +55,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="25dp"
+        android:textColor="#F5F7F7"
+        android:textStyle="bold"
         android:text="Meu Perfil"
         android:textSize="20dp"
         android:id="@+id/txtPerfilInicialMusico"/>
@@ -50,6 +66,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
+        android:textColor="#F5F7F7"
+        android:textStyle="bold"
         android:text="Pesquisar"
         android:textSize="20dp"
         android:id="@+id/txtPesquisarInicialMusico"/>
@@ -58,6 +76,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
+        android:textColor="#F5F7F7"
+        android:textStyle="bold"
         android:text="Propostas"
         android:textSize="20dp"
         android:id="@+id/txtPropostasInicialMusico"/>
@@ -66,6 +86,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
+        android:textColor="#F5F7F7"
+        android:textStyle="bold"
         android:text="Agenda"
         android:textSize="20dp"
         android:id="@+id/txtAgendaInicialMusico"/>
@@ -73,6 +95,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
+        android:textColor="#F5F7F7"
+        android:textStyle="bold"
         android:layout_marginTop="10dp"
         android:text="Cadastrar Banda"
         android:textSize="20dp"
@@ -90,6 +114,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
+        android:textColor="#F5F7F7"
+        android:textStyle="bold"
         android:text="Histórico"
         android:textSize="20dp"
         android:id="@+id/txtHistoricoInicialMusico"/>
@@ -98,7 +124,19 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
+        android:textColor="#F5F7F7"
+        android:textStyle="bold"
+        android:text="Avaliação"
+        android:textSize="20dp"
+        android:id="@+id/txtAvaliacaoEstabelecimento"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
         android:text="Trocar Visualização"
+        android:textColor="#F5F7F7"
+        android:textStyle="bold"
         android:textSize="20dp"
         android:id="@+id/txtVisualizacaoInicialMusico"/>
     <TextView
@@ -106,6 +144,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
+        android:textColor="#F5F7F7"
+        android:textStyle="bold"
         android:text="Sair"
         android:textSize="20dp"
         android:id="@+id/txtSairInicialMusico"/>

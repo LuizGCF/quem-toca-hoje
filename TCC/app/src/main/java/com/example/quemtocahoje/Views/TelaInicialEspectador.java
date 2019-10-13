@@ -27,6 +27,7 @@ public class TelaInicialEspectador extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_inicial_espectador);
+        getSupportActionBar().hide();
 
         //Toolbar para fazer o logout
         //Toolbar toolbar = findViewById(R.id.);

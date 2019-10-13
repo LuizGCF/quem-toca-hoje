@@ -17,20 +17,25 @@ public class TelaInicialEstabelecimento extends AppCompatActivity {
     private TextView txtAgendaInicialEstabelecimento;
     private TextView txtHistoricoInicialEstabelecimento;
     private TextView txtSairInicialEstabelecimento;
+    private TextView txtAvaliacaoMusico;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_inicial_estabelecimento);
+        getSupportActionBar().hide();
         final Intent telaLogin = new Intent(this, TelaInicial.class);
         final Intent telaPesquisaMusico = new Intent(this,TelaPesquisaMusico.class);
         final Intent telaProposta = new Intent(this,TelaProposta.class);
+        final Intent telaAvaliacaoMusico = new Intent(this,TelaAvaliacaoMusico.class);
+
         txtNomeEstabelecimento = findViewById(R.id.txtNomeEstabelecimento);
         txtPesquisarInicialEstabelecimento = findViewById(R.id.txtPesquisarInicialEstabelecimento);
         txtPropostasInicialEstabelecimento = findViewById(R.id.txtPropostasInicialEstabelecimento);
         txtAgendaInicialEstabelecimento = findViewById(R.id.txtAgendaInicialEstabelecimento);
         txtHistoricoInicialEstabelecimento = findViewById(R.id.txtHistoricoInicialEstabelecimento);
         txtSairInicialEstabelecimento = findViewById(R.id.txtSairInicialEstabelecimento);
+        txtAvaliacaoMusico = findViewById(R.id.txtAvaliacaoMusico);
 
         txtNomeEstabelecimento.setText("Olá " + preencherNomeUsuario() + "!");
 
@@ -53,6 +58,13 @@ public class TelaInicialEstabelecimento extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(telaProposta);
+            }
+        });
+
+        txtAvaliacaoMusico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(telaAvaliacaoMusico);
             }
         });
     }

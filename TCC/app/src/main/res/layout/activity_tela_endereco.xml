@@ -1,134 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/estilo_tela"
     tools:context="com.example.quemtocahoje.Views.TelaEndereco">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp"
+       >
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            app:srcCompat="@drawable/logoaplicativo" />
+
         <TextView
-            android:layout_marginTop="45dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cadastrar Endereço"
-            android:textSize="35dp"
-            android:layout_gravity="center_horizontal"/>
-        <LinearLayout
-            android:layout_marginTop="50dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right">
+            android:textSize="25dp"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:layout_gravity="center"/>
 
-            <TextView
-                android:layout_width="43dp"
-                android:layout_height="match_parent"
-                android:layout_marginRight="0dp"
-                android:gravity="center"
-                android:text="CEP" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="1dp">
 
             <EditText
                 android:id="@+id/edtCEPEndereco"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="00dp" />
+                android:layout_width="180dp"
+                android:layout_height="55dp"
+                android:paddingTop="5dp"
+                android:background="@drawable/estilo_edittext_cadastros"
+                android:cursorVisible="true"
+                android:hint="CEP"
+                android:gravity="center"
+                android:inputType="number"
+                android:textColor="#000"
+                android:textColorHint="#000"
+                android:textCursorDrawable="@drawable/estilo_cursor"
+                android:textSize="15dp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btnBuscarCep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="50dp"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/estilo_botao"
                 android:text="Buscar"
-                android:textColor="#FDFDFD"
-                android:textSize="8sp" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Logradouro"
-                android:gravity="center"/>
-            <EditText
-                android:layout_marginRight="20dp"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/edtLogradouroEndereco"/>
-        </LinearLayout>
-        <LinearLayout
+                android:textColor="#fff"
+                android:textSize="14dp"
+                android:textStyle="bold" />
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Bairro"
-                android:gravity="center"/>
-            <EditText
-                android:layout_marginRight="20dp"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/edtBairroEndereco"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Cidade"
-                android:gravity="center"/>
-            <EditText
-                android:layout_marginRight="20dp"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/edtCidadeEndereco"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Complemento"
-                android:gravity="center"/>
-            <EditText
-                android:layout_marginRight="20dp"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/edtComplementoEndereco"/>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="right">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="UF"
-                android:gravity="center"/>
+            android:padding="1dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
             <EditText
-                android:layout_marginRight="20dp"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/edtUFEndereco"/>
+                android:id="@+id/edtLogradouroEndereco"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/estilo_edittext_cadastros"
+                android:cursorVisible="true"
+                android:hint="Logradouro"
+                android:layout_gravity="center"
+                android:inputType="text"
+                android:textColor="#000"
+                android:gravity="center"
+                android:textColorHint="#000"
+                android:textCursorDrawable="@drawable/estilo_cursor"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edtBairroEndereco"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/estilo_edittext_cadastros"
+                android:cursorVisible="true"
+                android:hint="Bairro"
+                android:gravity="center"
+                android:inputType="text"
+                android:textColor="#000"
+                android:textColorHint="#000"
+                android:textCursorDrawable="@drawable/estilo_cursor"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+
+            <EditText
+                android:id="@+id/edtCidadeEndereco"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/estilo_edittext_cadastros"
+                android:cursorVisible="true"
+                android:hint="Cidade"
+                android:inputType="text"
+                android:textColor="#000"
+                android:gravity="center"
+                android:textColorHint="#000"
+                android:textCursorDrawable="@drawable/estilo_cursor"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edtComplementoEndereco"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/estilo_edittext_cadastros"
+                android:cursorVisible="true"
+                android:gravity="center"
+                android:hint="Complemento"
+                android:inputType="textEmailAddress"
+                android:textColor="#000"
+                android:textColorHint="#000"
+                android:textCursorDrawable="@drawable/estilo_cursor"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+
+            <EditText
+                android:id="@+id/edtUFEndereco"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/estilo_edittext_cadastros"
+                android:cursorVisible="true"
+                android:gravity="center"
+                android:hint="UF"
+                android:inputType="textEmailAddress"
+                android:textColor="#000"
+                android:textColorHint="#000"
+                android:textCursorDrawable="@drawable/estilo_cursor"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+
         </LinearLayout>
-        <Button
-            android:layout_marginTop="15dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Confirmar"
-            android:id="@+id/btnConfirmarEndereco"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="16dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnConfirmarEndereco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/estilo_botao"
+                android:textColor="#F5F7F7"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:text="Confirmar" />
+
+            <Button
+                android:id="@+id/btnVoltar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="top"
+                android:background="@drawable/estilo_botao"
+                android:textColor="#fff"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:text="Voltar"
+                />
+
+        </LinearLayout>
+
+
     </LinearLayout>
-
 </android.support.constraint.ConstraintLayout>

@@ -32,6 +32,7 @@ public class TelaCadastroMusico extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_cadastro_musico);
+        getSupportActionBar().hide();
 
         final Intent telaUpload = new Intent(this, TelaUpload.class);
 

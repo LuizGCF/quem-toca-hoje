@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/estilo_tela"
+    tools:context="com.example.quemtocahoje.Views.TelaAvaliacaoMusico">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        >
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="6dp"
+            app:srcCompat="@drawable/logoaplicativo" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="25dp"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:text="Avaliação"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:text="Performance"
+                />
+
+            <RatingBar
+                android:id="@+id/rbPerformance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleX=".6"
+                android:scaleY=".6"
+                android:background="@drawable/estilo_ratingbar"
+                android:isIndicator="false"
+                android:numStars="5"
+                />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:text="Estilo"
+                />
+
+            <RatingBar
+                android:id="@+id/rbEstilo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/estilo_ratingbar"
+                android:scaleX=".6"
+                android:scaleY=".6"
+                android:isIndicator="false"
+                android:numStars="5"
+                />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:text="Musicalidade"
+                />
+
+            <RatingBar
+                android:id="@+id/rbMusicalidade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/estilo_ratingbar"
+                android:scaleX=".6"
+                android:scaleY=".6"
+                android:isIndicator="false"
+                android:numStars="5"
+                />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:layout_gravity="left"
+                android:text="Deixe aqui seu comentário"
+                />
+
+            <EditText
+                android:id="@+id/txtComentario"
+                android:background="@drawable/estilo_background_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:ems="20"
+                android:cursorVisible="true"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnAvaliar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:background="@drawable/estilo_botao"
+                android:textColor="#F5F7F7"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:text="Avaliar"
+                />
+            <Button
+                android:id="@+id/btnVoltar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:background="@drawable/estilo_botao"
+                android:textColor="#F5F7F7"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:text="Voltar"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

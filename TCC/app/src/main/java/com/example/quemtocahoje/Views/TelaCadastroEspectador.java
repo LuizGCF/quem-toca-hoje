@@ -32,6 +32,7 @@ public class TelaCadastroEspectador extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_cadastro_espectador);
+        getSupportActionBar().hide();
 
         final Intent telaUpload = new Intent(this, TelaUpload.class);
         final Intent telaCadEstab = new Intent(this, TelaCadastroEstabelecimento.class);
@@ -90,7 +91,8 @@ public class TelaCadastroEspectador extends AppCompatActivity {
         btnCancelarEspectador.setOnClickListener(new View.OnClickListener(){
 
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 finish();
             }
         });

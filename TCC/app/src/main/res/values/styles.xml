@@ -21,4 +21,5 @@
         <item name="colorControlHighlight">@color/colorPrimary</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
+
 </resources>

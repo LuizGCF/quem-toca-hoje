@@ -41,8 +41,9 @@ public class BandaDAO {
         this.firebaseUser = firebaseUser;
     }
 
-    public BandaDAO() {
+    public BandaDAO(){
     }
+
 
     public void cadastrarNovaBanda(BandaEntity banda, Context ctx) {
         Log.d("CADASTRO BANDA", banda.toString());
