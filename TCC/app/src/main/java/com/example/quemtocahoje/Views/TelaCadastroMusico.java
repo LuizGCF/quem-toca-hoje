@@ -23,7 +23,6 @@ public class TelaCadastroMusico extends AppCompatActivity {
     private EditText edtCelularMusico;
     private EditText edtCidadeMusico;
     private EditText edtDescricaoMusico;
-    private RadioGroup rgpArtistaSolo;
 
     private Button btnCadastrarMusico;
     private Button btnCancelarMusico;
@@ -40,7 +39,6 @@ public class TelaCadastroMusico extends AppCompatActivity {
         edtCelularMusico = findViewById(R.id.edtCelularMusico);
         edtCidadeMusico = findViewById(R.id.edtCidadeMusico);
         edtDescricaoMusico = findViewById(R.id.edtDescricaoMusico);
-        rgpArtistaSolo = findViewById(R.id.rgpCarreiraSolo);
 
         btnCadastrarMusico = findViewById(R.id.btnCadastrarMusico);
         btnCancelarMusico = findViewById(R.id.btnCancelarMusico);
@@ -83,8 +81,6 @@ public class TelaCadastroMusico extends AppCompatActivity {
     }
 
     private MusicoEntity prepararObjetoMusico(){
-        RadioButton r = findViewById(rgpArtistaSolo.getCheckedRadioButtonId());
-        String valorArtistaSolo = r.getText().toString().toUpperCase();
 
         EspectadorEntity es = (EspectadorEntity) getIntent().getSerializableExtra("objetoEspectador");
         MusicoEntity m = new MusicoEntity(null
@@ -94,7 +90,6 @@ public class TelaCadastroMusico extends AppCompatActivity {
                 ,es.getDataCriacao()
                 ,edtDescricaoMusico.getText().toString().trim()
                 ,edtCidadeMusico.getText().toString().trim()
-                ,valorArtistaSolo
         );
 
         return m;

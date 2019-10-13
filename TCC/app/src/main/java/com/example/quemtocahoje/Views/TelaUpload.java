@@ -1,6 +1,7 @@
 package com.example.quemtocahoje.Views;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -59,9 +60,7 @@ public class TelaUpload extends AppCompatActivity {
         setContentView(R.layout.activity_tela_upload);
         registro = new FirebaseRegistro(auth, reference);
 
-        final Intent telaInicialEspectador = new Intent(this,TelaInicialEspectador.class);
-        final Intent telaInicialEstabelecimento = new Intent(this,TelaInicialEstabelecimento.class);
-        final Intent telaInicialMusico = new Intent(this,TelaInicialMusico.class);
+        final Intent telaInicial = new Intent(this,TelaInicial.class);
 
         txtNomeUsuarioUpload = findViewById(R.id.txtNomeUsuarioUpload);
         imgFotoUsuarioUpload = findViewById(R.id.imgFotoUsuarioUpload);
@@ -77,31 +76,9 @@ public class TelaUpload extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 persistirNovoUsuario();
-                String tipo = getIntent().getStringExtra("tipoUsuario");
-                if (tipo.equals(TipoUsuario.ESPECTADOR.name())) {
-                    String nome = ((EspectadorEntity) getIntent().getSerializableExtra("objetoEspectador")).getNomeEspectador();
-                    AutenticacaoDTO dto =  AutenticacaoDTOAdapter.espectadorToAutenticacaoDTO((EspectadorEntity) getIntent().getSerializableExtra("objetoEspectador"));
-                    telaInicialEspectador.putExtra("dtoAutenticacao",dto);
-                    startActivity(telaInicialEspectador);
-                    finishAffinity();
+                //startActivity(telaInicial);
+                //finishAffinity();
                 }
-                else if (tipo.equals(TipoUsuario.ESTABELECIMENTO.name()))
-                {
-                    String nome = ((EstabelecimentoEntity) getIntent().getSerializableExtra("objetoEstabelecimento")).getNomeDono();
-                    AutenticacaoDTO dto =  AutenticacaoDTOAdapter.estabelecimentoToAutenticacaoDTO((EstabelecimentoEntity) getIntent().getSerializableExtra("objetoEstabelecimento"));
-                    telaInicialEstabelecimento.putExtra("dtoAutenticacao", dto);
-                    startActivity(telaInicialEstabelecimento);
-                    finishAffinity();
-                }
-                else if(tipo.equals(TipoUsuario.MUSICO.name()))
-                {
-                   String nome = ((MusicoEntity) getIntent().getSerializableExtra("objetoMusico")).getNome();
-                   AutenticacaoDTO dto =  AutenticacaoDTOAdapter.musicoToAutenticacaoDTO((MusicoEntity) getIntent().getSerializableExtra("objetoMusico"));
-                   telaInicialMusico.putExtra("dtoAutenticacao",dto);
-                   startActivity(telaInicialMusico);
-                   finishAffinity();
-                }
-            }
         });
 
         linearImagensDemonstracao = findViewById(R.id.linearImagensDemonstracao);
@@ -138,14 +115,14 @@ public class TelaUpload extends AppCompatActivity {
 
         if(tipo.equals(TipoUsuario.ESPECTADOR.name())){
             EspectadorEntity e = (EspectadorEntity) getIntent().getSerializableExtra("objetoEspectador");
-            registro.registro(a.getLogin(),tipo,a.getEmail(),a.getSenha(),e, null, null, null);
+            registro.registro(a.getLogin(),tipo,a.getEmail(),a.getSenha(),e, null, null, null, TelaUpload.this);
         }else if(tipo.equals(TipoUsuario.ESTABELECIMENTO.name())){
             EnderecoEntity end = (EnderecoEntity) getIntent().getSerializableExtra("objetoEndereco");
             EstabelecimentoEntity estab = (EstabelecimentoEntity) getIntent().getSerializableExtra("objetoEstabelecimento");
-            registro.registro(a.getLogin(),tipo, a.getEmail(),a.getSenha(), null, null, estab, end);
+            registro.registro(a.getLogin(),tipo, a.getEmail(),a.getSenha(), null, null, estab, end, TelaUpload.this);
         }else if(tipo.equals(TipoUsuario.MUSICO.name())){
             MusicoEntity m = (MusicoEntity) getIntent().getSerializableExtra("objetoMusico");
-            registro.registro(a.getLogin(), tipo, a.getEmail(), a.getSenha(),null, m, null, null);
+            registro.registro(a.getLogin(), tipo, a.getEmail(), a.getSenha(),null, m, null, null, TelaUpload.this);
         }
 
         //TODO reimplementar com Firebase

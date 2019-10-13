@@ -23,47 +23,6 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:textColor="#fff"
-                android:textStyle="bold"
-                android:text="Exibir perfil solo em pesquisas: "/>
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/text"
-                android:id="@+id/rgpCarreiraSolo"
-                android:orientation="horizontal"
-                android:checkedButton="@+id/rbSoloSim" >
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    android:textColor="#fff"
-                    android:textStyle="bold"
-                    android:id="@+id/rbSoloSim"
-                    android:text="Sim" />
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    android:textColor="#fff"
-                    android:textStyle="bold"
-                    android:id="@+id/rbSoloNao"
-                    android:text="Não" />
-            </RadioGroup>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="16dp"
             android:orientation="vertical">

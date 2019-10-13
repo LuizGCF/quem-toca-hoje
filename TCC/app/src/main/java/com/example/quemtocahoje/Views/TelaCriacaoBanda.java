@@ -1,5 +1,6 @@
 package com.example.quemtocahoje.Views;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.example.quemtocahoje.DTO.AutenticacaoDTO;
 import com.example.quemtocahoje.Enum.GeneroMusical;
@@ -37,7 +41,11 @@ public class TelaCriacaoBanda extends AppCompatActivity {
     private Button btnVoltarBanda;
     private EditText edtNomeBanda;
     private EditText edtEmailIntegrante;
+    private RadioGroup rgpCadastroTipoBandaSolo;
+    private TextView txtEmailIntegrante;
+    private TextView txtNomeBanda;
     private ArrayAdapter<String> adapterIntegrantes;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +58,9 @@ public class TelaCriacaoBanda extends AppCompatActivity {
         edtNomeBanda = findViewById(R.id.edtNomeBanda);
         edtEmailIntegrante = findViewById(R.id.edtEmailIntegrante);
         spnGeneroBanda = findViewById(R.id.spnGeneroBanda);
+        rgpCadastroTipoBandaSolo = findViewById(R.id.rgpCadastroTipoBandaSolo);
+        txtEmailIntegrante = findViewById(R.id.txtEmailIntegrante);
+        txtNomeBanda = findViewById(R.id.txtNomeBanda);
 
         final List<String> adapter = GeneroMusical.getGenerosMusicais();
         spnGeneroBanda.setItems(adapter);
@@ -57,6 +68,27 @@ public class TelaCriacaoBanda extends AppCompatActivity {
         adapterIntegrantes = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_list_item_1);
         lstEmailIntegrantes = findViewById(R.id.lstEmailIntegrantes);
 
+        rgpCadastroTipoBandaSolo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @SuppressLint("RestrictedApi")
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton r = findViewById(rgpCadastroTipoBandaSolo.getCheckedRadioButtonId());
+                String valorBandaSolo = r.getText().toString().trim();
+                if(valorBandaSolo.equals("Banda")){
+                    btnAddIntegrante.setVisibility(View.VISIBLE);
+                    edtEmailIntegrante.setVisibility(View.VISIBLE);
+                    txtEmailIntegrante.setVisibility(View.VISIBLE);
+                    lstEmailIntegrantes.setVisibility(View.VISIBLE);
+                    txtNomeBanda.setText("Nome da Banda:");
+                }else{
+                    btnAddIntegrante.setVisibility(View.GONE);
+                    edtEmailIntegrante.setVisibility(View.GONE);
+                    txtEmailIntegrante.setVisibility(View.GONE);
+                    lstEmailIntegrantes.setVisibility(View.GONE);
+                    txtNomeBanda.setText("Nome de Apresentação:");
+                }
+            }
+        });
 
 
         btnAddIntegrante.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +112,7 @@ public class TelaCriacaoBanda extends AppCompatActivity {
             public void onClick(View v) {
                 if(isCamposValidos()){
                     BandaEntity banda = montarObjeto();
+                    if(tipoEscolhido().equals("Artista Solo")) banda.setConvites(new ArrayList<>());
                     BandaDAO dao = new BandaDAO();
                     dao.cadastrarNovaBanda(banda, TelaCriacaoBanda.this);
                 }
@@ -115,12 +148,12 @@ public class TelaCriacaoBanda extends AppCompatActivity {
 
     private boolean isCamposValidos(){
         if(edtNomeBanda.getText().toString().trim().isEmpty()){
-            Mensagem.notificar(TelaCriacaoBanda.this,"Atenção!","O nome da banda é obrigatório");
+            Mensagem.notificar(TelaCriacaoBanda.this,"Atenção!","O nome é obrigatório");
             return false;
         }else if(spnGeneroBanda.getSelectedIndicies().isEmpty()) {
             Mensagem.notificar(TelaCriacaoBanda.this, "Atenção!", "Ao menos um gênero deve ser selecionado");
             return false;
-        }else if(lstEmailIntegrantes.getCount() < 1){
+        }else if(lstEmailIntegrantes.getCount() < 1 && tipoEscolhido().equals("Banda")){
             Mensagem.notificar(TelaCriacaoBanda.this, "Atenção!", "Ao menos um email deve ser informado");
             return false;
         }
@@ -138,6 +171,12 @@ public class TelaCriacaoBanda extends AppCompatActivity {
         if(lista.contains(email)) return false;
 
         return true;
+    }
+
+    private String tipoEscolhido(){
+        int r = rgpCadastroTipoBandaSolo.getCheckedRadioButtonId();
+        RadioButton b = (RadioButton) findViewById(r);
+        return b.getText().toString();
     }
 
     private BandaEntity montarObjeto(){
@@ -160,6 +199,7 @@ public class TelaCriacaoBanda extends AppCompatActivity {
                 ,new ArrayList<>()
                 ,"SIM"
                 ,convite
+                ,tipoEscolhido()
         );
     }
 }

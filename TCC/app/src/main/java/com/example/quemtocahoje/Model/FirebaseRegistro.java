@@ -1,7 +1,12 @@
 package com.example.quemtocahoje.Model;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.quemtocahoje.Enum.TabelasFirebase;
 import com.example.quemtocahoje.Enum.TipoUsuario;
@@ -12,11 +17,16 @@ import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.MusicoEntity;
 import com.example.quemtocahoje.Utility.DefinirDatas;
 import com.example.quemtocahoje.Utility.EncodeBase64;
+import com.example.quemtocahoje.Views.TelaInicial;
+import com.example.quemtocahoje.Views.TelaUpload;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -28,6 +38,8 @@ public class FirebaseRegistro implements Serializable {
 
     private FirebaseAuth auth;
     private DatabaseReference reference;
+    private ProgressDialog progressDialog;
+    private Context ctx;
 
     public FirebaseRegistro(FirebaseAuth auth, DatabaseReference reference){
 
@@ -37,7 +49,13 @@ public class FirebaseRegistro implements Serializable {
 
     public FirebaseRegistro(){}
 
-    public void registro(final String login, final String tipoUsuario, final String email, final String senha, final EspectadorEntity e, final MusicoEntity m, final EstabelecimentoEntity estab, final EnderecoEntity endereco){
+    public void registro(final String login, final String tipoUsuario, final String email, final String senha, final EspectadorEntity e, final MusicoEntity m, final EstabelecimentoEntity estab, final EnderecoEntity endereco, Context ctx){
+        this.ctx = ctx;
+        progressDialog = new ProgressDialog(this.ctx);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Aguarde enquanto criamos o seu usuário");
+        progressDialog.setTitle("Salvando dados");
+
         auth = FirebaseAuth.getInstance();
         auth.createUserWithEmailAndPassword(email,senha)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -45,6 +63,7 @@ public class FirebaseRegistro implements Serializable {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful())
                         {
+                            progressDialog.show();
                             final FirebaseUser usuariofirebase = auth.getCurrentUser();
                             String idusuario = EncodeBase64.toBase64(email);//getIdToken(false).toString();
 
@@ -57,7 +76,6 @@ public class FirebaseRegistro implements Serializable {
                             hashMap.put("email", email);
                             hashMap.put("tipoUsuario",tipoUsuario);
                             hashMap.put("senha", senha);
-                            Log.d("FIM HASH", "FIM HASH");
 
                             reference.setValue(hashMap)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -65,16 +83,38 @@ public class FirebaseRegistro implements Serializable {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful())
                                             {
-                                            Log.d("ON COMPLETE", "aaa");
-                                            if(tipoUsuario.equals(TipoUsuario.ESPECTADOR.name()))
-                                               registroEspectador(e, idusuario);
-                                            else if(tipoUsuario.equals(TipoUsuario.MUSICO.name()))
-                                                registroMusico(m, idusuario);
-                                            else if(tipoUsuario.equals(TipoUsuario.ESTABELECIMENTO.name()))
-                                                registrarEstabelecimento(estab,endereco, idusuario);
+                                                auth.signOut();
+                                                if(tipoUsuario.equals(TipoUsuario.ESPECTADOR.name()))
+                                                   registroEspectador(e, idusuario);
+                                                else if(tipoUsuario.equals(TipoUsuario.MUSICO.name()))
+                                                    registroMusico(m, idusuario);
+                                                else if(tipoUsuario.equals(TipoUsuario.ESTABELECIMENTO.name()))
+                                                    registrarEstabelecimento(estab,endereco, idusuario);
                                             }
                                         }
                                     });
+                        }
+                        else
+                        {
+                            String erroExcecao = "";
+                            try
+                            {
+                                throw task.getException();
+                            }
+                            catch(FirebaseAuthInvalidCredentialsException e)
+                            {
+                                erroExcecao = "Insira um email válido para continuar";
+                            }
+                            catch(FirebaseAuthUserCollisionException e)
+                            {
+                                erroExcecao = "Esse email já está cadastrado em nosso sistema";
+                            }
+                            catch (Exception e)
+                            {
+                                Log.d("FIREBASE ERRO", e.getMessage());
+                            }
+                            progressDialog.dismiss();
+                            Toast.makeText(getCtx(), erroExcecao, Toast.LENGTH_LONG).show();
                         }
                     }
                 }
@@ -94,6 +134,8 @@ public class FirebaseRegistro implements Serializable {
         hashMap.put("nomeEspectador",espectador.getNomeEspectador());
         hashMap.put("dataCriacao", DefinirDatas.dataAtual());
         reference.setValue(hashMap);
+        progressDialog.dismiss();
+        iniciarAtividadePrincipal();
     }
 
     public void registroMusico(final MusicoEntity musico, final String idmusico) {
@@ -108,9 +150,10 @@ public class FirebaseRegistro implements Serializable {
         hashMap.put("telefone", musico.getTelefone());
         hashMap.put("cidade", musico.getCidade());
         hashMap.put("descricao", musico.getDescricao());
-        hashMap.put("carreiraSoloAtiva", musico.isCarreiraSoloAtiva());
         hashMap.put("dataCriacao", DefinirDatas.dataAtual());
         reference.setValue(hashMap);
+        progressDialog.dismiss();
+        iniciarAtividadePrincipal();
     }
 
     public void registrarEstabelecimento(final EstabelecimentoEntity estab, final EnderecoEntity endereco, final String idEstab){
@@ -158,25 +201,17 @@ public class FirebaseRegistro implements Serializable {
         hashMap.put("complemento", endereco.getComplemento());
         hashMap.put("dataCriacao", DefinirDatas.dataAtual());
         reference.setValue(hashMap);
+        progressDialog.dismiss();
+        iniciarAtividadePrincipal();
     }
 
-    private void persistirAvaliacaoMusico(final AvaliacaoMusicoEntity avaliacao, String idAvaliacaoMusico) {
-        reference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.AvaliacaoMusico.name()).child(idAvaliacaoMusico);
+    private void iniciarAtividadePrincipal(){
+        Intent tela = new Intent(ctx, TelaInicial.class);
+        ctx.startActivity(tela);
+        ((Activity) ctx).finish();
+    }
 
-        HashMap<String, String> hashMap = new HashMap<>();
-
-        hashMap.put("idAvaliacaoMusico", idAvaliacaoMusico);
-        hashMap.put("estilo", avaliacao.getEstilo());
-        hashMap.put("musicalidade", avaliacao.getMusicalidade());
-        hashMap.put("performance", avaliacao.getPerformance());
-        hashMap.put("txtComentario", avaliacao.getTxtComentario());
-        reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful())
-                    persistirAvaliacaoMusico(avaliacao, idAvaliacaoMusico);
-            }
-        });
-
+    public Context getCtx() {
+        return ctx;
     }
 }

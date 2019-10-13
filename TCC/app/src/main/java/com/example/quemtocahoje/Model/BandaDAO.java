@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.util.Log;
 
+import com.example.quemtocahoje.DTO.ConvitesRecebidosDTO;
 import com.example.quemtocahoje.Enum.StatusConvite;
 import com.example.quemtocahoje.Enum.TabelasFirebase;
 import com.example.quemtocahoje.Enum.TipoUsuario;
@@ -63,6 +64,7 @@ public class BandaDAO {
                     hashMap.put("dataCriacao", banda.getDataCriacao());
                     hashMap.put("bandaAtiva", banda.isBandaAtiva());
                     hashMap.put("generos", banda.getGeneros());
+                    hashMap.put("tipoCadastro", banda.getTipoCadastro());
 
                     databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

@@ -65,16 +65,12 @@ public class TelaCadastroEstabelecimento extends AppCompatActivity {
 
                     if(VerificadorCpfCnpj.isCNPJValido(s))
                     {
-                        //if(!isCnpjCadastrado()) {
                             EstabelecimentoEntity e = prepararObjetoEstabelecimento();
                             telaEndereco.putExtra("tipoUsuario", TipoUsuario.ESTABELECIMENTO.name());
                             telaEndereco.putExtra("objetoAutenticacao", getIntent().getSerializableExtra("objetoAutenticacao"));
                             telaEndereco.putExtra("objetoEstabelecimento", e);
 
                             startActivity(telaEndereco);
-                       /* }else{
-                            Mensagem.notificar(TelaCadastroEstabelecimento.this, "CNPJ Cadastrado", "Esse CNPJ já foi cadastrado");
-                        }*/
                     }
                     else
                         Mensagem.notificar(TelaCadastroEstabelecimento.this,"CNPJ Inválido","CNPJ não existente.");

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.quemtocahoje.Views.TelaCriacaoBanda">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -12,10 +13,42 @@
         android:textSize="30dp"
         android:id="@+id/txtCadastrarBanda"
         android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtCadastrarBanda"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:id="@+id/linearBandaSolo">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipo de Cadastro: "/>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text"
+            android:id="@+id/rgpCadastroTipoBandaSolo"
+            android:orientation="horizontal"
+            android:checkedButton="@+id/rbCadastroBanda" >
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rbCadastroBanda"
+                android:text="Banda" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rbCadastroSolo"
+                android:text="Artista Solo" />
+        </RadioGroup>
+    </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtCadastrarBanda"
+        android:layout_below="@id/linearBandaSolo"
         android:layout_marginTop="20dp"
         android:textSize="20dp"
         android:text="Nome da Banda:"

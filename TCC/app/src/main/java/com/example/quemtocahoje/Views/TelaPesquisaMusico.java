@@ -113,7 +113,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
                     MusicoEntity m = snapshot.getValue(MusicoEntity.class);
-                    if(m.isCarreiraSoloAtiva().equals("SIM"))
+                 //   if(m.isCarreiraSoloAtiva().equals("SIM"))
                         allItens.add(new ItensListaBuscaDTO(null,m.getNomeArtistico(),m.getDescricao()));
                 }
                 listarEstabelecimentos();

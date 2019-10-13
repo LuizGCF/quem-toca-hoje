@@ -1,5 +1,6 @@
 package com.example.quemtocahoje.Model;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -103,7 +104,7 @@ public class AutenticacaoDAO {
                 {
                     EspectadorEntity entidade = dataSnapshot.getValue(EspectadorEntity.class);
 
-                    AutenticacaoDTO dto = AutenticacaoDTOAdapter.espectadorToAutenticacaoDTO(entidade);
+                    AutenticacaoDTO dto = AutenticacaoDTOAdapter.espectadorToAutenticacaoDTO(entidade, EncodeBase64.fromBase64(id));
                     Intent telaInicialEspectador = new Intent(ctx, TelaInicialEspectador.class);
                     telaInicialEspectador.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     telaInicialEspectador.putExtra("dtoAutenticacao", dto);
@@ -131,7 +132,7 @@ public class AutenticacaoDAO {
                         Log.d("DENTROUSUARIO",entidade.getNome());
                         Log.d("DENTROUSUARIO",entidade.getNomeArtistico());
 
-                        AutenticacaoDTO dto = AutenticacaoDTOAdapter.musicoToAutenticacaoDTO(entidade);
+                        AutenticacaoDTO dto = AutenticacaoDTOAdapter.musicoToAutenticacaoDTO(entidade, EncodeBase64.fromBase64(id));
                         Intent telaInicialMusico = new Intent(ctx, TelaInicialMusico.class);
                         telaInicialMusico.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         telaInicialMusico.putExtra("dtoAutenticacao",dto);
@@ -160,7 +161,7 @@ public class AutenticacaoDAO {
                         Log.d("DENTROUSUARIO",entidade.getNomeDono());
                         Log.d("DENTROUSUARIO",entidade.getNomeFantasia());
 
-                        AutenticacaoDTO dto = AutenticacaoDTOAdapter.estabelecimentoToAutenticacaoDTO(entidade);
+                        AutenticacaoDTO dto = AutenticacaoDTOAdapter.estabelecimentoToAutenticacaoDTO(entidade, EncodeBase64.fromBase64(id));
                         Intent telaInicialEstabelecimento = new Intent(ctx, TelaInicialEstabelecimento.class);
                         telaInicialEstabelecimento.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         telaInicialEstabelecimento.putExtra("dtoAutenticacao",dto);

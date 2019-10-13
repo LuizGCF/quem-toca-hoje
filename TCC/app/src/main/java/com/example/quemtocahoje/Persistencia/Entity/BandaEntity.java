@@ -1,6 +1,5 @@
 package com.example.quemtocahoje.Persistencia.Entity;
 
-import com.example.quemtocahoje.POJO.Convite;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,8 +14,9 @@ public class BandaEntity implements Serializable {
     private List<String> integrantes;
     private List<ConviteEntity> convites;
     private String bandaAtiva;
+    private String tipoCadastro;
 
-    public BandaEntity(String nome, String idCriador, String dataCriacao, String generos, List<String> integrantes, String bandaAtiva, List<ConviteEntity> convites) {
+    public BandaEntity(String nome, String idCriador, String dataCriacao, String generos, List<String> integrantes, String bandaAtiva, List<ConviteEntity> convites, String tipoCadastro) {
         this.nome = nome;
         this.idCriador = idCriador;
         this.dataCriacao = dataCriacao;
@@ -24,6 +24,7 @@ public class BandaEntity implements Serializable {
         this.integrantes = integrantes;
         this.bandaAtiva = bandaAtiva;
         this.convites = convites;
+        this.tipoCadastro= tipoCadastro;
     }
 
     public BandaEntity() {
@@ -93,6 +94,14 @@ public class BandaEntity implements Serializable {
         this.convites = convites;
     }
 
+    public String getTipoCadastro() {
+        return tipoCadastro;
+    }
+
+    public void setTipoCadastro(String tipoCadastro) {
+        this.tipoCadastro = tipoCadastro;
+    }
+
     @Override
     public String toString() {
         return "BandaEntity{" +
@@ -100,10 +109,11 @@ public class BandaEntity implements Serializable {
                 ", idCriador='" + idCriador + '\'' +
                 ", nome='" + nome + '\'' +
                 ", dataCriacao='" + dataCriacao + '\'' +
-                ", generos=" + generos +
+                ", generos='" + generos + '\'' +
                 ", integrantes=" + integrantes +
                 ", convites=" + convites +
                 ", bandaAtiva='" + bandaAtiva + '\'' +
+                ", tipoCadastro='" + tipoCadastro + '\'' +
                 '}';
     }
 }
