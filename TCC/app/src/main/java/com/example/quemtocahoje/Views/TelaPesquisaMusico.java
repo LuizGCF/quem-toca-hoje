@@ -24,8 +24,10 @@ import com.example.quemtocahoje.DTO.ItensListaBuscaDTO;
 import com.example.quemtocahoje.Enum.TabelasFirebase;
 import com.example.quemtocahoje.Enum.TipoArquivo;
 import com.example.quemtocahoje.Enum.TipoUsuario;
+import com.example.quemtocahoje.POJO.Banda;
 import com.example.quemtocahoje.POJO.Estabelecimento;
 import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
+import com.example.quemtocahoje.Persistencia.Entity.BandaEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.MusicoEntity;
 import com.example.quemtocahoje.Utility.ConversaoArquivo;
@@ -40,6 +42,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TelaPesquisaMusico extends AppCompatActivity {
 
@@ -87,13 +90,15 @@ public class TelaPesquisaMusico extends AppCompatActivity {
     }
 
     private void listarBandas(){
-        reference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Usuarios.name()).child(TipoUsuario.MUSICO.name());
+        reference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Banda.name());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
-                    //Utilizar a BandaEntity para adicionalas aqui
+                    BandaEntity b = snapshot.getValue(BandaEntity.class);
+                    if(b.isBandaAtiva().equals("SIM"))
+                        allItens.add(new ItensListaBuscaDTO(null,b.getNome(),""));//b.getGeneros().stream().collect(Collectors.joining(","))));
                 }
                 carregarRecyclerView();
             }

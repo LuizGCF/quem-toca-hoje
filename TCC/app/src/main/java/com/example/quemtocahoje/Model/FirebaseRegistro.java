@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
@@ -30,9 +31,11 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 
 public class FirebaseRegistro implements Serializable {
 
@@ -49,7 +52,7 @@ public class FirebaseRegistro implements Serializable {
 
     public FirebaseRegistro(){}
 
-    public void registro(final String login, final String tipoUsuario, final String email, final String senha, final EspectadorEntity e, final MusicoEntity m, final EstabelecimentoEntity estab, final EnderecoEntity endereco, Context ctx){
+    public void registro(final String login, final String tipoUsuario, final String email, final String senha, final EspectadorEntity e, final MusicoEntity m, final EstabelecimentoEntity estab, final EnderecoEntity endereco, Context ctx, List<Uri> uris){
         this.ctx = ctx;
         progressDialog = new ProgressDialog(this.ctx);
         progressDialog.setCancelable(false);
@@ -83,13 +86,28 @@ public class FirebaseRegistro implements Serializable {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful())
                                             {
+                                                //String idusuario = EncodeBase64.toBase64(a.getEmail());
+                                                FirebaseStorageRegistro firebaseStorageRegistro = new FirebaseStorageRegistro(FirebaseStorage.getInstance());
+                                                for (int i =0;i < uris.size();i++)
+                                                {
+                                                    if(i == 0)
+                                                        firebaseStorageRegistro.salvarImagem(uris.get(i), ctx, idusuario+"/imagemfoto.png");
+                                                    else
+                                                        firebaseStorageRegistro.salvarImagem(uris.get(i), ctx, idusuario+"/imagem"+i+".png");
+                                                }
+
                                                 auth.signOut();
                                                 if(tipoUsuario.equals(TipoUsuario.ESPECTADOR.name()))
+                                                {
                                                    registroEspectador(e, idusuario);
-                                                else if(tipoUsuario.equals(TipoUsuario.MUSICO.name()))
+                                                }
+                                                else if(tipoUsuario.equals(TipoUsuario.MUSICO.name())) {
                                                     registroMusico(m, idusuario);
+                                                }
                                                 else if(tipoUsuario.equals(TipoUsuario.ESTABELECIMENTO.name()))
+                                                {
                                                     registrarEstabelecimento(estab,endereco, idusuario);
+                                                }
                                             }
                                         }
                                     });
