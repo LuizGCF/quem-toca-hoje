@@ -1,5 +1,6 @@
 package com.example.quemtocahoje.Views;
 
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import com.example.quemtocahoje.DTO.ItensListaBuscaDTO;
 import com.example.quemtocahoje.Enum.TabelasFirebase;
 import com.example.quemtocahoje.Enum.TipoArquivo;
 import com.example.quemtocahoje.Enum.TipoUsuario;
+import com.example.quemtocahoje.Model.FirebaseStorageRegistro;
 import com.example.quemtocahoje.POJO.Banda;
 import com.example.quemtocahoje.POJO.Estabelecimento;
 import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
@@ -31,6 +33,7 @@ import com.example.quemtocahoje.Persistencia.Entity.BandaEntity;
 import com.example.quemtocahoje.Persistencia.Entity.EstabelecimentoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.MusicoEntity;
 import com.example.quemtocahoje.Utility.ConversaoArquivo;
+import com.example.quemtocahoje.Utility.EncodeBase64;
 import com.example.tcc.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,6 +42,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +54,8 @@ public class TelaPesquisaMusico extends AppCompatActivity {
     FirebaseAuth auth;
     DatabaseReference reference;
 
+    FirebaseStorageRegistro firebaseStorageRegistro;
+
     private CustomAdapter adapter;
     private List<ItensListaBuscaDTO> allItens;
     //TODO Carregar a imagem de cada um dos tipos de usuario
@@ -60,6 +66,8 @@ public class TelaPesquisaMusico extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
 
+        firebaseStorageRegistro = new FirebaseStorageRegistro(FirebaseStorage.getInstance());
+
         carregarDados();
 
     }
@@ -69,7 +77,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
     }
 //Cadastrar um estabelecimento pra testar depois
     private void listarEstabelecimentos() {
-        reference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Usuarios.name()).child(TipoUsuario.ESPECTADOR.name());
+        reference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Usuarios.name()).child(TipoUsuario.ESTABELECIMENTO.name());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -98,7 +106,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
                 {
                     BandaEntity b = snapshot.getValue(BandaEntity.class);
                     if(b.isBandaAtiva().equals("SIM"))
-                        allItens.add(new ItensListaBuscaDTO(null,b.getNome(),""));//b.getGeneros().stream().collect(Collectors.joining(","))));
+                        allItens.add(new ItensListaBuscaDTO(null,b.getGeneros(),b.getNome()));//b.getGeneros().stream().collect(Collectors.joining(","))));
                 }
                 carregarRecyclerView();
             }
@@ -111,6 +119,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
 
     }
     private void listarMusicos() {
+
         reference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Usuarios.name()).child(TipoUsuario.MUSICO.name());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -118,7 +127,10 @@ public class TelaPesquisaMusico extends AppCompatActivity {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
                     MusicoEntity m = snapshot.getValue(MusicoEntity.class);
-                 //   if(m.isCarreiraSoloAtiva().equals("SIM"))
+                    String idusuario = EncodeBase64.toBase64(m.getAutenticacao_id());
+                    Cursor c = firebaseStorageRegistro.carregarImagem(getApplicationContext(),idusuario);//tentativa de carregar a imagem com o idusuario sendo o caminho no storage
+                    //ConversaoArquivo.converterImagem(c,)
+                    //if(m.isCarreiraSoloAtiva().equals("SIM"))
                         allItens.add(new ItensListaBuscaDTO(null,m.getNomeArtistico(),m.getDescricao()));
                 }
                 listarEstabelecimentos();

@@ -52,7 +52,7 @@ public class FirebaseRegistro implements Serializable {
 
     public FirebaseRegistro(){}
 
-    public void registro(final String login, final String tipoUsuario, final String email, final String senha, final EspectadorEntity e, final MusicoEntity m, final EstabelecimentoEntity estab, final EnderecoEntity endereco, Context ctx, List<Uri> uris){
+    public void registro(final String login, final String tipoUsuario, final String email, final String senha, final EspectadorEntity e, final MusicoEntity m, final EstabelecimentoEntity estab, final EnderecoEntity endereco, Context ctx, Uri[] uris){
         this.ctx = ctx;
         progressDialog = new ProgressDialog(this.ctx);
         progressDialog.setCancelable(false);
@@ -88,12 +88,14 @@ public class FirebaseRegistro implements Serializable {
                                             {
                                                 //String idusuario = EncodeBase64.toBase64(a.getEmail());
                                                 FirebaseStorageRegistro firebaseStorageRegistro = new FirebaseStorageRegistro(FirebaseStorage.getInstance());
-                                                for (int i =0;i < uris.size();i++)
+                                                for (int i =0;i < uris.length;i++)
                                                 {
-                                                    if(i == 0)
-                                                        firebaseStorageRegistro.salvarImagem(uris.get(i), ctx, idusuario+"/imagemfoto.png");
-                                                    else
-                                                        firebaseStorageRegistro.salvarImagem(uris.get(i), ctx, idusuario+"/imagem"+i+".png");
+                                                    if(uris[i]!=null){
+                                                        if(i == 0)
+                                                            firebaseStorageRegistro.salvarImagem(uris[i], ctx, idusuario+"/imagemfoto.png");
+                                                        else
+                                                            firebaseStorageRegistro.salvarImagem(uris[i], ctx, idusuario+"/imagem"+i+".png");
+                                                    }
                                                 }
 
                                                 auth.signOut();

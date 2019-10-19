@@ -69,13 +69,13 @@ public class TelaUpload extends AppCompatActivity {
     private LinearLayout linearImagensDemonstracao;
     private FirebaseStorageRegistro firebaseStorageRegistro;
 
-    private List<Uri> uris;
+    private Uri[] uris;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_upload);
 
-        uris = new ArrayList<>();
+        uris = new Uri[4];
 
         registro = new FirebaseRegistro();
         firebaseStorageRegistro = new FirebaseStorageRegistro(FirebaseStorage.getInstance());
@@ -146,6 +146,7 @@ public class TelaUpload extends AppCompatActivity {
             imagemUri = data.getData();
             cursor = getContentResolver().query(imagemUri, null, null, null, null);
             imgFotoUsuarioUpload.setImageURI(imagemUri);
+            uris[0] = imagemUri;
             //if(imagemUri!= null)
             //    firebaseStorageRegistro.salvarImagem(imagemUri,this,"imagemfoto.png");
         }
@@ -154,20 +155,24 @@ public class TelaUpload extends AppCompatActivity {
             imagemUri = data.getData();
             cursor = getContentResolver().query(imagemUri, null, null, null, null);
             imgImagemUsuarioUpload1.setImageURI(imagemUri);
+            uris[1] = imagemUri;
         }
         else if (resultCode == RESULT_OK && requestCode == IMAGEMDEMO2)
         {
             imagemUri = data.getData();
             cursor = getContentResolver().query(imagemUri, null, null, null, null);
             imgImagemUsuarioUpload2.setImageURI(imagemUri);
+            uris[2] = imagemUri;
         }
         else if (resultCode == RESULT_OK && requestCode == IMAGEMDEMO3)
         {
             imagemUri = data.getData();
             cursor = getContentResolver().query(imagemUri, null, null, null, null);
             imgImagemUsuarioUpload3.setImageURI(imagemUri);
+            uris[3] = imagemUri;
+
         }
-        uris.add(imagemUri);
+        //uris.add(imagemUri);
     }
 
 

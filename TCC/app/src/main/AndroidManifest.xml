@@ -23,7 +23,9 @@
         <activity android:name="com.example.quemtocahoje.Views.TelaInicialEstabelecimento" />
         <activity android:name="com.example.quemtocahoje.Views.TelaInicialMusico" />
         <activity android:name="com.example.quemtocahoje.Views.TelaPesquisaEstabelecimento" />
-        <activity android:name="com.example.quemtocahoje.Views.TelaPesquisaMusico" />
+        <activity android:name="com.example.quemtocahoje.Views.TelaPesquisaMusico" >
+
+        </activity>
         <activity android:name="com.example.quemtocahoje.Views.TelaConvite" />
         <activity android:name="com.example.quemtocahoje.Views.TelaProposta" />
         <activity android:name="com.example.quemtocahoje.Views.TelaUpload" />
