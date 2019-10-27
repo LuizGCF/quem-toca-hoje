@@ -2,6 +2,7 @@ package com.example.quemtocahoje.Persistencia.Entity;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BandaEntity implements Serializable {
@@ -12,18 +13,18 @@ public class BandaEntity implements Serializable {
     private String dataCriacao;
     private String generos;
     private List<String> integrantes;
-    private List<ConviteEntity> convites;
+    private List<ConviteEntity> Convite;
     private String bandaAtiva;
     private String tipoCadastro;
 
-    public BandaEntity(String nome, String idCriador, String dataCriacao, String generos, List<String> integrantes, String bandaAtiva, List<ConviteEntity> convites, String tipoCadastro) {
+    public BandaEntity(String nome, String idCriador, String dataCriacao, String generos, List<String> integrantes, String bandaAtiva, List<ConviteEntity> Convite, String tipoCadastro) {
         this.nome = nome;
         this.idCriador = idCriador;
         this.dataCriacao = dataCriacao;
         this.generos = generos;
         this.integrantes = integrantes;
         this.bandaAtiva = bandaAtiva;
-        this.convites = convites;
+        this.Convite = Convite;
         this.tipoCadastro= tipoCadastro;
     }
 
@@ -86,12 +87,12 @@ public class BandaEntity implements Serializable {
         this.bandaAtiva = bandaAtiva;
     }
 
-    public List<ConviteEntity> getConvites() {
-        return convites;
+    public List<ConviteEntity> getConvite() {
+        return Convite;
     }
 
-    public void setConvites(List<ConviteEntity> convites) {
-        this.convites = convites;
+    public void setConvite(List<ConviteEntity> convites) {
+        this.Convite = convites;
     }
 
     public String getTipoCadastro() {
@@ -100,6 +101,18 @@ public class BandaEntity implements Serializable {
 
     public void setTipoCadastro(String tipoCadastro) {
         this.tipoCadastro = tipoCadastro;
+    }
+
+    public List<String> converterConvites(String convites){
+        if(convites.isEmpty()) return new ArrayList<String>();
+
+        String[] selecao = convites.split(",");
+        ArrayList<String> retorno = new ArrayList<>();
+        for(String c : selecao){
+            retorno.add(c.replace(",",""));
+        }
+
+        return retorno;
     }
 
     @Override
@@ -111,7 +124,7 @@ public class BandaEntity implements Serializable {
                 ", dataCriacao='" + dataCriacao + '\'' +
                 ", generos='" + generos + '\'' +
                 ", integrantes=" + integrantes +
-                ", convites=" + convites +
+                ", convites=" + Convite +
                 ", bandaAtiva='" + bandaAtiva + '\'' +
                 ", tipoCadastro='" + tipoCadastro + '\'' +
                 '}';

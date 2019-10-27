@@ -4,11 +4,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.quemtocahoje.DTO.AutenticacaoDTO;
+import com.example.quemtocahoje.Model.BandaDAO;
 import com.example.tcc.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class TelaInicialMusico extends AppCompatActivity {
 
@@ -22,7 +23,7 @@ public class TelaInicialMusico extends AppCompatActivity {
     private TextView txtVisualizacaoInicialMusico;
     private TextView txtSairInicialMusico;
     private TextView txtConviteInicialMusico;
-
+    private TextView txtMeusConvitesInicialMusico;
     private TextView txtCadastrarBandaInicialMusico;
 
     private TextView txtAvaliacaoEstabelecimento;
@@ -50,7 +51,7 @@ public class TelaInicialMusico extends AppCompatActivity {
         txtVisualizacaoInicialMusico = findViewById(R.id.txtVisualizacaoInicialMusico);
         txtSairInicialMusico = findViewById(R.id.txtSairInicialMusico);
         txtConviteInicialMusico = findViewById(R.id.txtConviteInicialMusico);
-
+        txtMeusConvitesInicialMusico = findViewById(R.id.txtMeusConvitesInicialMusico);
         txtCadastrarBandaInicialMusico = findViewById(R.id.txtCadastrarBandaInicialMusico);
 
         txtAvaliacaoEstabelecimento = findViewById(R.id.txtAvaliacaoEstabelecimento);
@@ -65,6 +66,14 @@ public class TelaInicialMusico extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(convidarMembro);
+            }
+        });
+
+        txtMeusConvitesInicialMusico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BandaDAO dao = new BandaDAO();
+                dao.recuperarConvites(dto.getEmail(), TelaInicialMusico.this);
             }
         });
 
@@ -85,6 +94,7 @@ public class TelaInicialMusico extends AppCompatActivity {
         txtSairInicialMusico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
                 startActivity(telaLogin);
                 finishAffinity();
             }

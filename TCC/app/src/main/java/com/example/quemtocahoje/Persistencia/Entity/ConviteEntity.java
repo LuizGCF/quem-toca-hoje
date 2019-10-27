@@ -15,6 +15,8 @@ public class ConviteEntity implements Serializable {
         this.dataCriacao = dataCriacao;
     }
 
+    public ConviteEntity(){}
+
 
     public String getEmailConvidado() {
         return emailConvidado;

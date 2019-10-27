@@ -112,7 +112,7 @@ public class TelaCriacaoBanda extends AppCompatActivity {
             public void onClick(View v) {
                 if(isCamposValidos()){
                     BandaEntity banda = montarObjeto();
-                    if(tipoEscolhido().equals("Artista Solo")) banda.setConvites(new ArrayList<>());
+                    if(tipoEscolhido().equals("Artista Solo")) banda.setConvite(new ArrayList<>());
                     BandaDAO dao = new BandaDAO();
                     dao.cadastrarNovaBanda(banda, TelaCriacaoBanda.this);
                 }

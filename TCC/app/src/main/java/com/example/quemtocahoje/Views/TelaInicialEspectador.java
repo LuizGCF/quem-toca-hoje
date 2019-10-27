@@ -43,6 +43,7 @@ public class TelaInicialEspectador extends AppCompatActivity {
         txtSairInicialEstabelecimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
                 startActivity(telaLogin);
                 finishAffinity();
             }

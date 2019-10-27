@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.quemtocahoje.DTO.AutenticacaoDTO;
 import com.example.tcc.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class TelaInicialEstabelecimento extends AppCompatActivity {
 
@@ -49,6 +50,7 @@ public class TelaInicialEstabelecimento extends AppCompatActivity {
         txtSairInicialEstabelecimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
                 startActivity(telaLogin);
                 finishAffinity();
             }
