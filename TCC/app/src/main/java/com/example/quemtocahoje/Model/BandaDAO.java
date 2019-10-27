@@ -48,7 +48,7 @@ public class BandaDAO {
         this.firebaseUser = firebaseUser;
     }
 
-    public BandaDAO(){
+    public BandaDAO() {
     }
 
 
@@ -112,7 +112,8 @@ public class BandaDAO {
                     if (!emails.isEmpty()) emails.forEach(e -> notificarUsuario(e, ctx, banda));
 
                     //TODO notificar usuários do aplicativo
-                    if(!emails.isEmpty()) Log.d("OSEMAILSLA", emailsExistentes.stream().collect(Collectors.joining(",")));
+                    if (!emails.isEmpty())
+                        Log.d("OSEMAILSLA", emailsExistentes.stream().collect(Collectors.joining(",")));
 
                 }
 
@@ -132,7 +133,7 @@ public class BandaDAO {
         //if(Banco.getDatabase(getApplicationContext()).autenticacaoDao().findAutenticacaoByEmail(edtEmailConvite.getText().toString()) == null){
         String destinatario = email.trim();
         String subject = "Convite para juntar-se à banda";
-        String message = "Você foi convidado para a banda "+banda+". Instale nosso aplicativo para integrá-la!";
+        String message = "Você foi convidado para a banda " + banda + ". Instale nosso aplicativo para integrá-la!";
 
         Email sm = new Email(ctx, destinatario, subject, message);
         sm.execute();
@@ -140,19 +141,19 @@ public class BandaDAO {
 
     }
 
-    public void recuperarConvites(String emailUsuario, Context ctx){
+    public void recuperarConvites(String emailUsuario, Context ctx) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Banda.name());
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<ConvitesRecebidosDTO> convitesRecebidos = new ArrayList<>();
-                if(dataSnapshot.getValue() != null){
-                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                if (dataSnapshot.getValue() != null) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         BandaEntity banda = snapshot.getValue(BandaEntity.class);
                         Log.d("BANDAENTITY", banda.toString());
-                        if(banda.getTipoCadastro().equals("Banda")) {
-                            ConviteEntity c = banda.getConvite().stream().filter(e ->  e.getStatusConvite().equals(StatusConvite.ABERTO.name()) && e.getEmailConvidado().equals(emailUsuario)).findAny().orElse(null);
+                        if (banda.getTipoCadastro().equals("Banda")) {
+                            ConviteEntity c = banda.getConvite().stream().filter(e -> e.getStatusConvite().equals(StatusConvite.ABERTO.name()) && e.getEmailConvidado().equals(emailUsuario)).findAny().orElse(null);
                             if (c != null) {
                                 convitesRecebidos.add(new ConvitesRecebidosDTO(
                                         banda.getIdCriador()
@@ -175,7 +176,7 @@ public class BandaDAO {
         });
     }
 
-    public void atualizarConvite(String email, String nomeBanda, String status, Context ctx){
+    public void atualizarConvite(String email, String nomeBanda, String status, Context ctx) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Banda.name()).child(nomeBanda);
         this.ctx = ctx;
         progressDialog = new ProgressDialog(this.ctx);
@@ -190,9 +191,9 @@ public class BandaDAO {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        for(DataSnapshot snap : snapshot.getChildren()) {
+                        for (DataSnapshot snap : snapshot.getChildren()) {
                             ConviteEntity convites = snap.getValue(ConviteEntity.class);
-                            if(convites.getEmailConvidado().equals(email)) {
+                            if (convites.getEmailConvidado().equals(email)) {
                                 convites.setStatusConvite(status);
                                 databaseReference.child(TabelasFirebase.Convite.name()).child(snap.getKey()).setValue(convites);
                                 break;
@@ -211,7 +212,7 @@ public class BandaDAO {
         });
     }
 
-    public void atualizarListaIntegrantes(String nomeBanda, String emailUsuario, String acao, Context ctx){
+    public void atualizarListaIntegrantes(String nomeBanda, String emailUsuario, String acao, Context ctx) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Banda.name()).child(nomeBanda);
         this.ctx = ctx;
         progressDialog = new ProgressDialog(this.ctx);
@@ -226,15 +227,17 @@ public class BandaDAO {
                 List<String> listaIntegrantes = new ArrayList<>();
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     if (data.getKey().equals("integrantes")) {
-                       listaIntegrantes = (List<String>) data.getValue();
-                        if(acao.equals(AcoesIntegrantesBanda.INCLUIR.name())) listaIntegrantes.add(emailUsuario);
-                        else if (acao.equals(AcoesIntegrantesBanda.REMOVER.name())) listaIntegrantes.remove(emailUsuario);
+                        listaIntegrantes = (List<String>) data.getValue();
+                        if (acao.equals(AcoesIntegrantesBanda.INCLUIR.name()))
+                            listaIntegrantes.add(emailUsuario);
+                        else if (acao.equals(AcoesIntegrantesBanda.REMOVER.name()))
+                            listaIntegrantes.remove(emailUsuario);
 
                         databaseReference.child("integrantes").setValue(listaIntegrantes);
                         break;
                     }
                 }
-                if(listaIntegrantes.isEmpty() && acao.equals(AcoesIntegrantesBanda.INCLUIR.name()))
+                if (listaIntegrantes.isEmpty() && acao.equals(AcoesIntegrantesBanda.INCLUIR.name()))
                     databaseReference.child("integrantes").setValue(Arrays.asList(emailUsuario));
 
                 progressDialog.dismiss();
@@ -243,6 +246,36 @@ public class BandaDAO {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void atualizarDadosBanda(BandaEntity banda, Context ctx) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Banda.name()).child(banda.getNome());
+        this.ctx = ctx;
+        progressDialog = new ProgressDialog(this.ctx);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Aguarde enquanto atualizamos os dados da banda");
+        progressDialog.setTitle("Atualizando dados");
+        progressDialog.show();
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    if (data.getValue() != null) {
+                        databaseReference.child("bandaAtiva").setValue(banda.isBandaAtiva());
+                        databaseReference.child("generos").setValue(banda.getGeneros());
+                        break;
+                    }
+                }
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                progressDialog.dismiss();
+
             }
         });
     }
