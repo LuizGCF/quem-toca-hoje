@@ -266,6 +266,7 @@ public class BandaDAO {
                     if (data.getValue() != null) {
                         databaseReference.child("bandaAtiva").setValue(banda.isBandaAtiva());
                         databaseReference.child("generos").setValue(banda.getGeneros());
+                        //TODO atualização de nota
                         break;
                     }
                 }
