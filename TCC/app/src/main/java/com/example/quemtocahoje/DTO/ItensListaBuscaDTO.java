@@ -4,22 +4,22 @@ import android.graphics.Bitmap;
 
 public class
 ItensListaBuscaDTO {
-    Bitmap imagem;
+    String urlimagem;
     String nome;
     String descricao;
 
-    public ItensListaBuscaDTO(Bitmap imagem, String nome, String descricao) {
-        this.imagem = imagem;
+    public ItensListaBuscaDTO(String urlimagem, String nome, String descricao) {
+        this.urlimagem = urlimagem;
         this.nome = nome;
         this.descricao = descricao;
     }
 
-    public Bitmap getImagem() {
-        return imagem;
+    public String getImagem() {
+        return urlimagem;
     }
 
-    public void setImagem(Bitmap imagem) {
-        this.imagem = imagem;
+    public void setImagem(String imagem) {
+        this.urlimagem = urlimagem;
     }
 
     public String getNome() {

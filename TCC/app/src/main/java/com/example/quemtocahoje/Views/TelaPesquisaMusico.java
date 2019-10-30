@@ -2,6 +2,10 @@ package com.example.quemtocahoje.Views;
 
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +39,8 @@ import com.example.quemtocahoje.Persistencia.Entity.MusicoEntity;
 import com.example.quemtocahoje.Utility.ConversaoArquivo;
 import com.example.quemtocahoje.Utility.EncodeBase64;
 import com.example.tcc.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -43,7 +49,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
+import java.io.FileDescriptor;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -76,6 +86,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
         listarMusicos();
     }
 //Cadastrar um estabelecimento pra testar depois
+
     private void listarEstabelecimentos() {
         reference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Usuarios.name()).child(TipoUsuario.ESTABELECIMENTO.name());
         reference.addValueEventListener(new ValueEventListener() {
@@ -84,7 +95,29 @@ public class TelaPesquisaMusico extends AppCompatActivity {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
                     EstabelecimentoEntity e = snapshot.getValue(EstabelecimentoEntity.class);
-                    allItens.add(new ItensListaBuscaDTO(null,e.getNomeFantasia(),e.getDescricao()));
+                    try{
+                        StorageReference ref = FirebaseStorage.getInstance().getReference().child(e.getAutenticacao_id()+"/imagemfoto.png");
+
+                        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {//retornando corretamente a imagem na uri, converter para bitmap agora
+                                allItens.add(new ItensListaBuscaDTO(uri.toString(),e.getNomeFantasia(),e.getDescricao()));
+                                carregarRecyclerView();
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception ex) {
+                                allItens.add(new ItensListaBuscaDTO(null,e.getNomeFantasia(),e.getDescricao()));
+                                carregarRecyclerView();
+                            }
+                        });
+                        carregarRecyclerView();
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
                 }
                 listarBandas();
             }
@@ -106,7 +139,32 @@ public class TelaPesquisaMusico extends AppCompatActivity {
                 {
                     BandaEntity b = snapshot.getValue(BandaEntity.class);
                     if(b.isBandaAtiva().equals("SIM"))
-                        allItens.add(new ItensListaBuscaDTO(null,b.getGeneros(),b.getNome()));//b.getGeneros().stream().collect(Collectors.joining(","))));
+                    {
+                        //allItens.add(new ItensListaBuscaDTO(null,b.getGeneros(),b.getNome()));//b.getGeneros().stream().collect(Collectors.joining(","))));
+                        try{
+                            StorageReference ref = FirebaseStorage.getInstance().getReference().child(b.getBanda_id()+"/imagemfoto.png");
+
+                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {//retornando corretamente a imagem na uri, converter para bitmap agora
+                                    allItens.add(new ItensListaBuscaDTO(uri.toString(),b.getGeneros(),b.getNome()));
+                                    carregarRecyclerView();
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    allItens.add(new ItensListaBuscaDTO(null,b.getGeneros(),b.getNome()));
+                                    carregarRecyclerView();
+                                }
+                            });
+                            carregarRecyclerView();
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+                    }
                 }
                 carregarRecyclerView();
             }
@@ -127,11 +185,30 @@ public class TelaPesquisaMusico extends AppCompatActivity {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
                     MusicoEntity m = snapshot.getValue(MusicoEntity.class);
-                    String idusuario = EncodeBase64.toBase64(m.getAutenticacao_id());
-                    Cursor c = firebaseStorageRegistro.carregarImagem(getApplicationContext(),idusuario);//tentativa de carregar a imagem com o idusuario sendo o caminho no storage
-                    //ConversaoArquivo.converterImagem(c,)
-                    //if(m.isCarreiraSoloAtiva().equals("SIM"))
-                        allItens.add(new ItensListaBuscaDTO(null,m.getNomeArtistico(),m.getDescricao()));
+                    try {
+                        //String idusuario = EncodeBase64.toBase64(m.getAutenticacao_id());
+
+                        StorageReference ref = FirebaseStorage.getInstance().getReference().child(m.getAutenticacao_id()+"/imagemfoto.png");
+
+                        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {//retornando corretamente a imagem na uri, converter para bitmap agora
+                                allItens.add(new ItensListaBuscaDTO(uri.toString(),m.getNomeArtistico(),m.getDescricao()));
+                                carregarRecyclerView();
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                allItens.add(new ItensListaBuscaDTO(null,m.getNomeArtistico(),m.getDescricao()));
+                                carregarRecyclerView();
+                            }
+                        });
+                        carregarRecyclerView();
+                    }
+                    catch (Exception e){
+
+                    }
                 }
                 listarEstabelecimentos();
             }
@@ -142,7 +219,21 @@ public class TelaPesquisaMusico extends AppCompatActivity {
             }
         });
     }
+    private Bitmap uriToBitmap(Uri selectedFileUri) {
+        try {
+            ParcelFileDescriptor parcelFileDescriptor =
+                    getContentResolver().openFileDescriptor(selectedFileUri, "r");
+            FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+            Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
 
+
+            parcelFileDescriptor.close();
+            return image;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     private void carregarRecyclerView() {
         RecyclerView lstResultadoPesquisaMusico = lstResultadoPesquisaMusico = findViewById(R.id.lstResultadoPesquisaMusico);
         lstResultadoPesquisaMusico.setHasFixedSize(true);
@@ -285,7 +376,9 @@ class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ExampleViewHolder
     public void onBindViewHolder(@NonNull ExampleViewHolder exampleViewHolder, int i) {
         ItensListaBuscaDTO currentItem = exampleList.get(i);
 
-        exampleViewHolder.imagem.setImageBitmap(currentItem.getImagem());
+        //exampleViewHolder.imagem.setImageBitmap(currentItem.getImagem());
+        if(currentItem.getImagem() != "" && currentItem.getImagem() != null)
+            Picasso.get().load(Uri.parse(currentItem.getImagem())).into(exampleViewHolder.imagem);
         exampleViewHolder.descricao.setText(currentItem.getNome());
         exampleViewHolder.nome.setText(currentItem.getDescricao());
     }
