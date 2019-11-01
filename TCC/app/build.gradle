@@ -6,18 +6,17 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.tcc"
-        minSdkVersion 24
+        minSdkVersion 22
         targetSdkVersion 28
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    compileOptions
-            {
-                sourceCompatibility JavaVersion.VERSION_1_8
-                targetCompatibility JavaVersion.VERSION_1_8
-            }
+    compileOptions{
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -53,4 +52,7 @@ dependencies {
     // retrofit cep
     implementation 'com.squareup.retrofit2:retrofit:2.0.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.0.0'
+
+    //picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
