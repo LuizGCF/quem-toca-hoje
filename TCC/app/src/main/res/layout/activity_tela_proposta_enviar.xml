@@ -30,7 +30,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="Para: "
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:id="@+id/txtDePara"/>
 
             <TextView
                 android:layout_width="wrap_content"

@@ -60,77 +60,126 @@ public class TelaProposta extends Activity implements DatePickerDialog.OnDateSet
         lblNomeDestinatario = findViewById(R.id.lblNomeDestinatario);
         Calendar dataAtual = Calendar.getInstance();
 
-        //lblNomeDestinatario.setText(getIntent().getStringExtra("labelDestinatario"));
-        lblNomeDestinatario.setText("Angelo arrombado");
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                TelaProposta.this, TelaProposta.this, dataAtual.get(Calendar.YEAR), dataAtual.get(Calendar.MONTH), dataAtual.get(Calendar.DAY_OF_MONTH));
+        //lblNomeDestinatario.setText(getIntent().getStringExtra("labelDestinatario"))
+        //String intentTela = getIntent().getStringExtra("intentTela");
+        String intentTela = "ENVIAR";
+        if (intentTela.equals("ENVIAR")) {
+            lblNomeDestinatario.setText("Angelo arrombado");
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    TelaProposta.this, TelaProposta.this, dataAtual.get(Calendar.YEAR), dataAtual.get(Calendar.MONTH), dataAtual.get(Calendar.DAY_OF_MONTH));
 
 
-        imgSelecionarDataProposta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-                datePickerDialog.show();
-            }
-        });
-
-        btnEnviarProposta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!validaCampos()){
-                    if(!validaCache()){
-
-                    }else{
-                        Mensagem.notificar(TelaProposta.this,"Aviso", "Valor do cachê inválido");
-                    }
-                }else{
-                    Mensagem.notificar(TelaProposta.this,"Aviso", "Preencher todos os campos");
+            imgSelecionarDataProposta.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                    datePickerDialog.show();
                 }
-            }
-        });
+            });
 
-        //Time Picker que resgata o horário direto no EditText - Horário Inicio
-        Calendar c = Calendar.getInstance();
-        int hr = c.get(HOUR);
-        int min = c.get(MINUTE);
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                edtHorarioProposta.setText(ajustarHoraMinuto(i,i1));
-            }
-        }, hr, min, true);
+            btnEnviarProposta.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!validaHorario()) {
+                        if (!validaCampos()) {
+                            if (!validaCache()) {
 
+                            } else {
+                                Mensagem.notificar(TelaProposta.this, "Aviso", "Valor do cachê inválido");
+                            }
+                        } else {
+                            Mensagem.notificar(TelaProposta.this, "Aviso", "Preencher todos os campos");
+                        }
+                    //}else {
+                       // Mensagem.notificar(TelaProposta.this,"Aviso","Horário inválido");
+                    }
+                }
+            });
 
-        imgSelecionarHorarioInicio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                timePickerDialog.show();
-
-            }
-
-        });
-
-        //Time Picker que resgata o horário direto no EditText - Horário Fim
-        int hrF = c.get(HOUR);
-        int minF = c.get(MINUTE);
-        TimePickerDialog timePickerDialog2 = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                edtHorarioFim.setText(ajustarHoraMinuto(i,i1));
-            }
-        }, hrF, minF, true);
-
-        imgSelecionarHorarioFim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            //Time Picker que resgata o horário direto no EditText - Horário Inicio
+            Calendar c = Calendar.getInstance();
+            int hr = c.get(HOUR);
+            int min = c.get(MINUTE);
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                    edtHorarioProposta.setText(ajustarHoraMinuto(i, i1));
+                }
+            }, hr, min, true);
 
 
-                timePickerDialog2.show();
+            imgSelecionarHorarioInicio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-            }
-        });
+                    timePickerDialog.show();
 
+                }
+
+            });
+
+            //Time Picker que resgata o horário direto no EditText - Horário Fim
+            int hrF = c.get(HOUR);
+            int minF = c.get(MINUTE);
+            TimePickerDialog timePickerDialog2 = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                    edtHorarioFim.setText(ajustarHoraMinuto(i, i1));
+                }
+            }, hrF, minF, true);
+
+            imgSelecionarHorarioFim.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+
+                    timePickerDialog2.show();
+
+                }
+            });
+        }else{
+
+            TextView txtDePara = findViewById(R.id.txtDePara);
+
+            edtHorarioProposta.setEnabled(false);
+            imgSelecionarDataProposta.setVisibility(View.GONE);
+            txtDataPropostaEscolhida.setEnabled(false);
+            edtLocalProposta.setEnabled(false);
+            edtCacheProposta.setEnabled(false);
+            edtDescricaoProposta.setEnabled(false);
+            btnVoltarProposta = findViewById(R.id.btnVoltarProposta);
+            edtHorarioFim.setEnabled(false);
+            imgSelecionarHorarioInicio.setVisibility(View.GONE);
+            imgSelecionarHorarioFim.setVisibility(View.GONE);
+
+            //vai substituir por um objeto
+
+            btnEnviarProposta.setText("ACEITAR");
+
+            edtHorarioProposta.setText("11:11");
+            edtHorarioFim.setText("12:12");
+            edtCacheProposta.setText("90.0");
+            edtDescricaoProposta.setText("ALFAFA");
+            edtLocalProposta.setText("Casa do senhor caralho");
+            txtDataPropostaEscolhida.setText("12/12/2012");
+
+            txtDePara.setText("De: ");
+            lblNomeDestinatario.setText("Remetente arrombado");
+
+            btnEnviarProposta.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //lógica aceitar proposta
+                }
+            });
+
+            btnVoltarProposta.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //lógica voltar
+                }
+            });
+        }
 
     }
 
@@ -150,6 +199,7 @@ public class TelaProposta extends Activity implements DatePickerDialog.OnDateSet
         String h = hora < 10 ? "0" + hora : ""+ hora;
         String m = minuto < 10 ? "0" + minuto : "" + minuto;
         return h +":"+m;
+
     }
 
     private boolean validaCampos() {
@@ -177,7 +227,6 @@ public class TelaProposta extends Activity implements DatePickerDialog.OnDateSet
 
         return res;
 
-
     }
 
     private boolean isCampoVazio(String valor) {
@@ -185,6 +234,16 @@ public class TelaProposta extends Activity implements DatePickerDialog.OnDateSet
         return resultado;
     }
 
+   /* private boolean validaHorario(){
+        boolean res=false;
+        String horarioInicio = edtHorarioProposta.getText().toString();
+        String horarioFim = edtHorarioFim.getText().toString();
+
+        if(horarioInicio==horarioFim){
+            return false;
+        }
+        return res;
+    }*/
 
     private boolean validaCache() {
         boolean res = false;
@@ -200,20 +259,5 @@ public class TelaProposta extends Activity implements DatePickerDialog.OnDateSet
     }
 
 
-    private void escolheHora() {
 
-        /*Calendar c = Calendar.getInstance();
-        int hr = c.get(HOUR);
-        int min = c.get(MINUTE);
-
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                edtHorarioProposta.setText(hr + ":" + min);
-            }
-        }, hr, min, true);
-        timePickerDialog.show();
-        */
-
-    }
 }
