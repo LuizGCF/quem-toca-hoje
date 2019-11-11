@@ -16,6 +16,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.example.quemtocahoje.Enum.StatusProposta;
+import com.example.quemtocahoje.Model.PropostaDAO;
+import com.example.quemtocahoje.Persistencia.Entity.PropostaEntity;
+import com.example.quemtocahoje.Utility.DefinirDatas;
 import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
 
@@ -80,9 +84,12 @@ public class TelaProposta extends Activity implements DatePickerDialog.OnDateSet
             btnEnviarProposta.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (!validaHorario()) {
+                    if (validaHorario()) {
                         if (!validaCampos()) {
                             if (!validaCache()) {
+                                PropostaEntity p = prepararObjeto();
+                                PropostaDAO dao = new PropostaDAO();
+                                dao.enviarNovaProposta(p, TelaProposta.this);
 
                             } else {
                                 Mensagem.notificar(TelaProposta.this, "Aviso", "Valor do cachê inválido");
@@ -234,16 +241,17 @@ public class TelaProposta extends Activity implements DatePickerDialog.OnDateSet
         return resultado;
     }
 
-   /* private boolean validaHorario(){
-        boolean res=false;
+    //TODO arrumar
+    private boolean validaHorario(){
+        /*boolean res=false;
         String horarioInicio = edtHorarioProposta.getText().toString();
         String horarioFim = edtHorarioFim.getText().toString();
 
         if(horarioInicio==horarioFim){
             return false;
-        }
-        return res;
-    }*/
+        }*/
+        return true;
+    }
 
     private boolean validaCache() {
         boolean res = false;
@@ -258,6 +266,19 @@ public class TelaProposta extends Activity implements DatePickerDialog.OnDateSet
         return res;
     }
 
-
+    private PropostaEntity prepararObjeto(){
+        return new PropostaEntity(
+                "ID BANDA TESTE"
+                ,"ID ESTABELECIMENTO TESTE"
+                ,StatusProposta.ABERTO.name()
+                ,edtHorarioProposta.getText().toString()
+                ,edtHorarioFim.getText().toString()
+                ,edtLocalProposta.getText().toString()
+                ,edtDescricaoProposta.getText().toString()
+                ,Double.parseDouble(edtCacheProposta.getText().toString().trim().replace(",", "."))
+                ,txtDataPropostaEscolhida.getText().toString()
+                ,DefinirDatas.dataAtual()
+        );
+    }
 
 }
