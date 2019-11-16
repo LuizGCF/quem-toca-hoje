@@ -7,48 +7,63 @@ import java.io.Serializable;
 
 public class AvaliacaoEstabelecimentoEntity implements Serializable
 {
-    private String idAvaliacaoEstabelecimento;
-    private RatingBar rbOrganizacao;
-    private  RatingBar  rbEstrutura;
-    private  RatingBar  rbReceptividade;
-    private EditText txtComentario;
 
-    public AvaliacaoEstabelecimentoEntity(RatingBar rbOrganizacao, RatingBar rbEstrutura, RatingBar rbReceptividade, EditText txtComentario) {
-        this.rbOrganizacao = rbOrganizacao;
-        this.rbEstrutura = rbEstrutura;
-        this.rbReceptividade = rbReceptividade;
-        this.txtComentario = txtComentario;
+    private String idEstabelecimento;
+    private String idEvento;
+    private String txtComentario;
+
+    // Caras que vão receber os dados do Rating bar
+    private float organizacao;
+    private  float  estrutura;
+    private  float  receptividade;
+
+    public AvaliacaoEstabelecimentoEntity(){}
+
+    public String getIdEstabelecimento() {
+        return idEstabelecimento;
     }
 
-    public RatingBar getRbOrganizacao() {
-        return rbOrganizacao;
+    public void setIdEstabelecimento(String idEstabelecimento) {
+        this.idEstabelecimento = idEstabelecimento;
     }
 
-    public void setRbOrganizacao(RatingBar rbOrganizacao) {
-        this.rbOrganizacao = rbOrganizacao;
+    public String getIdEvento() {
+        return idEvento;
     }
 
-    public RatingBar getRbEstrutura() {
-        return rbEstrutura;
+    public void setIdEvento(String idEvento) {
+        this.idEvento = idEvento;
     }
 
-    public void setRbEstrutura(RatingBar rbEstrutura) {
-        this.rbEstrutura = rbEstrutura;
-    }
-
-    public RatingBar getRbReceptividade() {
-        return rbReceptividade;
-    }
-
-    public void setRbReceptividade(RatingBar rbReceptividade) {
-        this.rbReceptividade = rbReceptividade;
-    }
-
-    public EditText getTxtComentario() {
+    public String getTxtComentario() {
         return txtComentario;
     }
 
-    public void setTxtComentario(EditText txtComentario) {
+    public void setTxtComentario(String txtComentario) {
         this.txtComentario = txtComentario;
+    }
+
+    public float getOrganizacao() {
+        return organizacao;
+    }
+
+    public void setOrganizacao(float organizacao) {
+        this.organizacao = organizacao;
+    }
+
+    public float getEstrutura() {
+        return estrutura;
+    }
+
+    public void setEstrutura(float estrutura) {
+        this.estrutura = estrutura;
+    }
+
+    public float getReceptividade() {
+        return receptividade;
+    }
+
+    public void setReceptividade(float receptividade) {
+        this.receptividade = receptividade;
     }
 }

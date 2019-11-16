@@ -4,35 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/estilo_tela"
     tools:context="com.example.quemtocahoje.Views.TelaEsqueceuaSenha">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="16dp"
         android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingTop="16dp"
+            app:srcCompat="@drawable/logoaplicativo" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Recuperar Senha"
-            android:textSize="30dp"
-            android:layout_marginTop="50dp"
+            android:textSize="25dp"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="50dp"
             android:layout_gravity="center_horizontal"/>
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_gravity="center"
             android:layout_marginBottom="20dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_gravity="center"
                 android:text="Digite seu e-mail: "/>
+
             <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="200dp"
+
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/estilo_edittext_cadastros"
                 android:id="@+id/edtEmailEsqueceu"/>
+
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,22 +80,29 @@
                 android:width="200dp"
                 android:id="@+id/edtTokenEsqueceu"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_gravity="center">
+
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/estilo_botao"
+                android:textColor="#F5F7F7"
+                android:textSize="14dp"
+                android:textStyle="bold"
                 android:text="Confirmar"
                 android:id="@+id/btnConfirmarRecuperarSenha"/>
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="Validar Token"
                 android:visibility="gone"
                 android:id="@+id/btnValidarRecuperarSenha"/>
+
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

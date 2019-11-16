@@ -1,12 +1,12 @@
 package com.example.quemtocahoje.Views;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.quemtocahoje.Model.AvaliacaoDAO;
+import com.example.quemtocahoje.Persistencia.Entity.AvaliacaoEstabelecimentoEntity;
 import com.example.tcc.R;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.LayerDrawable;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,25 +20,18 @@ public class TelaAvalicaoEstabelecimento extends AppCompatActivity {
     private  EditText txtComentario;
     private  Button btnAvaliar;
     private  Button btnVoltar;
-    private float organizacao;
-    private float estrutura;
-    private float receptividade;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tela_avaliacao_musico);
-
-        final Intent telaInicialMusico = new Intent(this,TelaInicialMusico.class);
-
+        setContentView(R.layout.activity_tela_avalicao_estabelecimento);
         // Esse código, tira a label da aplicação
         getSupportActionBar().hide();
 
-        rbOrganizacao =  findViewById(R.id.rbOrganizacao);
-        rbEstrutura= findViewById(R.id.rbEstrutura);
-        rbReceptividade = findViewById(R.id.rbReceptividade);
+        rbOrganizacao =  findViewById(R.id.rbOrganizacao1);
+        rbEstrutura= findViewById(R.id.rbEstrutura1);
+        rbReceptividade = findViewById(R.id.rbReceptividade1);
         txtComentario = findViewById(R.id.txtComentario);
         btnAvaliar = findViewById(R.id.btnAvaliar);
         btnVoltar = findViewById(R.id.btnVoltar);
@@ -47,7 +40,15 @@ public class TelaAvalicaoEstabelecimento extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-
+                if(validarCampos(rbOrganizacao,rbEstrutura,rbReceptividade))
+                    {
+                        AvaliacaoEstabelecimentoEntity avaliacao = prepararObjetoEstabelecimento();
+                        AvaliacaoDAO avaliacaoEstabelecimento = new AvaliacaoDAO();
+                        avaliacaoEstabelecimento.persistirAvaliacaoEstabelecimento(avaliacao);
+                        String texto = "Avaliação realizada com sucesso!!!";
+                        Toast.makeText(getApplicationContext(),texto, Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
             }
         });
 
@@ -60,9 +61,9 @@ public class TelaAvalicaoEstabelecimento extends AppCompatActivity {
         });
     }
 
-    private boolean validarCampos(RatingBar rbPerformace,RatingBar rbEstilo, RatingBar rbMusicalidade)
+    private boolean validarCampos(RatingBar rbOrganizacao,RatingBar rbEstrutura, RatingBar rbReceptividade)
     {
-        if(rbPerformace == null || rbEstilo == null || rbMusicalidade == null)
+        if(rbOrganizacao == null || rbOrganizacao == null || rbOrganizacao == null)
         {
             // Enviando mensagem na tela, caso usuário não selecione os rating bar
             String texto = "Campos não selecionados";
@@ -73,16 +74,19 @@ public class TelaAvalicaoEstabelecimento extends AppCompatActivity {
             return true;
     }
 
+    public AvaliacaoEstabelecimentoEntity prepararObjetoEstabelecimento()
+    {
+       AvaliacaoEstabelecimentoEntity obj = new AvaliacaoEstabelecimentoEntity();
+       obj.setIdEvento("EVENTOTESTE");
+       obj.setIdEstabelecimento("Teste id de estab mockado");
+       obj.setOrganizacao(rbOrganizacao.getRating());
+       obj.setEstrutura(rbEstrutura.getRating());
+       obj.setReceptividade(rbReceptividade.getRating());
+       obj.setTxtComentario(txtComentario.getText().toString().trim());
+       return obj;
+    }
+
 
 }
 
-/*
 
-         organizacao = rbOrganizacao.getNumStars();
-         estrutura = rbEstrutura.getNumStars();
-         receptividade = rbReceptividade.getNumStars();
-
-        rbReceptividade.setNumStars(0);
-        rbEstrutura.setNumStars(0);
-        rbOrganizacao.setNumStars(0);
- */

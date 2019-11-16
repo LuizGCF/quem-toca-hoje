@@ -7,6 +7,10 @@
     android:background="@drawable/estilo_tela"
     >
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -60,4 +64,5 @@
             android:textColor="#fff"
             android:id="@+id/txtSairInicialEstabelecimento"/>
     </LinearLayout>
+</ScrollView>
 </android.support.constraint.ConstraintLayout>

@@ -8,13 +8,11 @@ public enum TabelasFirebase {
     ,Token(4)
     ,Proposta(5)
     ,Evento(6)
-    ,AvaliacaoMusico(7)
     ,Banda(8)
     ,Autenticacao(9)
-    ,AvaliacaoEstabelecimento(10)
+    ,Avaliacao(7)
 
     ;
-
     private final int valor;
 
     TabelasFirebase(int valor) { this.valor = valor;}

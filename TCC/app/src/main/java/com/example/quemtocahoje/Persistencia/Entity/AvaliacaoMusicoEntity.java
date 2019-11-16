@@ -1,61 +1,31 @@
 package com.example.quemtocahoje.Persistencia.Entity;
 
-import android.widget.EditText;
-import android.widget.RatingBar;
 
-public class AvaliacaoMusicoEntity
+
+import java.io.Serializable;
+
+public class AvaliacaoMusicoEntity implements Serializable
 {
-    private String idAvaliacaoMusico;
-    private String rbPerformance;
-    private String rbEstilo;
-    private String rbMusicalidade;
+    private String idBanda;
+    private String idEvento;
     private String txtComentario;
-    private String estilo;
-    private String musicalidade;
-    private String performance;
 
-    public AvaliacaoMusicoEntity(String idAvaliacaoMusico, String rbPerformance, String rbEstilo, String rbMusicalidade, String txtComentario, String estilo, String musicalidade, String performance) {
-        this.idAvaliacaoMusico = idAvaliacaoMusico;
-        this.rbPerformance = rbPerformance;
-        this.rbEstilo = rbEstilo;
-        this.rbMusicalidade = rbMusicalidade;
-        this.txtComentario = txtComentario;
-        this.estilo = estilo;
-        this.musicalidade = musicalidade;
-        this.performance = performance;
+    // Caras que vão receber os dados do Rating bar
+    private float estilo;
+    private float musicalidade;
+    private float performance;
+
+
+    public AvaliacaoMusicoEntity(){}
+
+    public String getIdBanda() {
+        return idBanda;
     }
 
-    public String getIdAvaliacaoMusico() {
-        return idAvaliacaoMusico;
+    public void setIdBanda(String idBanda) {
+        this.idBanda = idBanda;
     }
 
-    public void setIdAvaliacaoMusico(String idAvaliacaoMusico) {
-        this.idAvaliacaoMusico = idAvaliacaoMusico;
-    }
-
-    public String getRbPerformance() {
-        return rbPerformance;
-    }
-
-    public void setRbPerformance(String rbPerformance) {
-        this.rbPerformance = rbPerformance;
-    }
-
-    public String getRbEstilo() {
-        return rbEstilo;
-    }
-
-    public void setRbEstilo(String rbEstilo) {
-        this.rbEstilo = rbEstilo;
-    }
-
-    public String getRbMusicalidade() {
-        return rbMusicalidade;
-    }
-
-    public void setRbMusicalidade(String rbMusicalidade) {
-        this.rbMusicalidade = rbMusicalidade;
-    }
 
     public String getTxtComentario() {
         return txtComentario;
@@ -65,27 +35,37 @@ public class AvaliacaoMusicoEntity
         this.txtComentario = txtComentario;
     }
 
-    public String getEstilo() {
+    public float getEstilo() {
         return estilo;
     }
 
-    public void setEstilo(String estilo) {
+    public void setEstilo(float estilo) {
         this.estilo = estilo;
     }
 
-    public String getMusicalidade() {
+    public float getMusicalidade() {
         return musicalidade;
     }
 
-    public void setMusicalidade(String musicalidade) {
+    public void setMusicalidade(float musicalidade) {
         this.musicalidade = musicalidade;
     }
 
-    public String getPerformance() {
+    public float getPerformance() {
         return performance;
     }
 
-    public void setPerformance(String performance) {
+    public void setPerformance(float performance) {
         this.performance = performance;
     }
+
+    public String getIdEvento() {
+        return idEvento;
+    }
+
+    public void setIdEvento(String idEvento) {
+        this.idEvento = idEvento;
+    }
+
+
 }

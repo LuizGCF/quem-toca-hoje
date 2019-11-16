@@ -70,12 +70,12 @@
                 android:src="@mipmap/img_calendario" />
         </LinearLayout>
 
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/edtHorarioProposta"
                 android:layout_width="100dp"
@@ -101,6 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/edtHorarioFim"
                 android:layout_width="100dp"

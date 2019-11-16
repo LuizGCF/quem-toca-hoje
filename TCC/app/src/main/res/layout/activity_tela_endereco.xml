@@ -8,6 +8,10 @@
     android:background="@drawable/estilo_tela"
     tools:context="com.example.quemtocahoje.Views.TelaEndereco">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,6 +38,22 @@
             android:paddingBottom="16dp"
             android:layout_gravity="center"/>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="left"
+            android:text="CEP"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,15 +62,15 @@
 
             <EditText
                 android:id="@+id/edtCEPEndereco"
-                android:layout_width="180dp"
-                android:layout_height="55dp"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
                 android:paddingTop="5dp"
                 android:background="@drawable/estilo_edittext_cadastros"
                 android:cursorVisible="true"
-                android:hint="CEP"
                 android:gravity="center"
                 android:inputType="number"
                 android:textColor="#000"
+                android:layout_marginRight="5dp"
                 android:textColorHint="#000"
                 android:textCursorDrawable="@drawable/estilo_cursor"
                 android:textSize="15dp"
@@ -58,9 +78,9 @@
 
             <Button
                 android:id="@+id/btnBuscarCep"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/estilo_botao"
+                android:layout_width="130dp"
+                android:layout_height="37dp"
+                android:background="#47A891"
                 android:text="Buscar"
                 android:textColor="#fff"
                 android:textSize="14dp"
@@ -75,21 +95,43 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="2dp"
+                android:layout_gravity="left"
+                android:text="Logradouro"/>
+
             <EditText
                 android:id="@+id/edtLogradouroEndereco"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/estilo_edittext_cadastros"
                 android:cursorVisible="true"
-                android:hint="Logradouro"
                 android:layout_gravity="center"
                 android:inputType="text"
                 android:textColor="#000"
                 android:gravity="center"
                 android:textColorHint="#000"
+                android:layout_marginBottom="10dp"
                 android:textCursorDrawable="@drawable/estilo_cursor"
                 android:textSize="15dp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="2dp"
+                android:layout_gravity="left"
+                android:text="Bairro"/>
 
             <EditText
                 android:id="@+id/edtBairroEndereco"
@@ -97,14 +139,25 @@
                 android:layout_height="40dp"
                 android:background="@drawable/estilo_edittext_cadastros"
                 android:cursorVisible="true"
-                android:hint="Bairro"
                 android:gravity="center"
                 android:inputType="text"
                 android:textColor="#000"
+                android:layout_marginBottom="10dp"
                 android:textColorHint="#000"
                 android:textCursorDrawable="@drawable/estilo_cursor"
                 android:textSize="15dp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="2dp"
+                android:layout_gravity="left"
+                android:text="Cidade"/>
 
 
             <EditText
@@ -113,7 +166,6 @@
                 android:layout_height="40dp"
                 android:background="@drawable/estilo_edittext_cadastros"
                 android:cursorVisible="true"
-                android:hint="Cidade"
                 android:inputType="text"
                 android:textColor="#000"
                 android:gravity="center"
@@ -121,6 +173,16 @@
                 android:textCursorDrawable="@drawable/estilo_cursor"
                 android:textSize="15dp"
                 android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="left"
+                android:text="Complemento"/>
 
             <EditText
                 android:id="@+id/edtComplementoEndereco"
@@ -129,13 +191,23 @@
                 android:background="@drawable/estilo_edittext_cadastros"
                 android:cursorVisible="true"
                 android:gravity="center"
-                android:hint="Complemento"
                 android:inputType="textEmailAddress"
                 android:textColor="#000"
                 android:textColorHint="#000"
                 android:textCursorDrawable="@drawable/estilo_cursor"
                 android:textSize="15dp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="left"
+                android:text="UF"/>
 
 
             <EditText
@@ -145,7 +217,6 @@
                 android:background="@drawable/estilo_edittext_cadastros"
                 android:cursorVisible="true"
                 android:gravity="center"
-                android:hint="UF"
                 android:inputType="textEmailAddress"
                 android:textColor="#000"
                 android:textColorHint="#000"
@@ -165,7 +236,7 @@
 
             <Button
                 android:id="@+id/btnConfirmarEndereco"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:layout_marginTop="15dp"
@@ -177,7 +248,7 @@
 
             <Button
                 android:id="@+id/btnVoltar"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="15dp"
@@ -191,6 +262,8 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
+
+    </ScrollView>
+
 </android.support.constraint.ConstraintLayout>

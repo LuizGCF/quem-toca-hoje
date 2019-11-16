@@ -7,6 +7,10 @@
     android:background="@drawable/estilo_tela"
     tools:context="com.example.quemtocahoje.Views.TelaCadastroEstabelecimento">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,28 +31,46 @@
             android:padding="16dp"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="left"
+                android:text="Razão Social"/>
+
             <EditText
                 android:id="@+id/edtRazaoSocial"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:cursorVisible="true"
-                android:gravity="center"
-                android:hint="Razão Social"
+                android:hint=" "
                 android:inputType="text"
                 android:textColor="#000"
+                android:gravity="center"
                 android:textCursorDrawable="@drawable/estilo_cursor"
                 android:background="@drawable/estilo_edittext_cadastros"
                 android:textColorHint="#000"
                 android:textStyle="bold"
                 android:textSize="15dp"
                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_gravity="left"
+                android:text="CNPJ"/>
             <EditText
                 android:id="@+id/edtCNPJ"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:cursorVisible="true"
                 android:gravity="center"
-                android:hint="CNPJ"
                 android:inputType="number"
                 android:textColor="#000"
                 android:textCursorDrawable="@drawable/estilo_cursor"
@@ -57,13 +79,22 @@
                 android:textStyle="bold"
                 android:textSize="15dp"
                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_gravity="left"
+                android:text="Nome Fantasia"/>
             <EditText
                 android:id="@+id/edtNomeFantasia"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:cursorVisible="true"
                 android:gravity="center"
-                android:hint="Nome Fantasia"
+                android:hint=""
                 android:inputType="text"
                 android:textColor="#000"
                 android:textCursorDrawable="@drawable/estilo_cursor"
@@ -72,13 +103,23 @@
                 android:textStyle="bold"
                 android:textSize="15dp"
                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_gravity="left"
+                android:text="Telefone"/>
+
             <EditText
                 android:id="@+id/edtTelefoneEstabelecimento"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:cursorVisible="true"
                 android:gravity="center"
-                android:hint="Telefone"
+                android:hint=""
                 android:inputType="number"
                 android:textColor="#000"
                 android:textCursorDrawable="@drawable/estilo_cursor"
@@ -87,29 +128,46 @@
                 android:textStyle="bold"
                 android:textSize="15dp"
                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="#fff"
+                android:layout_marginBottom="5dp"
+                android:textStyle="bold"
+                android:layout_gravity="left"
+                android:text="Inicio Expediente"/>
 
             <EditText
                 android:id="@+id/edtInicioExpediente"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:cursorVisible="true"
-                android:gravity="center"
-                android:hint="Início do Expediente"
                 android:inputType="number"
                 android:textColor="#000"
+                android:gravity="center"
                 android:textCursorDrawable="@drawable/estilo_cursor"
                 android:background="@drawable/estilo_edittext_cadastros"
                 android:textColorHint="#000"
                 android:textStyle="bold"
                 android:textSize="15dp"
                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_gravity="left"
+                android:text="Fim Expediente"/>
             <EditText
                 android:id="@+id/edtFimExpediente"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:cursorVisible="true"
+                android:hint=""
                 android:gravity="center"
-                android:hint="Fim do Expediente"
                 android:inputType="number"
                 android:textColor="#000"
                 android:textCursorDrawable="@drawable/estilo_cursor"
@@ -118,16 +176,25 @@
                 android:textStyle="bold"
                 android:textSize="15dp"
                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_gravity="left"
+                android:text="Descrição"/>
 
             <EditText
                 android:id="@+id/edtDescricaoEstabelecimento"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="80dp"
                 android:cursorVisible="true"
-                android:gravity="center"
+                android:gravity="clip_horizontal"
                 android:textColor="#000"
                 android:inputType="text"
-                android:hint="Descrição"
+                android:hint=""
                 android:textCursorDrawable="@drawable/estilo_cursor"
                 android:background="@drawable/estilo_edittext_cadastros"
                 android:textColorHint="#000"
@@ -139,12 +206,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:padding="16dp"
+                android:padding="10dp"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btnCadastrarEstabelecimento"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
                     android:layout_marginTop="15dp"
@@ -156,7 +223,7 @@
 
                 <Button
                     android:id="@+id/btnCancelarEstabelecimento"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
                     android:layout_gravity="top"
@@ -170,4 +237,5 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>

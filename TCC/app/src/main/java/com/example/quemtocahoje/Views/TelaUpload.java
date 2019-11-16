@@ -74,6 +74,7 @@ public class TelaUpload extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_upload);
+        getSupportActionBar().hide();
 
         uris = new Uri[4];
 

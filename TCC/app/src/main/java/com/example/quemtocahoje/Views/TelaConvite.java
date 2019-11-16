@@ -22,10 +22,12 @@ public class TelaConvite extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_convite);
+        getSupportActionBar().hide();
 
         edtEmailConvite = findViewById(R.id.edtEmailConvite);
         btnEnviarConvite = findViewById(R.id.btnEnviarConvite);
         btnCancelarConvite = findViewById(R.id.btnCancelarConvite);
+
 
         btnEnviarConvite.setOnClickListener(new View.OnClickListener() {
             @Override

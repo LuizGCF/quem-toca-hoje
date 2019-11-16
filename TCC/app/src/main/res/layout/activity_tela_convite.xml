@@ -4,48 +4,92 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/estilo_tela"
     tools:context="com.example.quemtocahoje.Views.TelaConvite">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 <LinearLayout
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    <TextView
-        android:layout_marginTop="50dp"
-        android:textSize="35dp"
-        android:text="Enviar Convite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:textSize="20dp"
-        android:text="Digite o email do usuário a ser adicionado:"
-        android:layout_gravity="center_horizontal"/>
-    <EditText
+    android:padding="16dp"
+    android:layout_marginTop="16dp"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/imageView4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="120dp"
+        android:layout_marginTop="60dp"
+        android:paddingBottom="25dp"
+        app:srcCompat="@drawable/logoaplicativo" />
+
+    <TextView
         android:layout_marginTop="5dp"
+        android:text="Enviar Convite"
+        android:textSize="25dp"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:paddingTop="1dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:textSize="16dp"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:text="Digite o email do usuário a ser adicionado"
+        android:layout_gravity="center_horizontal"/>
+
+    <EditText
+        android:id="@+id/edtEmailConvite"
+        android:layout_width="304dp"
+        android:layout_height="40dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
         android:layout_marginRight="20dp"
-        android:id="@+id/edtEmailConvite"/>
+        android:background="@drawable/estilo_edittext_cadastros" />
     <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_horizontal">
+
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Enviar"
+            android:layout_gravity="top"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/estilo_botao"
+            android:textColor="#F5F7F7"
+            android:textSize="14dp"
+            android:textStyle="bold"
             android:id="@+id/btnEnviarConvite"/>
+
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/estilo_botao"
+            android:textColor="#F5F7F7"
+            android:textSize="14dp"
+            android:layout_marginHorizontal="10dp"
+            android:textStyle="bold"
             android:text="Voltar"
             android:id="@+id/btnCancelarConvite"/>
+
     </LinearLayout>
-</LinearLayout>
+  </LinearLayout>
+ </ScrollView>
 </android.support.constraint.ConstraintLayout>

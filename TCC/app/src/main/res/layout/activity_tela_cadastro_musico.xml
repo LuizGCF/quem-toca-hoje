@@ -8,6 +8,11 @@
     android:background="@drawable/estilo_tela"
     tools:context="com.example.quemtocahoje.Views.TelaCadastroMusico">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,7 +23,7 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp"
+            android:paddingTop="50dp"
             app:srcCompat="@drawable/logoaplicativo" />
 
         <LinearLayout
@@ -26,15 +31,24 @@
             android:layout_height="match_parent"
             android:padding="16dp"
             android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_gravity="left"
+                android:text="Nome Artistico"/>
 
             <EditText
                 android:id="@+id/edtNomeArtisticoMusico"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:cursorVisible="true"
-                android:gravity="center"
-                android:hint="Nome Artistico"
                 android:inputType="text"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
                 android:textColor="#000"
                 android:textCursorDrawable="@drawable/estilo_cursor"
                 android:background="@drawable/estilo_edittext_cadastros"
@@ -42,23 +56,41 @@
                 android:textStyle="bold"
                 android:textSize="15dp"
                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_gravity="left"
+                android:text="Celular"/>
 
             <EditText
                 android:id="@+id/edtCelularMusico"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:cursorVisible="true"
-                android:gravity="center"
-                android:hint="Celular"
                 android:inputType="number"
+                android:gravity="center"
                 android:textColor="#000"
                 android:textCursorDrawable="@drawable/estilo_cursor"
                 android:background="@drawable/estilo_edittext_cadastros"
+                android:layout_marginBottom="8dp"
                 android:textColorHint="#000"
                 android:textStyle="bold"
                 android:textSize="15dp"
                 />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_gravity="left"
+                android:text="Cidade"/>
             <EditText
                 android:id="@+id/edtCidadeMusico"
                 android:layout_width="match_parent"
@@ -66,26 +98,35 @@
                 android:cursorVisible="true"
                 android:gravity="center"
                 android:inputType="text"
-                android:hint="Cidade"
                 android:textColor="#000"
                 android:textCursorDrawable="@drawable/estilo_cursor"
                 android:background="@drawable/estilo_edittext_cadastros"
+                android:layout_marginBottom="8dp"
                 android:textColorHint="#000"
                 android:textStyle="bold"
                 android:textSize="15dp"
                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_gravity="left"
+                android:text="Descrição"/>
 
             <EditText
                 android:id="@+id/edtDescricaoMusico"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="180dp"
                 android:cursorVisible="true"
-                android:gravity="center"
                 android:textColor="#000"
-                android:hint="Descrição"
+                android:gravity="top"
                 android:inputType="text"
                 android:textCursorDrawable="@drawable/estilo_cursor"
                 android:background="@drawable/estilo_edittext_cadastros"
+                android:layout_marginBottom="8dp"
                 android:textColorHint="#000"
                 android:textStyle="bold"
                 android:textSize="15dp"
@@ -100,7 +141,7 @@
 
                 <Button
                     android:id="@+id/btnCadastrarMusico"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
                     android:layout_marginTop="15dp"
@@ -112,7 +153,7 @@
 
                 <Button
                     android:id="@+id/btnCancelarMusico"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
                     android:layout_gravity="top"
@@ -125,7 +166,7 @@
 
             </LinearLayout>
         </LinearLayout>
-
-
     </LinearLayout>
+    </ScrollView>
+
 </android.support.constraint.ConstraintLayout>
