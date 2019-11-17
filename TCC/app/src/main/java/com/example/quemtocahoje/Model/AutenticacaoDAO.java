@@ -46,8 +46,12 @@ public class AutenticacaoDAO {
     public AutenticacaoDAO(){}
 
     public void autenticar(final String login, final String senha, final FirebaseAuth auth, final Context ctx){
-        //final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
+        ProgressDialog progressDialog;
+        progressDialog = new ProgressDialog(ctx);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Autenticando usuário");
+        progressDialog.setTitle("Aguarde");
+        progressDialog.show();
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Autenticacao.name());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -64,6 +68,7 @@ public class AutenticacaoDAO {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
+                                            progressDialog.dismiss();
                                             FirebaseUser user = auth.getCurrentUser();
                                             if (entidade.getTipoUsuario().equals(TipoUsuario.MUSICO.name())) {
                                                 loginMusico(EncodeBase64.toBase64(entidade.getEmail()), ctx);
@@ -77,6 +82,7 @@ public class AutenticacaoDAO {
                                 });
                         break;
                     }else if(getContador() == dataSnapshot.getChildrenCount()){
+                        progressDialog.dismiss();
                         Mensagem.notificar(ctx, "Usuário Inválido", "Login e/ou senha incorretos.");
                     }
 
@@ -86,6 +92,7 @@ public class AutenticacaoDAO {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                progressDialog.dismiss();
                 Mensagem.notificar(ctx, "Erro na aplicação", "Ocorreu um erro ao efetuar o login do usuário.");
                 Log.d("ERRO FIREBASE", databaseError.getDetails());
 

@@ -3,6 +3,7 @@ package com.example.quemtocahoje.Model;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.util.Log;
 import com.example.quemtocahoje.DTO.ConvitesRecebidosDTO;
 import com.example.quemtocahoje.Enum.AcoesIntegrantesBanda;
 import com.example.quemtocahoje.Enum.StatusConvite;
+import com.example.quemtocahoje.Enum.StatusProposta;
 import com.example.quemtocahoje.Enum.TabelasFirebase;
 import com.example.quemtocahoje.Enum.TipoUsuario;
 import com.example.quemtocahoje.POJO.Convite;
@@ -19,6 +21,7 @@ import com.example.quemtocahoje.Persistencia.Entity.ConviteEntity;
 import com.example.quemtocahoje.Utility.DefinirDatas;
 import com.example.quemtocahoje.Utility.Email;
 import com.example.quemtocahoje.Utility.Mensagem;
+import com.example.quemtocahoje.Views.TelaMeusConvites;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
@@ -142,12 +145,18 @@ public class BandaDAO {
     }
 
     public void recuperarConvites(String emailUsuario, Context ctx) {
+        this.ctx = ctx;
+        progressDialog = new ProgressDialog(this.ctx);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Aguarde enquanto recuperamos seus convites");
+        progressDialog.setTitle("Recuperando convites");
+        progressDialog.show();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Banda.name());
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<ConvitesRecebidosDTO> convitesRecebidos = new ArrayList<>();
+                ArrayList<ConvitesRecebidosDTO> convitesRecebidos = new ArrayList<>();
                 if (dataSnapshot.getValue() != null) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         BandaEntity banda = snapshot.getValue(BandaEntity.class);
@@ -165,6 +174,18 @@ public class BandaDAO {
                         }
                     }
                     Log.d("RESULTADOCONVITES", convitesRecebidos.toString());
+                }
+
+                if(convitesRecebidos.isEmpty()) {
+                    Mensagem.notificar(ctx, "Sem convites", "Você não possui convites pendentes");
+                    progressDialog.dismiss();
+                }
+                else{
+                    progressDialog.dismiss();
+                    Intent intent = new Intent(ctx, TelaMeusConvites.class);
+                    intent.putExtra("listaConvites", convitesRecebidos);
+                    intent.putExtra("emailAutenticacao", emailUsuario);
+                    ctx.startActivity(intent);
                 }
             }
 
@@ -195,8 +216,14 @@ public class BandaDAO {
                             ConviteEntity convites = snap.getValue(ConviteEntity.class);
                             if (convites.getEmailConvidado().equals(email)) {
                                 convites.setStatusConvite(status);
-                                databaseReference.child(TabelasFirebase.Convite.name()).child(snap.getKey()).setValue(convites);
-                                break;
+                                databaseReference.child(TabelasFirebase.Convite.name()).child(snap.getKey()).setValue(convites).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(status.equals(StatusProposta.ACEITO.name()))
+                                            atualizarListaIntegrantes(nomeBanda, email, AcoesIntegrantesBanda.INCLUIR.name(), ctx);
+                                    }
+                                });
+                                //break;
                             }
                         }
                         break;
