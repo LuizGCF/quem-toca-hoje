@@ -10,7 +10,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.quemtocahoje.Notificação.MySingleton;
-import com.example.quemtocahoje.Views.Teste;
 import com.google.gson.JsonObject;
 
 import org.json.JSONException;

@@ -44,56 +44,6 @@ public class TelaInicial extends AppCompatActivity{
     FirebaseAuth auth;
     DatabaseReference reference;
 
-    /*
-    //login automatico caso o usuario nao se deslogue
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        firebaseUser = auth.getCurrentUser();
-        final AutenticacaoDAO a = new AutenticacaoDAO();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Autenticacao");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){//para cada usuario no autenticacao, verificar login/senha para
-                    final AutenticacaoEntity entidade = snapshot.getValue(AutenticacaoEntity.class);
-                    if(firebaseUser != null)
-                    {
-                        if(entidade.getId().equals(firebaseUser.getUid()))
-                        {
-                            if(entidade.getTipoUsuario().equals(TipoUsuario.MUSICO.name()))
-                            {
-                                a.loginMusico(entidade.getId(),getApplicationContext());
-                            }
-                            else if(entidade.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name()))
-                            {
-                                a.loginEstabelecimento(entidade.getId(),getApplicationContext());
-                            }
-                            else if(entidade.getTipoUsuario().equals(TipoUsuario.ESPECTADOR.name()))
-                            {
-                                a.loginEspectador(entidade.getId(),getApplicationContext());
-                            }
-                        }
-                    }
-                    else
-                        break;
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-        if(firebaseUser!=null)
-        {
-            telaInicialEspectador.putExtra("nome",auth.getCurrentUser().getDisplayName());
-            startActivity(telaInicialEspectador);
-        }
-    }*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,16 +52,10 @@ public class TelaInicial extends AppCompatActivity{
 
         final Intent telaCadastroEspectador = new Intent(this, TelaCadastroEspectador.class);
         final Intent telaEsqueciSenha = new Intent(this, TelaEsqueceuaSenha.class);
-        final Intent telaInicialEstabelecimento = new Intent(this, TelaInicialEstabelecimento.class);
-        final Intent telaInicialMusico = new Intent(this, TelaInicialMusico.class);
-        final Intent telaInicialEspectador = new Intent(this, TelaInicialEspectador.class);
 
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
         dao = new AutenticacaoDAO();
-
-
-
 
         btnLogin = findViewById(R.id.btnLogin);
         txtCadastro = findViewById(R.id.txtCadastro);
