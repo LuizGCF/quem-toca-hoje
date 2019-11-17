@@ -14,7 +14,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.quemtocahoje.Views.TelaPerfilUsuario"></activity>
+        <activity android:name="com.example.quemtocahoje.Views.TelaMeusConvites">
+
+        </activity>
+        <activity android:name="com.example.quemtocahoje.Views.TelaHistoricoEstab" />
+        <activity android:name="com.example.quemtocahoje.Views.TelaHistoricoMus" />
+        
+
+        <service
+            android:name="com.example.quemtocahoje.Notificação.MyFirebaseMessagingService"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <service android:name="com.example.quemtocahoje.Notificação.MyFirebaseInstanceIDService">
+
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity android:name="com.example.quemtocahoje.Chat.Activitys.ConversaActivity" />
         <activity android:name="com.example.quemtocahoje.Views.TelaCriacaoBanda" />
         <activity android:name="com.example.quemtocahoje.Views.TelaAvalicaoEstabelecimento" />

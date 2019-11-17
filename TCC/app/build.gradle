@@ -9,8 +9,6 @@ android {
 
         minSdkVersion 22
 
-        minSdkVersion 23
-
         targetSdkVersion 28
         multiDexEnabled true
         versionCode 1

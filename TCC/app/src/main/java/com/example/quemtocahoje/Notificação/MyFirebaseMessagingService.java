@@ -16,7 +16,6 @@ import android.support.v4.app.NotificationCompat;
 
 import com.example.quemtocahoje.Chat.Activitys.ConversaActivity;
 import com.example.quemtocahoje.Views.TelaEsqueceuaSenha;
-import com.example.quemtocahoje.Views.Teste;
 import com.example.tcc.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
