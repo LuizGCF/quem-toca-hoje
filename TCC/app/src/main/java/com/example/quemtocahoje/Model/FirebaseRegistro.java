@@ -29,8 +29,10 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.io.Serializable;
@@ -79,40 +81,50 @@ public class FirebaseRegistro implements Serializable {
                             hashMap.put("email", email);
                             hashMap.put("tipoUsuario",tipoUsuario);
                             hashMap.put("senha", senha);
+                            task.getResult().getUser().getIdToken(true).addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                    if (task.isSuccessful()) {
+                                        //TODO topic
+                                        FirebaseMessaging.getInstance().subscribeToTopic("user2");
 
-                            reference.setValue(hashMap)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful())
-                                            {
-                                                //String idusuario = EncodeBase64.toBase64(a.getEmail());
-                                                FirebaseStorageRegistro firebaseStorageRegistro = new FirebaseStorageRegistro(FirebaseStorage.getInstance());
-                                                for (int i =0;i < uris.length;i++)
-                                                {
-                                                    if(uris[i]!=null){
-                                                        if(i == 0)
-                                                            firebaseStorageRegistro.salvarImagem(uris[i], ctx, idusuario+"/imagemfoto.png");
-                                                        else
-                                                            firebaseStorageRegistro.salvarImagem(uris[i], ctx, idusuario+"/imagem"+i+".png");
+                                        reference.setValue(hashMap)
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if(task.isSuccessful())
+                                                        {
+                                                            //String idusuario = EncodeBase64.toBase64(a.getEmail());
+                                                            FirebaseStorageRegistro firebaseStorageRegistro = new FirebaseStorageRegistro(FirebaseStorage.getInstance());
+                                                            for (int i =0;i < uris.length;i++)
+                                                            {
+                                                                if(uris[i]!=null){
+                                                                    if(i == 0)
+                                                                        firebaseStorageRegistro.salvarImagem(uris[i], ctx, idusuario+"/imagemfoto.png");
+                                                                    else
+                                                                        firebaseStorageRegistro.salvarImagem(uris[i], ctx, idusuario+"/imagem"+i+".png");
+                                                                }
+                                                            }
+
+                                                            auth.signOut();
+                                                            if(tipoUsuario.equals(TipoUsuario.ESPECTADOR.name()))
+                                                            {
+                                                                registroEspectador(e, idusuario);
+                                                            }
+                                                            else if(tipoUsuario.equals(TipoUsuario.MUSICO.name())) {
+                                                                registroMusico(m, idusuario);
+                                                            }
+                                                            else if(tipoUsuario.equals(TipoUsuario.ESTABELECIMENTO.name()))
+                                                            {
+                                                                registrarEstabelecimento(estab,endereco, idusuario);
+                                                            }
+                                                        }
                                                     }
-                                                }
+                                                });
+                                    }
+                                }
+                            });
 
-                                                auth.signOut();
-                                                if(tipoUsuario.equals(TipoUsuario.ESPECTADOR.name()))
-                                                {
-                                                   registroEspectador(e, idusuario);
-                                                }
-                                                else if(tipoUsuario.equals(TipoUsuario.MUSICO.name())) {
-                                                    registroMusico(m, idusuario);
-                                                }
-                                                else if(tipoUsuario.equals(TipoUsuario.ESTABELECIMENTO.name()))
-                                                {
-                                                    registrarEstabelecimento(estab,endereco, idusuario);
-                                                }
-                                            }
-                                        }
-                                    });
                         }
                         else
                         {
@@ -234,4 +246,5 @@ public class FirebaseRegistro implements Serializable {
     public Context getCtx() {
         return ctx;
     }
+
 }

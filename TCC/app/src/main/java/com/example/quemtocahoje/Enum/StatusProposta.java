@@ -5,7 +5,8 @@ public enum StatusProposta {
     ,RECUSADO(2)
     ,EXPIRADO(3)
     ,CANCELADO(4)
-    ,ACEITO(5);
+    ,ACEITO(5)
+    ,FINALIZADO(6);
 
     private final int valor;
 

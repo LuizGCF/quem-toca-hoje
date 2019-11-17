@@ -167,7 +167,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:text="0.0"
+                android:text="0.00"
                 android:textSize="20dp"
                 android:inputType="number"/>
         </LinearLayout>
@@ -210,6 +210,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="Enviar"
+                android:textSize="20dp" />
+
+            <Button
+                android:id="@+id/btnRecusarProposta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Recusar"
+                android:visibility="gone"
                 android:textSize="20dp" />
 
             <Button

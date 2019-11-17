@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.quemtocahoje.Enum.StatusProposta;
+import com.example.quemtocahoje.Enum.TipoUsuario;
 import com.example.quemtocahoje.Model.PropostaDAO;
 import com.example.quemtocahoje.Persistencia.Entity.PropostaEntity;
 import com.example.quemtocahoje.Utility.DefinirDatas;
@@ -24,6 +25,7 @@ import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -42,6 +44,7 @@ public class TelaProposta extends Activity implements DatePickerDialog.OnDateSet
     private EditText edtDescricaoProposta;
     private Button btnEnviarProposta;
     private Button btnVoltarProposta;
+    private Button btnRecusarProposta;
     private EditText edtHorarioProposta;
     private EditText edtHorarioFim;
     private TextView lblNomeDestinatario;
@@ -58,17 +61,20 @@ public class TelaProposta extends Activity implements DatePickerDialog.OnDateSet
         edtDescricaoProposta = findViewById(R.id.edtDescricaoProposta);
         btnEnviarProposta = findViewById(R.id.btnEnviarProposta);
         btnVoltarProposta = findViewById(R.id.btnVoltarProposta);
+        btnRecusarProposta = findViewById(R.id.btnRecusarProposta);
         edtHorarioFim = findViewById(R.id.edtHorarioFim);
         imgSelecionarHorarioInicio = findViewById(R.id.imgSelecionarHorarioInicio);
         imgSelecionarHorarioFim = findViewById(R.id.imgSelecionarHorarioFim);
         lblNomeDestinatario = findViewById(R.id.lblNomeDestinatario);
         Calendar dataAtual = Calendar.getInstance();
+        PropostaDAO dao = new PropostaDAO();
 
-        //lblNomeDestinatario.setText(getIntent().getStringExtra("labelDestinatario"))
-        //String intentTela = getIntent().getStringExtra("intentTela");
-        String intentTela = "ENVIAR";
+       // ArrayList<PropostaEntity> test = (ArrayList<PropostaEntity>) getIntent().getSerializableExtra("testArray");
+
+        String intentTela = getIntent().getStringExtra("intentTela");
+        //String intentTela = "ENVIAR";
         if (intentTela.equals("ENVIAR")) {
-            lblNomeDestinatario.setText("Angelo arrombado");
+            lblNomeDestinatario.setText(getIntent().getStringExtra("labelDestinatario"));
             DatePickerDialog datePickerDialog = new DatePickerDialog(
                     TelaProposta.this, TelaProposta.this, dataAtual.get(Calendar.YEAR), dataAtual.get(Calendar.MONTH), dataAtual.get(Calendar.DAY_OF_MONTH));
 
@@ -84,12 +90,16 @@ public class TelaProposta extends Activity implements DatePickerDialog.OnDateSet
             btnEnviarProposta.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    PropostaEntity p = prepararObjeto();
+
+                    //dao.enviarNovaProposta(p, TelaProposta.this);
+                   // dao.atualizarProposta("-LtM_iVcdYrzQIjPmE7l", "ID BANDA TESTE", "ID ESTABELECIMENTO TESTE", StatusProposta.FINALIZADO.name(), TelaProposta.this);
+                    //dao.recuperarPorData("ID BANDA TESTE", DefinirDatas.dataAtual(), TipoUsuario.BANDA.name(), "HISTORICO", TelaProposta.this);
+
                     if (validaHorario()) {
                         if (!validaCampos()) {
                             if (!validaCache()) {
-                                PropostaEntity p = prepararObjeto();
-                                PropostaDAO dao = new PropostaDAO();
-                                dao.enviarNovaProposta(p, TelaProposta.this);
+
 
                             } else {
                                 Mensagem.notificar(TelaProposta.this, "Aviso", "Valor do cachê inválido");
@@ -158,32 +168,41 @@ public class TelaProposta extends Activity implements DatePickerDialog.OnDateSet
             edtHorarioFim.setEnabled(false);
             imgSelecionarHorarioInicio.setVisibility(View.GONE);
             imgSelecionarHorarioFim.setVisibility(View.GONE);
+            btnRecusarProposta.setVisibility(View.VISIBLE);
 
             //vai substituir por um objeto
 
+            PropostaEntity p = (PropostaEntity) getIntent().getSerializableExtra("objetoProposta");
             btnEnviarProposta.setText("ACEITAR");
 
-            edtHorarioProposta.setText("11:11");
-            edtHorarioFim.setText("12:12");
-            edtCacheProposta.setText("90.0");
-            edtDescricaoProposta.setText("ALFAFA");
-            edtLocalProposta.setText("Casa do senhor caralho");
-            txtDataPropostaEscolhida.setText("12/12/2012");
+            edtHorarioProposta.setText(p.getHorarioInicio());
+            edtHorarioFim.setText(p.getHorarioFim());
+            edtCacheProposta.setText(""+p.getCache());
+            edtDescricaoProposta.setText(p.getDescricao());
+            edtLocalProposta.setText(p.getLocal());
+            txtDataPropostaEscolhida.setText(p.getDataEnvioProposta());
 
             txtDePara.setText("De: ");
-            lblNomeDestinatario.setText("Remetente arrombado");
+            lblNomeDestinatario.setText(p.getIdEstabelecimento());
 
             btnEnviarProposta.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //lógica aceitar proposta
+                    dao.atualizarProposta(p.getIdProposta(), p.getIdBanda(), p.getIdEstabelecimento(), StatusProposta.ACEITO.name(), TelaProposta.this);
+                }
+            });
+
+            btnRecusarProposta.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dao.atualizarProposta(p.getIdProposta(), p.getIdBanda(), p.getIdEstabelecimento(), StatusProposta.RECUSADO.name(), TelaProposta.this);
                 }
             });
 
             btnVoltarProposta.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //lógica voltar
+                    finish();
                 }
             });
         }
