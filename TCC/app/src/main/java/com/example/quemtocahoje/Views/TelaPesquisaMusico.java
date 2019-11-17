@@ -78,6 +78,14 @@ public class TelaPesquisaMusico extends AppCompatActivity {
 
         firebaseStorageRegistro = new FirebaseStorageRegistro(FirebaseStorage.getInstance());
 
+        RecyclerView lstResultadoPesquisaMusico = findViewById(R.id.lstResultadoPesquisaMusico);
+        lstResultadoPesquisaMusico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         carregarDados();
 
     }
@@ -308,7 +316,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
         return true;
     }
 
-/*class CustomAdapter exte nds BaseAdapter{
+/*class CustomAdapter extends BaseAdapter{
 
         @Override
         public int getCount() {
