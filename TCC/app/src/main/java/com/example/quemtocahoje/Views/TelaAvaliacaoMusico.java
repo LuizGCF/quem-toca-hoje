@@ -1,10 +1,13 @@
 package com.example.quemtocahoje.Views;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.quemtocahoje.Model.AvaliacaoDAO;
 import com.example.quemtocahoje.Persistencia.Entity.AvaliacaoMusicoEntity;
+import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
 
 import android.view.View;
@@ -14,7 +17,7 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 
-public class TelaAvaliacaoMusico extends AppCompatActivity {
+public class TelaAvaliacaoMusico extends Activity {
 
     private  RatingBar rbPerformance;
     private  RatingBar  rbEstilo;
@@ -30,7 +33,8 @@ public class TelaAvaliacaoMusico extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_avaliacao_musico);
         // Esse código, tira a label da aplicação
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
+        //getActionBar().hide();
 
         rbPerformance =  findViewById(R.id.rbPerformance);
         rbMusicalidade= findViewById(R.id.rbMusicalidade);
@@ -50,10 +54,11 @@ public class TelaAvaliacaoMusico extends AppCompatActivity {
                 {
                     AvaliacaoMusicoEntity avaliacao = prepararObjetoAvaliacaoMusico();
                     AvaliacaoDAO avaliacaoMusico = new AvaliacaoDAO();
-                    avaliacaoMusico.persistirAvaliacaoMusico(avaliacao);
-                    String texto = "Avaliação realizada com sucesso!!!";
-                    Toast.makeText(getApplicationContext(),texto, Toast.LENGTH_SHORT).show();
-                    finish();
+                    avaliacaoMusico.persistirAvaliacaoMusico(avaliacao,TelaAvaliacaoMusico.this);
+
+
+                    //Toast.makeText(getApplicationContext(),texto, Toast.LENGTH_SHORT).show();
+                    //finish();
                 }
             }
         });
@@ -83,8 +88,8 @@ public class TelaAvaliacaoMusico extends AppCompatActivity {
     {
 
         AvaliacaoMusicoEntity obj = new AvaliacaoMusicoEntity();
-        obj.setIdBanda("BANDATESTE");
-        obj.setIdEvento("EVENTOTESTE");
+        obj.setIdBanda("BANDATESTE2");
+        obj.setIdEvento("EVENTOTESTE2");
         obj.setEstilo(rbEstilo.getRating());
         obj.setPerformance(rbPerformance.getRating());
         obj.setMusicalidade(rbMusicalidade.getRating());

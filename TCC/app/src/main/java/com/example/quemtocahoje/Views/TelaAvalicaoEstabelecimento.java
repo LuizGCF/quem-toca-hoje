@@ -1,5 +1,6 @@
 package com.example.quemtocahoje.Views;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -12,7 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
-public class TelaAvalicaoEstabelecimento extends AppCompatActivity {
+public class TelaAvalicaoEstabelecimento extends Activity {
 
     private  RatingBar rbOrganizacao;
     private  RatingBar  rbEstrutura;
@@ -27,7 +28,7 @@ public class TelaAvalicaoEstabelecimento extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_avalicao_estabelecimento);
         // Esse código, tira a label da aplicação
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         rbOrganizacao =  findViewById(R.id.rbOrganizacao1);
         rbEstrutura= findViewById(R.id.rbEstrutura1);
@@ -44,10 +45,8 @@ public class TelaAvalicaoEstabelecimento extends AppCompatActivity {
                     {
                         AvaliacaoEstabelecimentoEntity avaliacao = prepararObjetoEstabelecimento();
                         AvaliacaoDAO avaliacaoEstabelecimento = new AvaliacaoDAO();
-                        avaliacaoEstabelecimento.persistirAvaliacaoEstabelecimento(avaliacao);
-                        String texto = "Avaliação realizada com sucesso!!!";
-                        Toast.makeText(getApplicationContext(),texto, Toast.LENGTH_SHORT).show();
-                        finish();
+                        avaliacaoEstabelecimento.persistirAvaliacaoEstabelecimento(avaliacao,TelaAvalicaoEstabelecimento.this);
+
                     }
             }
         });

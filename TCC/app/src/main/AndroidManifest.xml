@@ -38,8 +38,16 @@
 
         <activity android:name="com.example.quemtocahoje.Chat.Activitys.ConversaActivity" />
         <activity android:name="com.example.quemtocahoje.Views.TelaCriacaoBanda" />
-        <activity android:name="com.example.quemtocahoje.Views.TelaAvalicaoEstabelecimento" />
-        <activity android:name="com.example.quemtocahoje.Views.TelaAvaliacaoMusico" />
+        <activity android:name="com.example.quemtocahoje.Views.TelaAvalicaoEstabelecimento" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.example.quemtocahoje.Views.TelaAvaliacaoMusico" >
+
+        </activity>
         <activity android:name="com.example.quemtocahoje.Views.TelaInicialEspectador" />
         <activity android:name="com.example.quemtocahoje.Views.TelaEndereco" />
         <activity android:name="com.example.quemtocahoje.Views.TelaInicialEstabelecimento" />
@@ -54,11 +62,6 @@
         <activity android:name="com.example.quemtocahoje.Views.TelaCadastroEspectador" />
         <activity android:name="com.example.quemtocahoje.Views.TelaEscolhaCadastro" />
         <activity android:name="com.example.quemtocahoje.Views.TelaInicial">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity android:name="com.example.quemtocahoje.Views.TelaEsqueceuaSenha" />

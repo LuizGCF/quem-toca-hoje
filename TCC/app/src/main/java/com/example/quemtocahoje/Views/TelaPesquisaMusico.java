@@ -1,5 +1,6 @@
 package com.example.quemtocahoje.Views;
 
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,6 +8,7 @@ import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -359,7 +361,7 @@ class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ExampleViewHolder
         this.exampleList = exampleList;
         exampleListFull = new ArrayList<>(exampleList);
     }
-    class ExampleViewHolder extends RecyclerView.ViewHolder {
+    class ExampleViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
         ImageView imagem;
         TextView nome;
         TextView descricao;
@@ -369,8 +371,26 @@ class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ExampleViewHolder
             imagem = itemView.findViewById(R.id.imgListItem);
             nome = itemView.findViewById(R.id.txtDescricaoBandaListItem);
             descricao = itemView.findViewById(R.id.txtDescricaoGeneroBandaListItem);
+            itemView.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View v) {
+            //pegar os parametros e ir para a tela de resultado
+
+            //AlertDialog.Builder adb = new AlertDialog.Builder(v.getContext());
+            //adb.setTitle("Funciona");
+            //adb.setMessage("Confima?");
+            //adb.setPositiveButton("Aceitar", new AlertDialog.OnClickListener() {
+            //    @Override
+            //    public void onClick(DialogInterface dialog, int which) {
+            //        exampleList.remove(getAdapterPosition());
+            //        //notifyDataSetChanged();
+            //        CustomAdapter.this.notifyDataSetChanged();
+            //    }
+            //});
+            //adb.show();
+        }
     }
     @NonNull
     @Override
@@ -379,6 +399,7 @@ class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ExampleViewHolder
                 viewGroup, false);
         return new ExampleViewHolder(v);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder exampleViewHolder, int i) {

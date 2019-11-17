@@ -23,7 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="16dp"
-            app:srcCompat="@drawable/logoaplicativo" />
+            android:src="@drawable/logoaplicativo"/>
+            <!--app:srcCompat="@drawable/logoaplicativo"!-->
 
         <TextView
             android:id="@+id/textView"
