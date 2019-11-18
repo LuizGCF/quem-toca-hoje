@@ -6,13 +6,13 @@ import android.os.Bundle;
 
 import com.example.quemtocahoje.Model.AvaliacaoDAO;
 import com.example.quemtocahoje.Persistencia.Entity.AvaliacaoEstabelecimentoEntity;
+import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.Toast;
 public class TelaAvalicaoEstabelecimento extends Activity {
 
     private  RatingBar rbOrganizacao;
@@ -27,8 +27,6 @@ public class TelaAvalicaoEstabelecimento extends Activity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_avalicao_estabelecimento);
-        // Esse código, tira a label da aplicação
-        //getSupportActionBar().hide();
 
         rbOrganizacao =  findViewById(R.id.rbOrganizacao1);
         rbEstrutura= findViewById(R.id.rbEstrutura1);
@@ -45,9 +43,10 @@ public class TelaAvalicaoEstabelecimento extends Activity {
                     {
                         AvaliacaoEstabelecimentoEntity avaliacao = prepararObjetoEstabelecimento();
                         AvaliacaoDAO avaliacaoEstabelecimento = new AvaliacaoDAO();
-                        avaliacaoEstabelecimento.persistirAvaliacaoEstabelecimento(avaliacao,TelaAvalicaoEstabelecimento.this);
-
-                    }
+                        avaliacaoEstabelecimento.persistirAvaliacaoEstabelecimento(avaliacao, TelaAvalicaoEstabelecimento.this);
+                    }else{
+                    Mensagem.notificar(TelaAvalicaoEstabelecimento.this, "Erro.","Preencher todos os campos.");
+                }
             }
         });
 
@@ -62,13 +61,8 @@ public class TelaAvalicaoEstabelecimento extends Activity {
 
     private boolean validarCampos(RatingBar rbOrganizacao,RatingBar rbEstrutura, RatingBar rbReceptividade)
     {
-        if(rbOrganizacao == null || rbOrganizacao == null || rbOrganizacao == null)
-        {
-            // Enviando mensagem na tela, caso usuário não selecione os rating bar
-            String texto = "Campos não selecionados";
-            Toast.makeText(getApplicationContext(),texto, Toast.LENGTH_SHORT).show();
+        if(rbOrganizacao.getRating() == 0 || rbOrganizacao.getRating() == 0 || rbOrganizacao.getRating() == 0 || txtComentario.getText().toString().trim().isEmpty())
             return false;
-        }
         else
             return true;
     }

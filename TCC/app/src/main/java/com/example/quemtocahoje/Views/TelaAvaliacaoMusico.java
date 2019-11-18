@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.Toast;
 
 
 public class TelaAvaliacaoMusico extends Activity {
@@ -32,9 +31,6 @@ public class TelaAvaliacaoMusico extends Activity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_avaliacao_musico);
-        // Esse código, tira a label da aplicação
-        //getSupportActionBar().hide();
-        //getActionBar().hide();
 
         rbPerformance =  findViewById(R.id.rbPerformance);
         rbMusicalidade= findViewById(R.id.rbMusicalidade);
@@ -50,16 +46,14 @@ public class TelaAvaliacaoMusico extends Activity {
             public void onClick(View v)
             {
 
-                if(validarCampos(rbPerformance,rbEstilo,rbMusicalidade))
-                {
+                if(validarCampos(rbPerformance,rbEstilo,rbMusicalidade)) {
                     AvaliacaoMusicoEntity avaliacao = prepararObjetoAvaliacaoMusico();
                     AvaliacaoDAO avaliacaoMusico = new AvaliacaoDAO();
-                    avaliacaoMusico.persistirAvaliacaoMusico(avaliacao,TelaAvaliacaoMusico.this);
-
-
-                    //Toast.makeText(getApplicationContext(),texto, Toast.LENGTH_SHORT).show();
-                    //finish();
+                    avaliacaoMusico.persistirAvaliacaoMusico(avaliacao, TelaAvaliacaoMusico.this);
+                }else{
+                    Mensagem.notificar(TelaAvaliacaoMusico.this, "Erro!", "Preencher todos os campos.");
                 }
+
             }
         });
 
@@ -74,12 +68,8 @@ public class TelaAvaliacaoMusico extends Activity {
 
     private boolean validarCampos( RatingBar rbPerformance,RatingBar rbEstilo, RatingBar rbMusicalidade)
     {
-        if(rbPerformance == null || rbEstilo == null || rbMusicalidade == null)
-        {
-            String texto = "Campos não selecionados";
-            Toast.makeText(getApplicationContext(),texto, Toast.LENGTH_SHORT).show();
+        if(rbPerformance.getRating() == 0 || rbEstilo.getRating() == 0 || rbMusicalidade.getRating() == 0 || txtComentario.getText().toString().trim().isEmpty())
             return false;
-        }
         else
             return true;
     }
