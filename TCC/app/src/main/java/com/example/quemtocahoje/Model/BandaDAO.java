@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BandaDAO {
@@ -44,14 +45,18 @@ public class BandaDAO {
     private FirebaseUser firebaseUser;
     private ProgressDialog progressDialog;
     private Context ctx;
+    private HashMap<DatabaseReference, ValueEventListener> hashMap;
+    private ValueEventListener valueEventListener;
 
     public BandaDAO(FirebaseDatabase database, DatabaseReference reference, FirebaseUser firebaseUser) {
         this.database = database;
         this.reference = reference;
         this.firebaseUser = firebaseUser;
+
     }
 
     public BandaDAO() {
+        hashMap  = new HashMap<>();
     }
 
 
@@ -153,7 +158,7 @@ public class BandaDAO {
         progressDialog.show();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Banda.name());
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(this.valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<ConvitesRecebidosDTO> convitesRecebidos = new ArrayList<>();
@@ -161,7 +166,7 @@ public class BandaDAO {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         BandaEntity banda = snapshot.getValue(BandaEntity.class);
                         Log.d("BANDAENTITY", banda.toString());
-                        if (banda.getTipoCadastro().equals("Banda")) {
+                        if (banda.getTipoCadastro().equals("Banda") && banda.getConvite() != null && !banda.getConvite().isEmpty()) {
                             ConviteEntity c = banda.getConvite().stream().filter(e -> e.getStatusConvite().equals(StatusConvite.ABERTO.name()) && e.getEmailConvidado().equals(emailUsuario)).findAny().orElse(null);
                             if (c != null) {
                                 convitesRecebidos.add(new ConvitesRecebidosDTO(
@@ -176,15 +181,18 @@ public class BandaDAO {
                     Log.d("RESULTADOCONVITES", convitesRecebidos.toString());
                 }
 
+                hashMap.put(databaseReference, valueEventListener);
                 if(convitesRecebidos.isEmpty()) {
                     Mensagem.notificar(ctx, "Sem convites", "Você não possui convites pendentes");
                     progressDialog.dismiss();
+                    removeValueEventListener(hashMap);
                 }
                 else{
                     progressDialog.dismiss();
                     Intent intent = new Intent(ctx, TelaMeusConvites.class);
                     intent.putExtra("listaConvites", convitesRecebidos);
                     intent.putExtra("emailAutenticacao", emailUsuario);
+                    removeValueEventListener(hashMap);
                     ctx.startActivity(intent);
                 }
             }
@@ -306,5 +314,13 @@ public class BandaDAO {
 
             }
         });
+    }
+
+    public static void removeValueEventListener(HashMap<DatabaseReference, ValueEventListener> hashMap) {
+        for (Map.Entry<DatabaseReference, ValueEventListener> entry : hashMap.entrySet()) {
+            DatabaseReference databaseReference = entry.getKey();
+            ValueEventListener valueEventListener = entry.getValue();
+            databaseReference.removeEventListener(valueEventListener);
+        }
     }
 }
