@@ -47,6 +47,8 @@ public class ConversaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversa);
 
+
+
         toolbar = (Toolbar) findViewById(R.id.tb_conversa);
         editMensagem = (EditText) findViewById(R.id.edit_mensagem);
         btMensagem = (ImageButton) findViewById(R.id.bt_enviar);
@@ -64,16 +66,18 @@ public class ConversaActivity extends AppCompatActivity {
             String emailDestinatario = extra.getString("email");
             //idUsuarioDestinatario = //Base64Custom.codificarBase64( emailDestinatario );
         }
-        idUsuarioRemetente = "EkUhcjz5ZXZ2SSzmL6zTceBG5qT2";//Virá no extra tbm//EkUhcjz5ZXZ2SSzmL6zTceBG5qT2
-        idUsuarioDestinatario = "1V0UQy6KBHeoN9oiOH97YRgpTsI2";//virá no extra do destinatario, por enquanto isso só para teste//1V0UQy6KBHeoN9oiOH97YRgpTsI2
+        idUsuarioRemetente = "1V0UQy6KBHeoN9oiOH97YRgpTsI2";//Virá no extra tbm//EkUhcjz5ZXZ2SSzmL6zTceBG5qT2
+        idUsuarioDestinatario = "EkUhcjz5ZXZ2SSzmL6zTceBG5qT2";//virá no extra do destinatario, por enquanto isso só para teste//1V0UQy6KBHeoN9oiOH97YRgpTsI2
         // Configura toolbar
-        toolbar.setTitle( nomeUsuarioDestinatario );
-        toolbar.setNavigationIcon(R.drawable.ic_action_arrow_left);
-        setSupportActionBar(toolbar);
+        //toolbar.setTitle( nomeUsuarioDestinatario );
+        //toolbar.setNavigationIcon(R.drawable.ic_action_arrow_left);
+        //setSupportActionBar(toolbar);
 
         // Monta listview e adapter
         mensagens = new ArrayList<>();
         adapter = new MensagemAdapter(ConversaActivity.this, mensagens);
+
+        listView.setDivider(null);
         listView.setAdapter( adapter );
 
         // Recuperar mensagens do Firebase
