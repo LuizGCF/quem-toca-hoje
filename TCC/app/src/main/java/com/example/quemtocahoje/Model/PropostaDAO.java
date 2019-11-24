@@ -13,6 +13,7 @@ import com.example.quemtocahoje.POJO.Proposta;
 import com.example.quemtocahoje.Persistencia.Entity.PropostaEntity;
 import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.quemtocahoje.Views.TelaProposta;
+import com.example.quemtocahoje.Views.TelaVisualizarTodasPropostas;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,6 +31,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class PropostaDAO {
 
@@ -38,8 +40,10 @@ public class PropostaDAO {
     private FirebaseUser firebaseUser;
     private ProgressDialog progressDialog;
     private Context ctx;
+    private HashMap<DatabaseReference, ValueEventListener> hashMap;
+    private ValueEventListener valueEventListener;
 
-    public PropostaDAO(){}
+    public PropostaDAO(){ hashMap = new HashMap<>();}
 
     public void enviarNovaProposta(PropostaEntity proposta, Context ctx){
         this.ctx = ctx;
@@ -141,11 +145,12 @@ public class PropostaDAO {
         progressDialog.setMessage("Aguarde enquanto recuperamos os dados");
         progressDialog.setTitle("Pesquisando");
         progressDialog.show();
-
-        FirebaseDatabase.getInstance().getReference(TabelasFirebase.Proposta.name())
-                .child(tipoUsuario).child(idUsuario).addValueEventListener(new ValueEventListener() {
+        DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Proposta.name())
+                .child(tipoUsuario).child(idUsuario);
+        firebaseDatabase.addValueEventListener(valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                hashMap.put(firebaseDatabase, valueEventListener);
                 List<PropostaEntity> eventos = new ArrayList<>();
                 Iterator<DataSnapshot> snapshot = dataSnapshot.getChildren().iterator();
                 while(snapshot.hasNext()){
@@ -158,16 +163,21 @@ public class PropostaDAO {
                             if(tipoPesquisa.equals("HISTORICO")){
                                 if(dataAtual.after(dataEvento) && proposta.getStatusProposta().equals(StatusProposta.FINALIZADO.name())){
                                     eventos.add(proposta);
+
+                                    removeValueEventListener(hashMap);
                                 }
                             }else { //agenda
                                 if (dataAtual.before(dataEvento) && proposta.getStatusProposta().equals(StatusProposta.ACEITO.name())) {
                                     eventos.add(proposta);
+
+                                    removeValueEventListener(hashMap);
                                 }
                             }
 
 
                         } catch (ParseException e) {
                             e.printStackTrace();
+                            removeValueEventListener(hashMap);
                         }
                     }
                     progressDialog.dismiss();
@@ -176,17 +186,21 @@ public class PropostaDAO {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 progressDialog.dismiss();
+                removeValueEventListener(hashMap);
             }
+
         });
     }
 
     public void recuperarPropostasUsuario(String idUsuario, String tipoUsuario, Context ctx){
-        FirebaseDatabase.getInstance().getReference(TabelasFirebase.Proposta.name())
-                .child(tipoUsuario).child(idUsuario).addValueEventListener(new ValueEventListener() {
+        DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Proposta.name())
+                        .child(tipoUsuario).child(idUsuario);
+                firebaseDatabase.addValueEventListener(valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                hashMap.put(firebaseDatabase, valueEventListener);
                 Iterator<DataSnapshot> snapshot = dataSnapshot.getChildren().iterator();
-                List<PropostaEntity> listaPropostas = new ArrayList<>();
+                ArrayList<PropostaEntity> listaPropostas = new ArrayList<>();
                 while(snapshot.hasNext()) {
                     PropostaEntity proposta = snapshot.next().getValue(PropostaEntity.class);
                     if(proposta.getStatusProposta().equals(StatusProposta.ABERTO.name()))
@@ -195,19 +209,30 @@ public class PropostaDAO {
 
                 if(!listaPropostas.isEmpty()){
                     Log.d("LISTAPROPOSTAS", listaPropostas.toString());
-                    Intent intent = new Intent(ctx, TelaProposta.class);
-                    intent.putExtra("listaPropostas", listaPropostas.toArray());
+                    Intent intent = new Intent(ctx, TelaVisualizarTodasPropostas.class);
+                    intent.putExtra("listaPropostas", listaPropostas);
+                    intent.putExtra("tipoUsuario", tipoUsuario);
+                    removeValueEventListener(hashMap);
                     ctx.startActivity(intent);
                 }else{
                     Mensagem.notificar(ctx, "Sem resultados", "Você não possui propostas pendentes");
+                    removeValueEventListener(hashMap);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                removeValueEventListener(hashMap);
             }
         });
 
+    }
+
+    public static void removeValueEventListener(HashMap<DatabaseReference, ValueEventListener> hashMap) {
+        for (Map.Entry<DatabaseReference, ValueEventListener> entry : hashMap.entrySet()) {
+            DatabaseReference databaseReference = entry.getKey();
+            ValueEventListener valueEventListener = entry.getValue();
+            databaseReference.removeEventListener(valueEventListener);
         }
+    }
 }

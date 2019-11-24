@@ -7,7 +7,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.quemtocahoje.DTO.AutenticacaoDTO;
+import com.example.quemtocahoje.Enum.TipoUsuario;
 import com.example.quemtocahoje.Model.BandaDAO;
+import com.example.quemtocahoje.Model.PropostaDAO;
+import com.example.quemtocahoje.Persistencia.Entity.PropostaEntity;
 import com.example.tcc.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -105,6 +108,14 @@ public class TelaInicialMusico extends AppCompatActivity {
             public void onClick(View v)
             {
                 startActivity(telaAvaliacaoEstabelecimento);
+            }
+        });
+
+        txtPropostasInicialMusico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PropostaDAO dao = new PropostaDAO();
+                dao.recuperarPropostasUsuario("ta", TipoUsuario.BANDA.name(), TelaInicialMusico.this);
             }
         });
     }
