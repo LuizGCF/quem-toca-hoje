@@ -1,12 +1,9 @@
-package com.example.quemtocahoje.Chat.Fragment;
-
+package com.example.quemtocahoje.Views;
 
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -15,7 +12,6 @@ import com.example.quemtocahoje.Chat.Activitys.ConversaActivity;
 import com.example.quemtocahoje.Chat.Adapter.ConversaAdapter;
 import com.example.quemtocahoje.Chat.Models.Conversa;
 import com.example.tcc.R;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,10 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class ConversasFragment extends Fragment {
+public class TelaMensagensAtivas extends AppCompatActivity {
 
     private ListView listView;
     private ArrayAdapter<Conversa> adapter;
@@ -36,33 +29,20 @@ public class ConversasFragment extends Fragment {
     private DatabaseReference firebase;
     private ValueEventListener valueEventListenerConversas;
 
-    public ConversasFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_conversas, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_tela_mensagens_ativas);
 
-        // Monta listview e adapter
         conversas = new ArrayList<>();
-        listView = (ListView) view.findViewById(R.id.lv_conversas);
-        adapter = new ConversaAdapter(getActivity(), conversas );
+        listView = findViewById(R.id.lv_conversas);
+        adapter = new ConversaAdapter(this, conversas );
         listView.setAdapter( adapter );
 
-        // recuperar dados do usuário
-        //Preferencias preferencias = new Preferencias(getActivity());
-        //String idUsuarioLogado = preferencias.getIdentificador();
-
-        // Recuperar conversas do Firebase
-
         firebase = FirebaseDatabase.getInstance()
-                    .getReference()
-                    .child("conversas")
-                    .child("EkUhcjz5ZXZ2SSzmL6zTceBG5qT2");//FirebaseAuth.getInstance().getUid());//id do usuario logado?
+                .getReference()
+                .child("conversas")
+                .child("EkUhcjz5ZXZ2SSzmL6zTceBG5qT2");//FirebaseAuth.getInstance().getUid());//id do usuario logado?
 
         valueEventListenerConversas = new ValueEventListener() {
             @Override
@@ -83,13 +63,12 @@ public class ConversasFragment extends Fragment {
             }
         };
 
-        //Adicionar evento de clique na lista
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Conversa conversa = conversas.get(position);
-                Intent intent = new Intent(getActivity(), ConversaActivity.class );
+                Intent intent = new Intent(TelaMensagensAtivas.this, ConversaActivity.class );
 
                 intent.putExtra("nome", conversa.getNome() );
                 //String email = Base64Custom.decodificarBase64( conversa.getIdUsuario() );
@@ -100,10 +79,7 @@ public class ConversasFragment extends Fragment {
             }
         });
 
-        return view;
-
     }
-
     @Override
     public void onStart() {
         super.onStart();
