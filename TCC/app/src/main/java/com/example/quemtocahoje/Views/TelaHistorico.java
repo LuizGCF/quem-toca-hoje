@@ -46,6 +46,10 @@ public class TelaHistorico extends AppCompatActivity {
                 @Override
                 public int compare(EventoDTO o1, EventoDTO o2) {
                     try {
+                        int i = f.parse(o1.getProposta().getDataEvento()).compareTo(f.parse(o2.getProposta().getDataEvento()));
+                        if (i !=0)
+                            return  -i;
+
                         return f.parse(o1.getProposta().getDataEvento()).compareTo(f.parse(o2.getProposta().getDataEvento()));
                     } catch (ParseException e) {
                         throw new IllegalArgumentException(e);
@@ -133,7 +137,7 @@ class CustomAdapterHistorico extends RecyclerView.Adapter<com.example.quemtocaho
             //exampleViewHolder.imagem.setImageBitmap(currentItem.getImagem());
             //  if (currentItem.getImagem() != "" && currentItem.getImagem() != null)
             //     Picasso.get().load(Uri.parse(currentItem.getImagem())).into(exampleViewHolder.imagem);
-            String nome = (tipoUsuario.equals(TipoUsuario.BANDA.name()) ? currentItem.getProposta().getIdEstabelecimento():currentItem.getProposta().getIdBanda()) + " - " + currentItem.getProposta().getDataEvento();
+                String nome = (tipoUsuario.equals(TipoUsuario.BANDA.name()) ? currentItem.getProposta().getIdEstabelecimento():currentItem.getProposta().getIdBanda()) + " - " + currentItem.getProposta().getDataEvento();
             String descricao = tipoUsuario.equals(TipoUsuario.BANDA.name()) ?
                     currentItem.getAvaliacaoMusico() == null ?
                             "" :
