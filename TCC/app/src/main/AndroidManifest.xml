@@ -14,12 +14,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.quemtocahoje.Views.TelaHistorico"></activity>
+        <activity android:name="com.example.quemtocahoje.Views.TelaAvaliacoesPendentes"></activity>
+        <activity android:name="com.example.quemtocahoje.Views.TelaHistorico" />
         <activity android:name="com.example.quemtocahoje.Views.TelaVisualizarTodasPropostas" />
-        </activity>
+        <activity android:name="com.example.quemtocahoje.Views.TelaMensagensAtivas"></activity>
+        <activity android:name="com.example.quemtocahoje.Chat.Fragment.ConversasFragment"></activity>
+        <activity android:name="com.example.quemtocahoje.Views.TelaMeusConvites" />
         <activity android:name="com.example.quemtocahoje.Views.TelaHistoricoEstab" />
         <activity android:name="com.example.quemtocahoje.Views.TelaHistoricoMus" />
-        
 
         <service
             android:name="com.example.quemtocahoje.Notificação.MyFirebaseMessagingService"
@@ -30,7 +32,6 @@
             </intent-filter>
         </service>
         <service android:name="com.example.quemtocahoje.Notificação.MyFirebaseInstanceIDService">
-
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
@@ -38,22 +39,15 @@
 
         <activity android:name="com.example.quemtocahoje.Chat.Activitys.ConversaActivity" />
         <activity android:name="com.example.quemtocahoje.Views.TelaCriacaoBanda" />
-        <activity android:name="com.example.quemtocahoje.Views.TelaAvalicaoEstabelecimento" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name="com.example.quemtocahoje.Views.TelaAvaliacaoMusico" >
-
-        </activity>
+        <activity android:name="com.example.quemtocahoje.Views.TelaAvalicaoEstabelecimento" />
+        <activity android:name="com.example.quemtocahoje.Views.TelaAvaliacaoMusico" />
+        <activity android:name="com.example.quemtocahoje.Views.TelaPerfilUsuario" />
         <activity android:name="com.example.quemtocahoje.Views.TelaInicialEspectador" />
         <activity android:name="com.example.quemtocahoje.Views.TelaEndereco" />
         <activity android:name="com.example.quemtocahoje.Views.TelaInicialEstabelecimento" />
         <activity android:name="com.example.quemtocahoje.Views.TelaInicialMusico" />
         <activity android:name="com.example.quemtocahoje.Views.TelaPesquisaEstabelecimento" />
-        <activity android:name="com.example.quemtocahoje.Views.TelaPesquisaMusico"></activity>
+        <activity android:name="com.example.quemtocahoje.Views.TelaPesquisaMusico" />
         <activity android:name="com.example.quemtocahoje.Views.TelaConvite" />
         <activity android:name="com.example.quemtocahoje.Views.TelaProposta" />
         <activity android:name="com.example.quemtocahoje.Views.TelaUpload" />
@@ -62,7 +56,11 @@
         <activity android:name="com.example.quemtocahoje.Views.TelaCadastroEspectador" />
         <activity android:name="com.example.quemtocahoje.Views.TelaEscolhaCadastro" />
         <activity android:name="com.example.quemtocahoje.Views.TelaInicial">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name="com.example.quemtocahoje.Views.TelaEsqueceuaSenha" />
         <activity android:name="com.example.quemtocahoje.Views.TelaRedefinirSenha" />
