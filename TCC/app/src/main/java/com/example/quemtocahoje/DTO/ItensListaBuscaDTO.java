@@ -4,14 +4,34 @@ import android.graphics.Bitmap;
 
 public class
 ItensListaBuscaDTO {
+    String id;
     String urlimagem;
     String nome;
     String descricao;
+    String tipoUsuario;
 
-    public ItensListaBuscaDTO(String urlimagem, String nome, String descricao) {
+    public ItensListaBuscaDTO(String urlimagem,String id, String nome, String descricao, String tipoUsuario) {
         this.urlimagem = urlimagem;
+        this.id = id;
         this.nome = nome;
         this.descricao = descricao;
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 
     public String getImagem() {

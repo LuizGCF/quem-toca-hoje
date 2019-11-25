@@ -1,6 +1,9 @@
 package com.example.quemtocahoje.Views;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,6 +30,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.quemtocahoje.DTO.AvaliacaoDTO;
 import com.example.quemtocahoje.DTO.ItensListaBuscaDTO;
 import com.example.quemtocahoje.Enum.TabelasFirebase;
 import com.example.quemtocahoje.Enum.TipoArquivo;
@@ -84,7 +88,6 @@ public class TelaPesquisaMusico extends AppCompatActivity {
         lstResultadoPesquisaMusico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             }
         });
 
@@ -111,14 +114,14 @@ public class TelaPesquisaMusico extends AppCompatActivity {
                         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {//retornando corretamente a imagem na uri, converter para bitmap agora
-                                allItens.add(new ItensListaBuscaDTO(uri.toString(),e.getNomeFantasia(),e.getDescricao()));
+                                allItens.add(new ItensListaBuscaDTO(uri.toString(),e.getAutenticacao_id(),e.getNomeFantasia(),e.getDescricao(),TipoUsuario.ESTABELECIMENTO.name()));
                                 carregarRecyclerView();
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception ex) {
-                                allItens.add(new ItensListaBuscaDTO(null,e.getNomeFantasia(),e.getDescricao()));
+                                allItens.add(new ItensListaBuscaDTO(null,e.getAutenticacao_id(),e.getNomeFantasia(),e.getDescricao(),TipoUsuario.ESTABELECIMENTO.name()));
                                 carregarRecyclerView();
                             }
                         });
@@ -152,19 +155,19 @@ public class TelaPesquisaMusico extends AppCompatActivity {
                     {
                         //allItens.add(new ItensListaBuscaDTO(null,b.getGeneros(),b.getNome()));//b.getGeneros().stream().collect(Collectors.joining(","))));
                         try{
-                            StorageReference ref = FirebaseStorage.getInstance().getReference().child(b.getBanda_id()+"/imagemfoto.png");
+                            StorageReference ref = FirebaseStorage.getInstance().getReference().child(b.getIdCriador()+"/imagemfoto.png");
 
                             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {//retornando corretamente a imagem na uri, converter para bitmap agora
-                                    allItens.add(new ItensListaBuscaDTO(uri.toString(),b.getGeneros(),b.getNome()));
+                                    allItens.add(new ItensListaBuscaDTO(uri.toString(),b.getBanda_id(), b.getGeneros(),b.getNome(),TipoUsuario.BANDA.name()));
                                     carregarRecyclerView();
 
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    allItens.add(new ItensListaBuscaDTO(null,b.getGeneros(),b.getNome()));
+                                    allItens.add(new ItensListaBuscaDTO(null,b.getBanda_id(), b.getGeneros(),b.getNome(),TipoUsuario.BANDA.name()));
                                     carregarRecyclerView();
                                 }
                             });
@@ -203,14 +206,14 @@ public class TelaPesquisaMusico extends AppCompatActivity {
                         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {//retornando corretamente a imagem na uri, converter para bitmap agora
-                                allItens.add(new ItensListaBuscaDTO(uri.toString(),m.getNomeArtistico(),m.getDescricao()));
+                                allItens.add(new ItensListaBuscaDTO(uri.toString(),m.getAutenticacao_id(), m.getNomeArtistico(),m.getDescricao(),TipoUsuario.MUSICO.name()));
                                 carregarRecyclerView();
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                allItens.add(new ItensListaBuscaDTO(null,m.getNomeArtistico(),m.getDescricao()));
+                                allItens.add(new ItensListaBuscaDTO(null,m.getAutenticacao_id(), m.getNomeArtistico(),m.getDescricao(),TipoUsuario.MUSICO.name()));
                                 carregarRecyclerView();
                             }
                         });
@@ -377,7 +380,14 @@ class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ExampleViewHolder
         @Override
         public void onClick(View v) {
             //pegar os parametros e ir para a tela de resultado
+            ItensListaBuscaDTO ilb = exampleListFull.get(getAdapterPosition());
 
+            //TODO carregar a lista de avaliacoes
+            AvaliacaoDTO a = new AvaliacaoDTO(ilb.getImagem(),ilb.getNome(),ilb.getId(),ilb.getDescricao(),ilb.getTipoUsuario(),null);
+
+            Intent i = new Intent(v.getContext(),TelaPerfilUsuario.class);
+            i.putExtra("usuario", a);
+            v.getContext().startActivity(i);
             //AlertDialog.Builder adb = new AlertDialog.Builder(v.getContext());
             //adb.setTitle("Funciona");
             //adb.setMessage("Confima?");
