@@ -28,15 +28,49 @@
         android:layout_marginTop="10dp"
         android:textSize="20dp"
         android:textStyle="bold" />
-    <ImageView
+    <!--Verificar edittext com mais de uma linha, ou uma textview mesmo-->
+    <TextView
         android:layout_below="@id/txtDescricaoPerfil"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_margin="20dp"
-        android:id="@+id/imgPerfil1"/>
+        android:id="@+id/txtDescricao"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Imagens Demonstração"
+        android:id="@+id/txtDescricaoImagensDemonstracao"
+        android:layout_below="@+id/txtDescricao"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtDescricaoImagensDemonstracao"
+        android:id="@+id/lstImagensUsuario"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="20dp"
+        android:id="@+id/imgImagemUsuario1"/>
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="20dp"
+        android:id="@+id/imgImagemUsuario2"/>
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="20dp"
+        android:id="@+id/imgImagemUsuario3"/>
+    </LinearLayout>
     <!--Adapter para a listview abaixo das avaliacoes, notas e seu comentário-->
     <ListView
-        android:layout_below="@id/imgPerfil1"
+        android:layout_below="@id/lstImagensUsuario"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:id="@+id/lstAvaliacoes" />
