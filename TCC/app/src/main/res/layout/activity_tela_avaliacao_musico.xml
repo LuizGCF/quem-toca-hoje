@@ -51,7 +51,7 @@
                 android:textSize="20dp"
                 android:textColor="#fff"
                 android:textStyle="bold"
-                android:text="Performance"
+                android:text="Pontualidade"
                 />
 
             <RatingBar
@@ -72,7 +72,7 @@
                 android:textSize="20dp"
                 android:textColor="#fff"
                 android:textStyle="bold"
-                android:text="Estilo"
+                android:text="Comportamento"
                 />
 
             <RatingBar
@@ -92,7 +92,7 @@
                 android:textSize="20dp"
                 android:textColor="#fff"
                 android:textStyle="bold"
-                android:text="Musicalidade"
+                android:text="Interação"
                 />
 
             <RatingBar

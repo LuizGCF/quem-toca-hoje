@@ -6,12 +6,16 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.quemtocahoje.DTO.EventoDTO;
 import com.example.quemtocahoje.Enum.StatusProposta;
 import com.example.quemtocahoje.Enum.TabelasFirebase;
 import com.example.quemtocahoje.Enum.TipoUsuario;
 import com.example.quemtocahoje.POJO.Proposta;
+import com.example.quemtocahoje.Persistencia.Entity.AvaliacaoEstabelecimentoEntity;
+import com.example.quemtocahoje.Persistencia.Entity.AvaliacaoMusicoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.PropostaEntity;
 import com.example.quemtocahoje.Utility.Mensagem;
+import com.example.quemtocahoje.Views.TelaHistorico;
 import com.example.quemtocahoje.Views.TelaProposta;
 import com.example.quemtocahoje.Views.TelaVisualizarTodasPropostas;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -64,6 +68,7 @@ public class PropostaDAO {
                 Log.d("ENVIO PROPOSTA", proposta.toString());
 
                 HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put("idProposta", databaseReference.getKey());
                 hashMap.put("idBanda", proposta.getIdBanda());
                 hashMap.put("idEstabelecimento", proposta.getIdEstabelecimento());
                 hashMap.put("statusProposta", StatusProposta.ABERTO.name());
@@ -163,14 +168,10 @@ public class PropostaDAO {
                             if(tipoPesquisa.equals("HISTORICO")){
                                 if(dataAtual.after(dataEvento) && proposta.getStatusProposta().equals(StatusProposta.FINALIZADO.name())){
                                     eventos.add(proposta);
-
-                                    removeValueEventListener(hashMap);
                                 }
                             }else { //agenda
                                 if (dataAtual.before(dataEvento) && proposta.getStatusProposta().equals(StatusProposta.ACEITO.name())) {
                                     eventos.add(proposta);
-
-                                    removeValueEventListener(hashMap);
                                 }
                             }
 
@@ -180,6 +181,58 @@ public class PropostaDAO {
                             removeValueEventListener(hashMap);
                         }
                     }
+                    removeValueEventListener(hashMap);
+                if(tipoPesquisa.equals("HISTORICO")) {
+                    ArrayList<EventoDTO> dtoFinal = new ArrayList<>();
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Avaliacao.name())
+                            .child(idUsuario);
+                    ref.addValueEventListener(valueEventListener = new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            hashMap.put(ref, valueEventListener);
+                            Iterator<DataSnapshot> data = dataSnapshot.getChildren().iterator();
+                            while (data.hasNext()) {
+                                if (tipoUsuario.equals(TipoUsuario.ESTABELECIMENTO.name())) {
+                                    AvaliacaoEstabelecimentoEntity avEstab = data.next().getValue(AvaliacaoEstabelecimentoEntity.class);
+                                    PropostaEntity proposta = eventos.stream().filter(e -> e.getIdProposta().equals(avEstab.getIdEvento())).findAny().orElse(null);
+
+                                    if (proposta != null) {
+                                        dtoFinal.add(new EventoDTO(proposta.getIdProposta(), avEstab, null, proposta));
+                                        eventos.remove(proposta);
+                                    }
+                                } else if (tipoUsuario.equals(TipoUsuario.BANDA.name())) {
+                                    AvaliacaoMusicoEntity avMusico = data.next().getValue(AvaliacaoMusicoEntity.class);
+                                    PropostaEntity proposta = eventos.stream().filter(e -> e.getIdProposta().equals(avMusico.getIdEvento())).findAny().orElse(null);
+                                    if (proposta != null) {
+                                        dtoFinal.add(new EventoDTO(proposta.getIdProposta(), null, avMusico, proposta));
+                                        eventos.remove(proposta);
+                                    }
+                                }
+                            }
+
+                            if(!eventos.isEmpty())
+                                eventos.forEach(e -> dtoFinal.add(new EventoDTO(e.getIdProposta(), null, null, e)));
+
+                            removeValueEventListener(hashMap);
+                            progressDialog.dismiss();
+                            Log.d("EVENTO",dtoFinal.toString());
+                            if(!dtoFinal.isEmpty()){
+                                Intent intent = new Intent(ctx, TelaHistorico.class);
+                                intent.putExtra("eventosDTO", dtoFinal);
+                                intent.putExtra("tipoUsuario", tipoUsuario);
+                                ctx.startActivity(intent);
+                            }else{
+                                Mensagem.notificar(ctx, "Histórico vazio", "Esta banda não possui nenhum evento em seu histórico.");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            removeValueEventListener(hashMap);
+                            progressDialog.dismiss();
+                        }
+                    });
+                }
                     progressDialog.dismiss();
             }
 

@@ -7,6 +7,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.quemtocahoje.DTO.AutenticacaoDTO;
+import com.example.quemtocahoje.Enum.TipoUsuario;
+import com.example.quemtocahoje.Model.AvaliacaoDAO;
+import com.example.quemtocahoje.Model.PropostaDAO;
+import com.example.quemtocahoje.Persistencia.Entity.AvaliacaoEstabelecimentoEntity;
+import com.example.quemtocahoje.Persistencia.Entity.PropostaEntity;
 import com.example.tcc.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -67,6 +72,15 @@ public class TelaInicialEstabelecimento extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(telaAvaliacaoMusico);
+            }
+        });
+
+        txtHistoricoInicialEstabelecimento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PropostaDAO dao = new PropostaDAO();
+                dao.recuperarEventos("estab", TipoUsuario.ESTABELECIMENTO.name(), "HISTORICO", TelaInicialEstabelecimento.this);
+
             }
         });
     }
