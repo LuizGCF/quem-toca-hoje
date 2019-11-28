@@ -1,7 +1,9 @@
 package com.example.quemtocahoje.Views;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,14 +14,31 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.quemtocahoje.Chat.Activitys.ConversaActivity;
 import com.example.quemtocahoje.DTO.AvaliacaoDTO;
+import com.example.quemtocahoje.DTO.EventoDTO;
+import com.example.quemtocahoje.Enum.TabelasFirebase;
+import com.example.quemtocahoje.Enum.TipoUsuario;
 import com.example.quemtocahoje.POJO.Avaliacao;
+import com.example.quemtocahoje.Persistencia.Entity.AvaliacaoEstabelecimentoEntity;
+import com.example.quemtocahoje.Persistencia.Entity.AvaliacaoMusicoEntity;
+import com.example.quemtocahoje.Persistencia.Entity.PropostaEntity;
+import com.example.quemtocahoje.Utility.EncodeBase64;
 import com.example.tcc.R;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class TelaPerfilUsuario extends AppCompatActivity {
@@ -32,6 +51,9 @@ public class TelaPerfilUsuario extends AppCompatActivity {
     ImageView imgImagemUsuario3;
     ListView lstAvaliacoes;
     Button btnMensagem;
+    Button btnProposta;
+    private HashMap<DatabaseReference, ValueEventListener> hashMap;
+    private ValueEventListener valueEventListener;
 
     AvaliacaoDTO a;
     @Override
@@ -46,22 +68,87 @@ public class TelaPerfilUsuario extends AppCompatActivity {
         imgImagemUsuario2 = findViewById(R.id.imgImagemUsuario2);
         imgImagemUsuario3 = findViewById(R.id.imgImagemUsuario3);
         lstAvaliacoes = findViewById(R.id.lstAvaliacoes);
+        btnMensagem = findViewById(R.id.btnMensagem);
+        btnProposta = findViewById(R.id.btnProposta);
+
+        //Acho que esta certo, mas verificar porque nao recebe o valor certo da lista as vezes
+        btnMensagem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String email =  FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                String idRemetente = EncodeBase64.toBase64(email);
+                //String test = EncodeBase64.toBase64("d@gmail.com");
+                Intent telaConversa = new Intent(TelaPerfilUsuario.this, ConversaActivity.class);
+
+                telaConversa.putExtra("remetente", idRemetente);
+                telaConversa.putExtra("destinatario",a.getIdUsuario());
+                //put extra id usuarios
+                startActivity(telaConversa);
+            }
+        });
+
+        btnProposta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent telaProposta = new Intent(TelaPerfilUsuario.this, TelaProposta.class);
+
+                startActivity(telaProposta);
+            }
+        });
+
+        hashMap = new HashMap<>();
 
         a = (AvaliacaoDTO) getIntent().getSerializableExtra("usuario");
 
-        txtNomePerfil.setText("Olá "+a.getNomePerfil());
-        txtDescricaoPerfil.setText(a.getDescricaoGenero());
+        if(a != null) {
+            txtNomePerfil.setText("Olá " + a.getNomePerfil());
+            txtDescricaoPerfil.setText(a.getDescricaoGenero());
 
+        }
 
+        carregarAvaliacoes();
 
         carregarImagemPerfil();
 
         carregarImagensDemonstracao();
 
+        //TODO Verificar que o usuario logado tbm aparece na lista de pesquisa, talvez carregar por perfil ja resolva isso
         //TODO Verificar perfil Banda qual id esta utilizando para a parte da imagem
         //TODO receber os dados da tela de pesquisa anterior para preencher os campos, Avaliacao depois que tiver o dto da avaliacao
         //Com os cados recebidos, iniciar a conversa
         //Criar uma tela com as conversas do perfil x
+    }
+
+    //Continuar depois
+    private void carregarAvaliacoes() {
+        ArrayList<EventoDTO> dtoFinal = new ArrayList<>();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Avaliacao.name())
+                .child("estab");//a.getIdUsuario());//mockado por enqnt
+        ref.addValueEventListener(valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                hashMap.put(ref, valueEventListener);
+                Iterator<DataSnapshot> data = dataSnapshot.getChildren().iterator();
+                while (data.hasNext()) {
+                    if (a.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name())) {
+                        AvaliacaoEstabelecimentoEntity avEstab = data.next().getValue(AvaliacaoEstabelecimentoEntity.class);
+                        dtoFinal.add(new EventoDTO("", avEstab, null, null));
+
+                    } else if (a.getTipoUsuario().equals(TipoUsuario.BANDA.name()) || a.getTipoUsuario().equals(TipoUsuario.MUSICO.name())) {
+                        AvaliacaoMusicoEntity avMusico = data.next().getValue(AvaliacaoMusicoEntity.class);
+                        dtoFinal.add(new EventoDTO("", null, avMusico, null));
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     private void carregarImagensDemonstracao() {

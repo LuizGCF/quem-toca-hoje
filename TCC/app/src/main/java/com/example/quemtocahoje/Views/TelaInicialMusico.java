@@ -128,5 +128,14 @@ public class TelaInicialMusico extends AppCompatActivity {
                 dao.recuperarEventos("ta", TipoUsuario.BANDA.name(), "HISTORICO",TelaInicialMusico.this);
             }
         });
+
+        txtAgendaInicialMusico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent telaavaliacoespendentes = new Intent(TelaInicialMusico.this,TelaAvaliacoesPendentes.class);
+
+                startActivity(telaavaliacoespendentes);
+            }
+        });
     }
 }

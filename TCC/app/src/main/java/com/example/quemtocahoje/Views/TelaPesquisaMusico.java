@@ -257,45 +257,6 @@ public class TelaPesquisaMusico extends AppCompatActivity {
         lstResultadoPesquisaMusico.setAdapter(adapter);
     }
 
-    /*private void carregarDados() {
-        allItens = new ArrayList<>();
-        //Banco bd = Banco.getDatabase(getApplicationContext());
-        List<EstabelecimentoEntity> estabelecimentos =  //bd.estabelecimentoDao().findAllEstabelecimentos();
-        List<MusicoEntity> musicos =  //bd.musicoDao().findAllMusicos();
-        try{
-            for(EstabelecimentoEntity estabelecimento : estabelecimentos)
-            {
-                Bitmap imagem = null;
-                AutenticacaoEntity autenticacaoEntity = bd.autenticacaoDao().findAutenticacaoId(estabelecimento.getAutenticacao_id());
-                byte[] arquivoEntity = bd.arquivoDao().findAnexoArquivoById(autenticacaoEntity.getIdAutenticacao(), TipoArquivo.FOTO_PERFIL.name());
-                if(arquivoEntity!=null)
-                {
-                    imagem = ConversaoArquivo.getImagem(TipoArquivo.FOTO_PERFIL.name(),TelaPesquisaMusico.this,autenticacaoEntity.getIdAutenticacao());
-                }
-                allItens.add(new ItensListaBuscaDTO(imagem  ,estabelecimento.getNomeFantasia(),estabelecimento.getDescricao()));
-
-            }
-            for(MusicoEntity musico : musicos)
-            {
-                Bitmap imagem = null;
-                AutenticacaoEntity autenticacaoEntity = bd.autenticacaoDao().findAutenticacaoId(musico.getAutenticacao_id());
-                byte[] arquivoEntity = bd.arquivoDao().findAnexoArquivoById(autenticacaoEntity.getIdAutenticacao(), TipoArquivo.FOTO_PERFIL.name());
-                if(arquivoEntity!=null)
-                {
-                    imagem= ConversaoArquivo.getImagem(TipoArquivo.FOTO_PERFIL.name(),TelaPesquisaMusico.this,autenticacaoEntity.getIdAutenticacao());
-                }
-                allItens.add(new ItensListaBuscaDTO(imagem,musico.getNomeArtistico(),musico.getNome()));
-            }
-        }
-        catch (Exception e)
-        {
-            Log.d("ERRO",e.getMessage());
-        }
-        //mock sem a imagem
-       //allItens.add(new ItensListaBuscaDTO( null,"Titulo", "Subtitulo"));
-       // allItens.add(new ItensListaBuscaDTO(null,"AA", "BB"));
-    }*/
-
    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -372,15 +333,15 @@ class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ExampleViewHolder
         ExampleViewHolder(View itemView) {
             super(itemView);
             imagem = itemView.findViewById(R.id.imgListItem);
-            nome = itemView.findViewById(R.id.txtDescricaoBandaListItem);
-            descricao = itemView.findViewById(R.id.txtDescricaoGeneroBandaListItem);
+            nome = itemView.findViewById(R.id.txtDescricaoGeneroBandaListItem);
+            descricao = itemView.findViewById(R.id.txtDescricaoBandaListItem);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             //pegar os parametros e ir para a tela de resultado
-            ItensListaBuscaDTO ilb = exampleListFull.get(getAdapterPosition());
+            ItensListaBuscaDTO ilb = exampleList.get(getAdapterPosition());
 
             //TODO carregar a lista de avaliacoes
             AvaliacaoDTO a = new AvaliacaoDTO(ilb.getImagem(),ilb.getNome(),ilb.getId(),ilb.getDescricao(),ilb.getTipoUsuario(),null);
@@ -443,7 +404,7 @@ class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ExampleViewHolder
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (ItensListaBuscaDTO item : exampleListFull) {
-                    if (item.getDescricao().toLowerCase().contains(filterPattern)) {
+                    if (item.getNome().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
                 }

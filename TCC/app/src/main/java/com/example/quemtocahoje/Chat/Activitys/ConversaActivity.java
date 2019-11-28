@@ -59,15 +59,17 @@ public class ConversaActivity extends AppCompatActivity {
         //idUsuarioRemetente = preferencias.getIdentificador();
         //nomeUsuarioRemetente = preferencias.getNome();
 
-        Bundle extra = getIntent().getExtras();
+        //Bundle extra = getIntent().getExtras();
 
-        if( extra != null ){
-            nomeUsuarioDestinatario = extra.getString("nome");
-            String emailDestinatario = extra.getString("email");
+        //if( extra != null ){
+            nomeUsuarioDestinatario = getIntent().getStringExtra("nome");
+            //String emailDestinatario = extra.getString("email");
             //idUsuarioDestinatario = //Base64Custom.codificarBase64( emailDestinatario );
-        }
-        idUsuarioRemetente = "1V0UQy6KBHeoN9oiOH97YRgpTsI2";//Virá no extra tbm//EkUhcjz5ZXZ2SSzmL6zTceBG5qT2
-        idUsuarioDestinatario = "EkUhcjz5ZXZ2SSzmL6zTceBG5qT2";//virá no extra do destinatario, por enquanto isso só para teste//1V0UQy6KBHeoN9oiOH97YRgpTsI2
+            idUsuarioRemetente = getIntent().getStringExtra("remetente");
+            idUsuarioDestinatario = getIntent().getStringExtra("destinatario");
+        //}
+        //idUsuarioRemetente = "1V0UQy6KBHeoN9oiOH97YRgpTsI2";//Virá no extra tbm//EkUhcjz5ZXZ2SSzmL6zTceBG5qT2
+        //idUsuarioDestinatario = "EkUhcjz5ZXZ2SSzmL6zTceBG5qT2";//virá no extra do destinatario, por enquanto isso só para teste//1V0UQy6KBHeoN9oiOH97YRgpTsI2
         // Configura toolbar
         //toolbar.setTitle( nomeUsuarioDestinatario );
         //toolbar.setNavigationIcon(R.drawable.ic_action_arrow_left);

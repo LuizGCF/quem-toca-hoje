@@ -71,8 +71,8 @@ public class TelaProposta extends Activity implements DatePickerDialog.OnDateSet
 
        // ArrayList<PropostaEntity> test = (ArrayList<PropostaEntity>) getIntent().getSerializableExtra("testArray");
 
-        String intentTela = getIntent().getStringExtra("intentTela");
-        //String intentTela = "ENVIAR";
+        //String intentTela = getIntent().getStringExtra("intentTela");
+        String intentTela = "ENVIAR";
         if (intentTela.equals("ENVIAR")) {
             lblNomeDestinatario.setText(getIntent().getStringExtra("labelDestinatario"));
             DatePickerDialog datePickerDialog = new DatePickerDialog(
