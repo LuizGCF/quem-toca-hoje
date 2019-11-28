@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--Estabelecimento do Evento/ Banda que vai tocar-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtAgendaEvento"
+        android:layout_margin="10dp"
+        android:textStyle="bold"
+        android:text="Evento"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtAgendaData"
+        android:layout_margin="10dp"
+        android:layout_below="@id/txtAgendaEvento"
+        android:text="Data Evento"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtAgendaHorarioInicio"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/txtAgendaEvento"
+        android:layout_toRightOf="@id/txtAgendaData"
+        android:text="Horario Inicio"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtAgendaHorarioFim"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/txtAgendaEvento"
+        android:layout_toRightOf="@id/txtAgendaHorarioInicio"
+        android:text="Horario Fim"/>
+</RelativeLayout>

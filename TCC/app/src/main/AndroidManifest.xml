@@ -14,7 +14,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.quemtocahoje.Views.TelaAvaliacoesPendentes"></activity>
+        <activity android:name="com.example.quemtocahoje.Views.TelaPropostasPendentes">
+
+        </activity>
+        <activity android:name="com.example.quemtocahoje.Views.TelaAgendaUsuarios">
+        </activity>
+        <activity android:name="com.example.quemtocahoje.Views.TelaAgenda">
+        </activity>
+        <activity android:name="com.example.quemtocahoje.Views.TelaAvaliacoesPendentes" />
         <activity android:name="com.example.quemtocahoje.Views.TelaHistorico" />
         <activity android:name="com.example.quemtocahoje.Views.TelaVisualizarTodasPropostas" />
         <activity android:name="com.example.quemtocahoje.Views.TelaMensagensAtivas"></activity>
