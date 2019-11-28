@@ -132,9 +132,9 @@ public class TelaInicialMusico extends AppCompatActivity {
         txtAgendaInicialMusico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent telaavaliacoespendentes = new Intent(TelaInicialMusico.this,TelaAvaliacoesPendentes.class);
+                Intent telaagendausuarios = new Intent(TelaInicialMusico.this,TelaAgendaUsuarios.class);
 
-                startActivity(telaavaliacoespendentes);
+                startActivity(telaagendausuarios);
             }
         });
     }

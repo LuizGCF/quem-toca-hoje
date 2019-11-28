@@ -1,8 +1,13 @@
 package com.example.quemtocahoje.Views;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -17,7 +22,9 @@ import java.util.List;
 
 public class TelaAgendaUsuarios extends AppCompatActivity {
 
-    ListView lstAgendaUsuarios;
+    RecyclerView lstAgendaUsuarios;
+    List<PropostaEntity> listaagenda;
+    AgendaUsuariosAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,14 +34,30 @@ public class TelaAgendaUsuarios extends AppCompatActivity {
 
         lstAgendaUsuarios = findViewById(R.id.lstAgendaUsuarios);
 
-        List<PropostaEntity> list = new ArrayList<>();
-        list.add(new PropostaEntity("Nirvana Cover","idestab","statusproposta","03:00","06:00","local","descricao",0.00,"27/11/2019","26/11/2019"));
-        //list.add(new PropostaEntity("Bossa Nova Brasil Comércio Ltda.","idestab","statusproposta","20:00","23:55","local","descricao",0.00,"27/11/2019","26/11/2019"));
-        lstAgendaUsuarios.setAdapter(new AgendaUsuariosAdapter(list,this));
+         listaagenda= new ArrayList<>();
+        //trazer a lista com a agenda do usuario
+        listaagenda.add(new PropostaEntity("Nirvana Cover","idestab","statusproposta","03:00","06:00","local","descricao",0.00,"27/11/2019","26/11/2019"));
+        listaagenda.add(new PropostaEntity("Nirvana Cover","idestab","statusproposta","03:00","06:00","local","descricao",0.00,"27/11/2019","26/11/2019"));
+        listaagenda.add(new PropostaEntity("Nirvana Cover","idestab","statusproposta","03:00","06:00","local","descricao",0.00,"27/11/2019","26/11/2019"));
+        listaagenda.add(new PropostaEntity("Bossa Nova Brasil Comércio Ltda.","idestab","statusproposta","20:00","23:55","local","descricao",0.00,"27/11/2019","26/11/2019"));
+
+        carregarRecyclerView();
+    }
+
+    private void carregarRecyclerView() {
+        if(listaagenda != null) {
+            lstAgendaUsuarios.setHasFixedSize(true);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+            adapter = new AgendaUsuariosAdapter(listaagenda, this);
+
+            lstAgendaUsuarios.setLayoutManager(layoutManager);
+            lstAgendaUsuarios.setAdapter(adapter);
+
+        }
     }
 
 }
-class AgendaUsuariosAdapter extends BaseAdapter{
+class AgendaUsuariosAdapter extends RecyclerView.Adapter<AgendaUsuariosAdapter.ExampleViewHolder> {
     private List<PropostaEntity> lista;
     private Activity act;
 
@@ -42,7 +65,59 @@ class AgendaUsuariosAdapter extends BaseAdapter{
         this.lista = lista;
         this.act = act;
     }
+    class ExampleViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
+        TextView txtAgendaEvento;
+        TextView txtAgendaData;
+        TextView txtAgendaHorarioInicio;
+        TextView txtAgendaHorarioFim;
+        public ExampleViewHolder(@NonNull View itemView) {
+            super(itemView);
+            txtAgendaEvento = itemView.findViewById(R.id.txtAgendaEvento);
+            txtAgendaData = itemView.findViewById(R.id.txtAgendaData);
+            txtAgendaHorarioInicio = itemView.findViewById(R.id.txtAgendaHorarioInicio);
+            txtAgendaHorarioFim = itemView.findViewById(R.id.txtAgendaHorarioFim);
+            itemView.setOnClickListener(this);
+        }
 
+        @Override
+        public void onClick(View v) {
+            PropostaEntity proposta = lista.get(getAdapterPosition());
+
+            Intent telaAgenda = new Intent(v.getContext(),TelaAgenda.class);
+            telaAgenda.putExtra("proposta",proposta);
+            v.getContext().startActivity(telaAgenda);
+
+        }
+    }
+    @NonNull
+    @Override
+    public ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.customlistitemagenda,
+                viewGroup, false);
+        return new ExampleViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ExampleViewHolder exampleViewHolder, int i) {
+        PropostaEntity currentItem = lista.get(i);
+
+        exampleViewHolder.txtAgendaEvento.setText(currentItem.getIdBanda());
+
+        exampleViewHolder.txtAgendaData.setText(currentItem.getDataEvento());
+
+        exampleViewHolder.txtAgendaHorarioInicio.setText(currentItem.getHorarioInicio() + " às ");
+
+        exampleViewHolder.txtAgendaHorarioFim.setText(currentItem.getHorarioFim());
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return lista.size();
+    }
+
+
+    /*
     @Override
     public int getCount() {
         return lista.size();
@@ -75,5 +150,6 @@ class AgendaUsuariosAdapter extends BaseAdapter{
 
         txtAgendaHorarioFim.setText(lista.get(position).getHorarioFim());
         return view;
-    }
+    }*/
+
 }

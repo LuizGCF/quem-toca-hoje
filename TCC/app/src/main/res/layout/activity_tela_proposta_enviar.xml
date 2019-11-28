@@ -159,6 +159,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:id="@+id/txtCache"
                 android:text="Cache: "
                 android:textSize="20dp" />
 
