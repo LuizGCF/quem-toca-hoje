@@ -107,7 +107,7 @@ public class TelaPerfilUsuario extends AppCompatActivity {
 
         }
 
-        carregarAvaliacoes();
+        carregarAvaliacoes("estab");
 
         carregarImagemPerfil();
 
@@ -121,10 +121,10 @@ public class TelaPerfilUsuario extends AppCompatActivity {
     }
 
     //Continuar depois
-    private void carregarAvaliacoes() {
+    private void carregarAvaliacoes(String usuario) {
         ArrayList<EventoDTO> dtoFinal = new ArrayList<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Avaliacao.name())
-                .child("estab");//a.getIdUsuario());//mockado por enqnt
+                .child(usuario);//a.getIdUsuario());//mockado por enqnt
         ref.addValueEventListener(valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -159,21 +159,21 @@ public class TelaPerfilUsuario extends AppCompatActivity {
             @Override
             public void onSuccess(Uri uri) {
                 if(uri.toString() != "" && uri != null)
-                    Picasso.get().load(Uri.parse(a.getImagemURI())).into(imgImagemUsuario1);
+                    Picasso.get().load(uri).into(imgImagemUsuario1);
             }
         });
         ref1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 if(uri.toString() != "" && uri != null)
-                    Picasso.get().load(Uri.parse(a.getImagemURI())).into(imgImagemUsuario2);
+                    Picasso.get().load(uri).into(imgImagemUsuario2);
             }
         });
         ref2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 if(uri.toString() != "" && uri != null)
-                    Picasso.get().load(Uri.parse(a.getImagemURI())).into(imgImagemUsuario3);
+                    Picasso.get().load(uri).into(imgImagemUsuario3);
             }
         });
 
