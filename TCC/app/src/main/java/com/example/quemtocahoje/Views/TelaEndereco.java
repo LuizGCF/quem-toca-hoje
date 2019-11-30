@@ -128,38 +128,12 @@ public class TelaEndereco extends AppCompatActivity {
                     edtCidadeEndereco.setText(end.getCidade());
                     edtUFEndereco.setText(end.getEstado());
 
-                    edtLogradouroEndereco.setEnabled(false);
-                    edtBairroEndereco.setEnabled(false);
-                    edtCidadeEndereco.setEnabled(false);
-                    edtUFEndereco.setEnabled(false);
-
-                }else{
-                    edtLogradouroEndereco.setText("");
-                    edtBairroEndereco.setText("");
-                    edtCidadeEndereco.setText("");
-                    edtUFEndereco.setText("");
-
-                    edtLogradouroEndereco.setEnabled(true);
-                    edtBairroEndereco.setEnabled(true);
-                    edtCidadeEndereco.setEnabled(true);
-                    edtUFEndereco.setEnabled(true);
-
                 }
             }
 
             @Override
             public void onFailure(Call<Endereco> call, Throwable t) {
                 Toast.makeText(TelaEndereco.this, "Não foi possível realizar a requisição", Toast.LENGTH_SHORT).show();
-                edtLogradouroEndereco.setText("");
-                edtBairroEndereco.setText("");
-                edtCidadeEndereco.setText("");
-                edtUFEndereco.setText("");
-
-                edtLogradouroEndereco.setEnabled(true);
-                edtBairroEndereco.setEnabled(true);
-                edtCidadeEndereco.setEnabled(true);
-                edtUFEndereco.setEnabled(true);
-
             }
         });
 

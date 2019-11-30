@@ -160,7 +160,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
                             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {//retornando corretamente a imagem na uri, converter para bitmap agora
-                                    allItens.add(new ItensListaBuscaDTO(uri.toString(),b.getBanda_id(), b.getGeneros(),b.getNome(),TipoUsuario.BANDA.name()));
+                                    allItens.add(new ItensListaBuscaDTO(uri.toString(),b.getBanda_id(), b.getNome(), b.getGeneros(),TipoUsuario.BANDA.name()));
                                     carregarRecyclerView();
 
                                 }
