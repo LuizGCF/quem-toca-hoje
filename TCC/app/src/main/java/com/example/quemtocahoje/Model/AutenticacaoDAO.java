@@ -31,11 +31,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AutenticacaoDAO {
     private FirebaseDatabase database;
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
     private Long contador;
+    private HashMap<DatabaseReference, ValueEventListener> hashMap;
+    private ValueEventListener valueEventListener;
 
     public AutenticacaoDAO(FirebaseDatabase database, DatabaseReference reference, FirebaseUser firebaseUser) {
         this.database = database;
@@ -43,7 +48,7 @@ public class AutenticacaoDAO {
         this.firebaseUser = firebaseUser;
     }
 
-    public AutenticacaoDAO(){}
+    public AutenticacaoDAO(){hashMap = new HashMap<>();}
 
     public void autenticar(final String login, final String senha, final FirebaseAuth auth, final Context ctx){
         ProgressDialog progressDialog;
@@ -53,9 +58,10 @@ public class AutenticacaoDAO {
         progressDialog.setTitle("Aguarde");
         progressDialog.show();
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Autenticacao.name());
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                hashMap.put(databaseReference, valueEventListener);
                 setContador(0L);
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){//para cada usuario no autenticacao, verificar login/senha para
                     final AutenticacaoEntity entidade = snapshot.getValue(AutenticacaoEntity.class);
@@ -63,6 +69,7 @@ public class AutenticacaoDAO {
 
                     if((entidade.getLogin().equals(login) || entidade.getEmail().equals(login)) && entidade.getSenha().equals(senha))
                     {
+                        removeValueEventListener(hashMap);
                         auth.signInWithEmailAndPassword(entidade.getEmail(),senha)
                                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                     @Override
@@ -84,6 +91,7 @@ public class AutenticacaoDAO {
                     }else if(getContador() == dataSnapshot.getChildrenCount()){
                         progressDialog.dismiss();
                         Mensagem.notificar(ctx, "Usuário Inválido", "Login e/ou senha incorretos.");
+                        removeValueEventListener(hashMap);
                     }
 
                 }
@@ -95,7 +103,7 @@ public class AutenticacaoDAO {
                 progressDialog.dismiss();
                 Mensagem.notificar(ctx, "Erro na aplicação", "Ocorreu um erro ao efetuar o login do usuário.");
                 Log.d("ERRO FIREBASE", databaseError.getDetails());
-
+                removeValueEventListener(hashMap);
             }
         });
     }
@@ -104,9 +112,10 @@ public class AutenticacaoDAO {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Usuarios.name());
         databaseReference = databaseReference.child(TipoUsuario.ESPECTADOR.name()).child(id);
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+               removeValueEventListener(hashMap);
                 if(dataSnapshot.getValue() != null)
                 {
                     EspectadorEntity entidade = dataSnapshot.getValue(EspectadorEntity.class);
@@ -121,21 +130,23 @@ public class AutenticacaoDAO {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                removeValueEventListener(hashMap);
             }
         });
     }
 
     public void loginMusico(final String id, final Context ctx){
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Usuarios.name()).child(TipoUsuario.MUSICO.name()).child(id);
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                hashMap.put(databaseReference, valueEventListener);
                 if(dataSnapshot.getValue()!= null)
                 {
                     MusicoEntity entidade = dataSnapshot.getValue(MusicoEntity.class);
                     if (entidade.getAutenticacao_id().equals(id))
                     {
+                        removeValueEventListener(hashMap);
                         Log.d("DENTROUSUARIO",entidade.getNome());
                         Log.d("DENTROUSUARIO",entidade.getNomeArtistico());
 
@@ -146,25 +157,28 @@ public class AutenticacaoDAO {
                         ctx.startActivity(telaInicialMusico);
                     }
                 }
+                removeValueEventListener(hashMap);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                removeValueEventListener(hashMap);
             }
         });
     }
 
     public void loginEstabelecimento(final String id, final Context ctx){
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Usuarios.name()).child(TipoUsuario.ESTABELECIMENTO.name()).child(id);
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                hashMap.put(databaseReference, valueEventListener);
                 if(dataSnapshot.getValue()!=null)
                 {
                     EstabelecimentoEntity entidade = dataSnapshot.getValue(EstabelecimentoEntity.class);
                     if (entidade.getAutenticacao_id().equals(id))
                     {
+                        removeValueEventListener(hashMap);
                         Log.d("DENTROUSUARIO",entidade.getNomeDono());
                         Log.d("DENTROUSUARIO",entidade.getNomeFantasia());
 
@@ -175,11 +189,12 @@ public class AutenticacaoDAO {
                         ctx.startActivity(telaInicialEstabelecimento);
                     }
                 }
+                removeValueEventListener(hashMap);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                removeValueEventListener(hashMap);
             }
         });
     }
@@ -227,4 +242,13 @@ public class AutenticacaoDAO {
     public void setContador(Long contador) {
         this.contador = contador;
     }
+
+    public static void removeValueEventListener(HashMap<DatabaseReference, ValueEventListener> hashMap) {
+        for (Map.Entry<DatabaseReference, ValueEventListener> entry : hashMap.entrySet()) {
+            DatabaseReference databaseReference = entry.getKey();
+            ValueEventListener valueEventListener = entry.getValue();
+            databaseReference.removeEventListener(valueEventListener);
+        }
+    }
+
 }
