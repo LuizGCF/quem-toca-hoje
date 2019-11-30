@@ -10,12 +10,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:src="@drawable/logoaplicativo"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Proposta"
-            android:textSize="35dp"
+            android:textSize="30dp"
+            android:textColor="#fff"
+            android:textStyle="bold"
             android:gravity="center_horizontal"/>
         <LinearLayout
             android:layout_marginTop="20dp"
@@ -26,14 +35,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Para: "
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:textSize="20dp"
                 android:layout_marginLeft="10dp"
-                android:textSize="20dp"/>
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:textSize="20dp"
                 android:text="Fulano"
-                android:textSize="20dp"/>
+                />
+
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="20dp"
@@ -44,13 +60,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Data: "
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:textSize="20dp"
                 android:layout_marginLeft="10dp"
-                android:textSize="20dp"/>
+                />
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="date"
                 android:ems="10"
+                android:backgroundTint="#fff"
                 android:enabled="false"/>
             <android.support.v7.widget.AppCompatImageButton
                 android:layout_marginLeft="5dp"
@@ -67,6 +87,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hora Inicio: "
+                android:textColor="#fff"
+                android:textStyle="bold"
                 android:layout_marginLeft="10dp"
                 android:textSize="20dp"/>
             <TextView
@@ -74,11 +96,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:text="00:00"
+                android:textColor="#fff"
+                android:textStyle="bold"
                 android:textSize="20dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hora Fim: "
+                android:textColor="#fff"
+                android:textStyle="bold"
                 android:layout_marginLeft="10dp"
                 android:textSize="20dp"/>
             <TextView
@@ -86,6 +112,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:text="00:00"
+                android:textColor="#fff"
+                android:textStyle="bold"
                 android:textSize="20dp"/>
         </LinearLayout>
         <LinearLayout
@@ -97,6 +125,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Local: "
+                android:textColor="#fff"
+                android:textStyle="bold"
                 android:layout_marginLeft="10dp"
                 android:textSize="20dp"/>
             <TextView
@@ -104,12 +134,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:text="Avenida 1"
+                android:textColor="#fff"
+                android:textStyle="bold"
                 android:lines="3"
                 android:maxLines="3"
                 android:textSize="20dp"/>
         </LinearLayout>
         <LinearLayout
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="1dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -117,6 +149,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cache: "
+                android:textColor="#fff"
+                android:textStyle="bold"
                 android:layout_marginLeft="10dp"
                 android:textSize="20dp"/>
             <TextView
@@ -124,6 +158,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:text="00,00"
+                android:textColor="#fff"
+                android:textStyle="bold"
                 android:textSize="20dp"/>
         </LinearLayout>
         <RelativeLayout
@@ -134,15 +170,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Descrição: "
+                android:textColor="#fff"
+                android:textStyle="bold"
                 android:layout_marginLeft="10dp"
                 android:id="@+id/txtDescricaoProposta"
                 android:textSize="20dp"/>
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="120dp"
                 android:layout_below="@id/txtDescricaoProposta"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
+                android:cursorVisible="true"
+                android:gravity="top"
+                android:inputType="text"
+                android:background="@drawable/estilo_edittext_cadastros"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:textSize="20dp"/>
@@ -154,18 +196,26 @@
             android:orientation="horizontal"
             android:gravity="center_horizontal">
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="Enviar"
+                android:background="@drawable/estilo_botao"
+                android:textColor="#F5F7F7"
+                android:textSize="14dp"
+                android:textStyle="bold"
                 android:layout_marginLeft="10dp"
-                android:textSize="20dp"/>
+               />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
+                android:background="@drawable/estilo_botao"
+                android:textColor="#F5F7F7"
+                android:textSize="14dp"
+                android:textStyle="bold"
                 android:text="Voltar"
-                android:textSize="20dp" />
+                />
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

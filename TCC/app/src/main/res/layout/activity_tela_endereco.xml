@@ -79,9 +79,10 @@
             <Button
                 android:id="@+id/btnBuscarCep"
                 android:layout_width="130dp"
-                android:layout_height="37dp"
-                android:background="#47A891"
+                android:layout_height="38dp"
+                android:background="@drawable/estilo_botao"
                 android:text="Buscar"
+                android:layout_marginBottom="10dp"
                 android:textColor="#fff"
                 android:textSize="14dp"
                 android:textStyle="bold" />

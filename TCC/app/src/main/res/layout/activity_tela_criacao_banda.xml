@@ -26,168 +26,180 @@
                 app:srcCompat="@drawable/logoaplicativo" />
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="16dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cadastrar Banda"
-                android:textColor="#fff"
-                android:textStyle="bold"
-                android:paddingBottom="1dp"
-                android:textSize="25dp"
-                android:id="@+id/txtCadastrarBanda"
-                 />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="16dp"
-                android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:textColor="#fff"
-                android:textStyle="bold"
-                android:text="Tipo de Cadastro "/>
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/text"
-                android:id="@+id/rgpCadastroTipoBandaSolo"
-                android:orientation="horizontal"
-                android:checkedButton="@+id/rbCadastroBanda" >
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:textColor="#fff"
-                    android:textStyle="bold"
-                    android:id="@+id/rbCadastroBanda"
-                    android:text="Banda" />
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:textColor="#fff"
-                    android:textStyle="bold"
-                    android:id="@+id/rbCadastroSolo"
-                    android:text="Artista Solo" />
-            </RadioGroup>
-      </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Nome da Banda"
-                android:textSize="14dp"
-                android:textColor="#fff"
-                android:layout_gravity="left"
-                android:textStyle="bold"
-                android:id="@+id/txtNomeBanda"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:inputType="text"
-                android:textColor="#000"
-                android:textCursorDrawable="@drawable/estilo_cursor"
-                android:background="@drawable/estilo_edittext_cadastros"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp"
-                android:textSize="14dp"
-                android:id="@+id/edtNomeBanda"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <TextView
+                    android:id="@+id/txtCadastrarBanda"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Genero Banda:"
-                    android:textSize="14dp"
+                    android:paddingBottom="1dp"
+                    android:text="Cadastrar Banda"
                     android:textColor="#fff"
-                    android:textStyle="bold"
-                    android:id="@+id/txtGeneroBanda"/>
-
-                <com.example.quemtocahoje.Spinner.MultiSelectionSpinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:text="Nome da Banda:"
-                    android:id="@+id/spnGeneroBanda"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:gravity="center"
-                android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_gravity="left"
-                android:textSize="14dp"
-                android:textColor="#fff"
-                android:textStyle="bold"
-                android:text="Email Integrante: "
-                android:id="@+id/txtEmailIntegrante"/>
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:orientation="horizontal">
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
-            <EditText
-                android:layout_width="250dp"
-                android:layout_height="40dp"
-                android:inputType="text"
-                android:layout_marginTop="5dp"
-                android:textColor="#000"
-                android:textCursorDrawable="@drawable/estilo_cursor"
-                android:background="@drawable/estilo_edittext_cadastros"
-                android:textStyle="bold"
-                android:layout_gravity="left"
-                android:textSize="14dp"
-                android:id="@+id/edtEmailIntegrante"
-                />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tipo de Cadastro "
+                        android:textColor="#fff"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
 
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/btnAddIntegrante"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="bottom|end"
-                        android:layout_marginLeft="2dp">
-                    </android.support.design.widget.FloatingActionButton>
+                    <RadioGroup
+                        android:id="@+id/rgpCadastroTipoBandaSolo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/text"
+                        android:checkedButton="@+id/rbCadastroBanda"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rbCadastroBanda"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Banda"
+                            android:textColor="#fff"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/rbCadastroSolo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Artista Solo"
+                            android:textColor="#fff"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+                    </RadioGroup>
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtNomeBanda"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="Nome da Banda"
+                    android:textColor="#fff"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edtNomeBanda"
+                    android:layout_width="300dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/estilo_edittext_cadastros"
+                    android:gravity="center"
+                    android:inputType="text"
+                    android:textColor="#000"
+                    android:textCursorDrawable="@drawable/estilo_cursor"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="6dp">
+
+                    <TextView
+                        android:id="@+id/txtGeneroBanda"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="43dp"
+                        android:gravity="center"
+                        android:text="Genero Banda"
+                        android:textColor="#fff"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <com.example.quemtocahoje.Spinner.MultiSelectionSpinner
+                        android:id="@+id/spnGeneroBanda"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nome da Banda:"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="6dp">
+
+                    <TextView
+                        android:id="@+id/txtEmailIntegrante"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="9dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="Email Integrante "
+                        android:textColor="#fff"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/edtEmailIntegrante"
+                            android:layout_width="255dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/estilo_edittext_cadastros"
+                            android:inputType="text"
+                            android:textColor="#000"
+                            android:textCursorDrawable="@drawable/estilo_cursor"
+                            android:textSize="14dp"
+                            android:textStyle="bold" />
+
+                        <android.support.design.widget.FloatingActionButton
+                            android:id="@+id/btnAddIntegrante"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="bottom|end"
+                            android:layout_marginHorizontal="5dp"
+                            app:srcCompat="@android:drawable/ic_dialog_email"
+                            app:fabCustomSize="40dp"
+                            android:layout_marginBottom="15dp">
+
+                        </android.support.design.widget.FloatingActionButton>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/lstEmailIntegrantes"
+                    android:layout_width="match_parent"
+                    android:layout_height="179dp"
+                    android:layout_marginTop="16dp" />
 
             </LinearLayout>
 
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/lstEmailIntegrantes"
-                android:layout_marginTop="10dp" />
-
-        </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -203,13 +215,13 @@
                     android:textSize="14dp"
                     android:layout_marginHorizontal="10dp"
                     android:textStyle="bold"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="1dp"
                     android:id="@+id/btnCadastrarBanda"/>
 
                 <Button
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="1dp"
                     android:background="@drawable/estilo_botao"
                     android:textColor="#F5F7F7"
                     android:textSize="14dp"

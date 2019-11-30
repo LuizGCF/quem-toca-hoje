@@ -49,7 +49,7 @@ public class ConversaActivity extends AppCompatActivity {
 
 
 
-        toolbar = (Toolbar) findViewById(R.id.tb_conversa);
+
         editMensagem = (EditText) findViewById(R.id.edit_mensagem);
         btMensagem = (ImageButton) findViewById(R.id.bt_enviar);
         listView = (ListView) findViewById(R.id.lv_conversas);

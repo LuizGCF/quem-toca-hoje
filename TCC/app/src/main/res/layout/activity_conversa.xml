@@ -3,20 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffffff"
+    android:background="@drawable/estilo_tela"
     tools:context="com.example.quemtocahoje.Chat.Activitys.ConversaActivity">
 
-    <include
-        android:id="@+id/tb_conversa"
-        layout="@layout/toolbar" ></include>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        >
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:src="@drawable/logoaplicativo"/>
 
     <ListView
         android:id="@+id/lv_conversas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:layout_below="@+id/tb_conversa"
         android:layout_above="@+id/ll_mensagem"></ListView>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_mensagem"
@@ -38,8 +51,9 @@
 
         <ImageButton
             android:id="@+id/bt_enviar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="#000"
             android:src="@drawable/ic_send"
             android:theme="@style/botaoPadrao"/>
 

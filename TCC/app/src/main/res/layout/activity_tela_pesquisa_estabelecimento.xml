@@ -6,9 +6,21 @@
     android:layout_height="match_parent"
     android:background="@drawable/estilo_tela"
     tools:context="com.example.quemtocahoje.Views.TelaPesquisaEstabelecimento">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        >
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:src="@drawable/logoaplicativo"/>
+
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

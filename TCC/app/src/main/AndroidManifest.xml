@@ -45,7 +45,13 @@
         </service>
 
         <activity android:name="com.example.quemtocahoje.Chat.Activitys.ConversaActivity" />
-        <activity android:name="com.example.quemtocahoje.Views.TelaCriacaoBanda" />
+        <activity android:name="com.example.quemtocahoje.Views.TelaCriacaoBanda" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
         <activity android:name="com.example.quemtocahoje.Views.TelaAvalicaoEstabelecimento" />
         <activity android:name="com.example.quemtocahoje.Views.TelaAvaliacaoMusico" />
         <activity android:name="com.example.quemtocahoje.Views.TelaPerfilUsuario" />
@@ -62,13 +68,8 @@
         <activity android:name="com.example.quemtocahoje.Views.TelaCadastroMusico" />
         <activity android:name="com.example.quemtocahoje.Views.TelaCadastroEspectador" />
         <activity android:name="com.example.quemtocahoje.Views.TelaEscolhaCadastro" />
-        <activity android:name="com.example.quemtocahoje.Views.TelaInicial">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name="com.example.quemtocahoje.Views.TelaInicial"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name="com.example.quemtocahoje.Views.TelaEsqueceuaSenha" />
         <activity android:name="com.example.quemtocahoje.Views.TelaRedefinirSenha" />
     </application>

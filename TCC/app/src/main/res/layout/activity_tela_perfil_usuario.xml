@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/estilo_tela"
     android:layout_height="match_parent">
+
     <ImageView
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:id="@+id/imgPerfil"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,19 +20,21 @@
         android:layout_below="@id/imgPerfil"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:textSize="20dp"
+        android:textSize="25dp"
+        android:textColor="#fff"
         android:textStyle="bold" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Descrição/Gênero"
-        android:id="@+id/txtDescricaoPerfil"
+
+        android:textColor="#fff"
         android:layout_below="@+id/txtNomePerfil"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:textSize="20dp"
-        android:textStyle="bold" />
-    <!--Verificar edittext com mais de uma linha, ou uma textview mesmo-->
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:id="@+id/txtDescricaoPerfil"/>
     <TextView
         android:layout_below="@id/txtDescricaoPerfil"
         android:layout_width="match_parent"
@@ -39,11 +45,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Imagens Demonstração"
+        android:textColor="#fff"
         android:id="@+id/txtDescricaoImagensDemonstracao"
         android:layout_below="@+id/txtDescricao"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:textSize="20dp"
+        android:textSize="25dp"
         android:textStyle="bold" />
     <LinearLayout
         android:layout_width="match_parent"
@@ -79,23 +86,32 @@
         android:layout_height="wrap_content"
         android:text="Média: "
         android:textSize="20dp"
+        android:textColor="#fff"
         android:textStyle="bold"
         android:layout_below="@id/lstAvaliacoes"
         android:layout_margin="10dp"/>
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/btnMensagem"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="10dp"
+        android:background="@drawable/estilo_botao"
+        android:textColor="#F5F7F7"
+        android:textSize="14dp"
+        android:textStyle="bold"
         android:text="Mensagem"/>
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/btnProposta"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/btnMensagem"
         android:layout_margin="10dp"
+        android:background="@drawable/estilo_botao"
+        android:textColor="#F5F7F7"
+        android:textSize="14dp"
+        android:textStyle="bold"
         android:text="Proposta"/>
 </RelativeLayout>
