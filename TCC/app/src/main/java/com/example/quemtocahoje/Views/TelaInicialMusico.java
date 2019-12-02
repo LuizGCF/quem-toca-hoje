@@ -44,7 +44,7 @@ public class TelaInicialMusico extends AppCompatActivity {
 
         final Intent telaNovaBanda = new Intent(this, TelaCriacaoBanda.class);
 
-        final Intent telaAvaliacaoEstabelecimento = new Intent(this, TelaAvalicaoEstabelecimento.class);
+        final Intent telaAvaliacaoEstabelecimento = new Intent(this, TelaAvaliacoesPendentes.class);
 
         txtNomeMusico = findViewById(R.id.txtNomeMusico);
         txtNomeBandaInicialMusico = findViewById(R.id.txtNomeBandaInicialMusico);
@@ -60,6 +60,7 @@ public class TelaInicialMusico extends AppCompatActivity {
         txtCadastrarBandaInicialMusico = findViewById(R.id.txtCadastrarBandaInicialMusico);
 
         txtAvaliacaoEstabelecimento = findViewById(R.id.txtAvaliacaoEstabelecimento);
+
 
         AutenticacaoDTO dto = (AutenticacaoDTO) getIntent().getSerializableExtra("dtoAutenticacao");
 
@@ -109,7 +110,8 @@ public class TelaInicialMusico extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                startActivity(telaAvaliacaoEstabelecimento);
+                AvaliacaoDAO dao = new AvaliacaoDAO();
+                dao.recuperarListaAvaliacoesPendentes(dto.getNome(), TipoUsuario.BANDA.name(),TelaInicialMusico.this);
             }
         });
 

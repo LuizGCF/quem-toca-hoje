@@ -1,6 +1,8 @@
 package com.example.quemtocahoje.DTO;
 
-public class AvaliacoesPendentesDTO {
+import java.io.Serializable;
+
+public class AvaliacoesPendentesDTO implements Serializable {
     private String id;
     private String nome;
     private String data;
@@ -33,5 +35,14 @@ public class AvaliacoesPendentesDTO {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "AvaliacoesPendentesDTO{" +
+                "id='" + id + '\'' +
+                ", nome='" + nome + '\'' +
+                ", data='" + data + '\'' +
+                '}';
     }
 }

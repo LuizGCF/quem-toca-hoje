@@ -21,6 +21,9 @@ public class TelaAvalicaoEstabelecimento extends Activity {
     private  EditText txtComentario;
     private  Button btnAvaliar;
     private  Button btnVoltar;
+    private String idEstabelecimento;
+    private String idEvento;
+    private String idBanda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,6 +37,9 @@ public class TelaAvalicaoEstabelecimento extends Activity {
         txtComentario = findViewById(R.id.txtComentario);
         btnAvaliar = findViewById(R.id.btnAvaliar);
         btnVoltar = findViewById(R.id.btnVoltar);
+        idEstabelecimento = getIntent().getStringExtra("idEstabelecimento");
+        idEvento = getIntent().getStringExtra("idEvento");
+        idBanda = getIntent().getStringExtra("idBanda");
 
         btnAvaliar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,7 +49,7 @@ public class TelaAvalicaoEstabelecimento extends Activity {
                     {
                         AvaliacaoEstabelecimentoEntity avaliacao = prepararObjetoEstabelecimento();
                         AvaliacaoDAO avaliacaoEstabelecimento = new AvaliacaoDAO();
-                        avaliacaoEstabelecimento.persistirAvaliacaoEstabelecimento(avaliacao, TelaAvalicaoEstabelecimento.this);
+                        avaliacaoEstabelecimento.persistirAvaliacaoEstabelecimento(idBanda, avaliacao, TelaAvalicaoEstabelecimento.this);
                     }else{
                     Mensagem.notificar(TelaAvalicaoEstabelecimento.this, "Erro.","Preencher todos os campos.");
                 }
@@ -70,8 +76,8 @@ public class TelaAvalicaoEstabelecimento extends Activity {
     public AvaliacaoEstabelecimentoEntity prepararObjetoEstabelecimento()
     {
        AvaliacaoEstabelecimentoEntity obj = new AvaliacaoEstabelecimentoEntity();
-       obj.setIdEvento("EVENTOTESTE");
-       obj.setIdEstabelecimento("Teste id de estab mockado");
+       obj.setIdEvento(idEvento);
+       obj.setIdEstabelecimento(idEstabelecimento);
        obj.setOrganizacao(rbOrganizacao.getRating());
        obj.setEstrutura(rbEstrutura.getRating());
        obj.setReceptividade(rbReceptividade.getRating());

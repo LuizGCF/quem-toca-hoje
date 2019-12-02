@@ -17,10 +17,12 @@ public class PropostaEntity implements Serializable {
     private String dataEvento;
     private String dataEnvioProposta;
     private Double cache;
+    private boolean bandaAvaliou;
+    private boolean estabAvaliou;
 
     public PropostaEntity(){}
 
-    public PropostaEntity(String idBanda, String idEstabelecimento, String statusProposta, String horarioInicio, String horarioFim, String local, String descricao, Double cache, String dataEvento, String dataEnvioProposta) {
+    public PropostaEntity(String idBanda, String idEstabelecimento, String statusProposta, String horarioInicio, String horarioFim, String local, String descricao, Double cache, String dataEvento, String dataEnvioProposta, boolean bandaAvaliou, boolean estabAvaliou) {
         this.idBanda = idBanda;
         this.idEstabelecimento = idEstabelecimento;
         this.statusProposta = statusProposta;
@@ -31,6 +33,8 @@ public class PropostaEntity implements Serializable {
         this.cache = cache;
         this.dataEvento = dataEvento;
         this.dataEnvioProposta = dataEnvioProposta;
+        this.estabAvaliou = estabAvaliou;
+        this.bandaAvaliou = bandaAvaliou;
     }
 
     public String getIdProposta() {
@@ -121,6 +125,22 @@ public class PropostaEntity implements Serializable {
         this.dataEnvioProposta = dataEnvioProposta;
     }
 
+    public boolean isBandaAvaliou() {
+        return bandaAvaliou;
+    }
+
+    public void setBandaAvaliou(boolean bandaAvaliou) {
+        this.bandaAvaliou = bandaAvaliou;
+    }
+
+    public boolean isEstabAvaliou() {
+        return estabAvaliou;
+    }
+
+    public void setEstabAvaliou(boolean estabAvaliou) {
+        this.estabAvaliou = estabAvaliou;
+    }
+
     @Override
     public String toString() {
         return "PropostaEntity{" +
@@ -132,9 +152,11 @@ public class PropostaEntity implements Serializable {
                 ", horarioFim='" + horarioFim + '\'' +
                 ", local='" + local + '\'' +
                 ", descricao='" + descricao + '\'' +
+                ", dataEvento='" + dataEvento + '\'' +
+                ", dataEnvioProposta='" + dataEnvioProposta + '\'' +
                 ", cache=" + cache +
-                ", dataEvento=" + dataEvento +
-                ", dataEnvioProposta=" + dataEnvioProposta +
+                ", bandaAvaliou=" + bandaAvaliou +
+                ", estabAvaliou=" + estabAvaliou +
                 '}';
     }
 }

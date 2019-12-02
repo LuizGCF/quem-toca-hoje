@@ -73,13 +73,14 @@ public class PropostaDAO {
                 hashMap.put("idEstabelecimento", proposta.getIdEstabelecimento());
                 hashMap.put("statusProposta", StatusProposta.ABERTO.name());
                 hashMap.put("horarioInicio", proposta.getHorarioInicio());
-
                 hashMap.put("horarioFim", proposta.getHorarioFim());
                 hashMap.put("local", proposta.getLocal());
                 hashMap.put("descricao", proposta.getDescricao());
                 hashMap.put("cache", proposta.getCache());
                 hashMap.put("dataEvento", proposta.getDataEvento());
                 hashMap.put("dataEnvioProposta", proposta.getDataEnvioProposta());
+                hashMap.put("bandaAvaliou", proposta.isBandaAvaliou());
+                hashMap.put("estabAvaliou", proposta.isEstabAvaliou());
 
                 databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -94,6 +95,7 @@ public class PropostaDAO {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         progressDialog.dismiss();
+                                        Mensagem.notificarFecharAtividade(ctx, "Sucesso!", "Proposta enviada com sucesso");
                                     }
                                 });
                     }

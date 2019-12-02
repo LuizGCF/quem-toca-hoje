@@ -24,6 +24,9 @@ public class TelaAvaliacaoMusico extends Activity {
     private  EditText txtComentario;
     private  Button btnAvaliar;
     private  Button btnVoltar;
+    private String idEvento;
+    private String idBanda;
+    private String idEstabelecimento;
 
 
     @Override
@@ -38,6 +41,9 @@ public class TelaAvaliacaoMusico extends Activity {
         txtComentario = findViewById(R.id.txtComentario);
         btnAvaliar = findViewById(R.id.btnAvaliarMusico);
         btnVoltar = findViewById(R.id.btnVoltar);
+        idEvento = getIntent().getStringExtra("idEvento");
+        idBanda = getIntent().getStringExtra("idBanda");
+        idEstabelecimento = getIntent().getStringExtra("idEstabelecimento");
 
 
 
@@ -49,7 +55,7 @@ public class TelaAvaliacaoMusico extends Activity {
                 if(validarCampos(rbPerformance,rbEstilo,rbMusicalidade)) {
                     AvaliacaoMusicoEntity avaliacao = prepararObjetoAvaliacaoMusico();
                     AvaliacaoDAO avaliacaoMusico = new AvaliacaoDAO();
-                    avaliacaoMusico.persistirAvaliacaoMusico(avaliacao, TelaAvaliacaoMusico.this);
+                    avaliacaoMusico.persistirAvaliacaoMusico(idEstabelecimento, avaliacao, TelaAvaliacaoMusico.this);
                 }else{
                     Mensagem.notificar(TelaAvaliacaoMusico.this, "Erro!", "Preencher todos os campos.");
                 }
@@ -78,17 +84,12 @@ public class TelaAvaliacaoMusico extends Activity {
     {
 
         AvaliacaoMusicoEntity obj = new AvaliacaoMusicoEntity();
-        obj.setIdBanda("BANDATESTE2");
-        obj.setIdEvento("EVENTOTESTE2");
+        obj.setIdBanda(idBanda);
+        obj.setIdEvento(idEvento);
         obj.setEstilo(rbEstilo.getRating());
         obj.setPerformance(rbPerformance.getRating());
         obj.setMusicalidade(rbMusicalidade.getRating());
         obj.setTxtComentario(""+txtComentario.getText().toString().trim());
-
-
-        //obj.setIdBanda(getIntent().getStringExtra("IDBANDA"));
-        // obj.setIdEvento(getIntent().getStringExtra("IDEVENTO"));
-
 
         return obj;
 

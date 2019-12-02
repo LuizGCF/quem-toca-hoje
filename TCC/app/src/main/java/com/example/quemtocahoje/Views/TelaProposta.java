@@ -69,10 +69,7 @@ public class TelaProposta extends Activity implements DatePickerDialog.OnDateSet
         Calendar dataAtual = Calendar.getInstance();
         PropostaDAO dao = new PropostaDAO();
 
-       // ArrayList<PropostaEntity> test = (ArrayList<PropostaEntity>) getIntent().getSerializableExtra("testArray");
-
-        //String intentTela = getIntent().getStringExtra("intentTela");
-        String intentTela = "ENVIAR";
+        String intentTela = getIntent().getStringExtra("intentTela");
         if (intentTela.equals("ENVIAR")) {
             lblNomeDestinatario.setText(getIntent().getStringExtra("labelDestinatario"));
             DatePickerDialog datePickerDialog = new DatePickerDialog(
@@ -92,14 +89,11 @@ public class TelaProposta extends Activity implements DatePickerDialog.OnDateSet
                 public void onClick(View view) {
                     PropostaEntity p = prepararObjeto();
 
-                    //dao.enviarNovaProposta(p, TelaProposta.this);
-                   // dao.atualizarProposta("-LtM_iVcdYrzQIjPmE7l", "ID BANDA TESTE", "ID ESTABELECIMENTO TESTE", StatusProposta.FINALIZADO.name(), TelaProposta.this);
-                    //dao.recuperarPorData("ID BANDA TESTE", DefinirDatas.dataAtual(), TipoUsuario.BANDA.name(), "HISTORICO", TelaProposta.this);
-
                     if (validaHorario()) {
                         if (!validaCampos()) {
                             if (!validaCache()) {
-
+                                PropostaDAO dao = new PropostaDAO();
+                                dao.enviarNovaProposta(p, TelaProposta.this);
 
                             } else {
                                 Mensagem.notificar(TelaProposta.this, "Aviso", "Valor do cachê inválido");
@@ -287,8 +281,8 @@ public class TelaProposta extends Activity implements DatePickerDialog.OnDateSet
 
     private PropostaEntity prepararObjeto(){
         return new PropostaEntity(
-                "ID BANDA TESTE"
-                ,"ID ESTABELECIMENTO TESTE"
+                getIntent().getStringExtra("labelDestinatario")
+                ,getIntent().getStringExtra("nomeEstabelecimento")
                 ,StatusProposta.ABERTO.name()
                 ,edtHorarioProposta.getText().toString()
                 ,edtHorarioFim.getText().toString()
@@ -297,6 +291,8 @@ public class TelaProposta extends Activity implements DatePickerDialog.OnDateSet
                 ,Double.parseDouble(edtCacheProposta.getText().toString().trim().replace(",", "."))
                 ,txtDataPropostaEscolhida.getText().toString()
                 ,DefinirDatas.dataAtual()
+                ,false
+                ,false
         );
     }
 

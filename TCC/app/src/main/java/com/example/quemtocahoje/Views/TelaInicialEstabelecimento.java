@@ -71,7 +71,9 @@ public class TelaInicialEstabelecimento extends AppCompatActivity {
         txtAvaliacaoMusico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(telaAvaliacaoMusico);
+
+                AvaliacaoDAO dao = new AvaliacaoDAO();
+                dao.recuperarListaAvaliacoesPendentes("estab", TipoUsuario.ESTABELECIMENTO.name(),TelaInicialEstabelecimento.this);
             }
         });
 
