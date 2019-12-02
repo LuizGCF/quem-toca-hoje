@@ -105,47 +105,74 @@ public class TelaCadastroEspectador extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterator<DataSnapshot> snapshot = dataSnapshot.getChildren().iterator();
-                while(snapshot.hasNext()){
-                    AutenticacaoEntity aut = snapshot.next().getValue(AutenticacaoEntity.class);
-                    if(aut.getEmail().equals(edtEmailEspectador.getText().toString().trim())) {
-                        Mensagem.notificar(TelaCadastroEspectador.this, "Email existente", "Este email já consta em nosso sistema");
+                if (dataSnapshot.getChildrenCount() == 0L) {
+                    final Intent telaUpload = new Intent(ctx, TelaUpload.class);
+                    final Intent telaCadEstab = new Intent(ctx, TelaCadastroEstabelecimento.class);
+                    final Intent telaCadMusico = new Intent(ctx, TelaCadastroMusico.class);
+
+                    String tipoUsuario = definirTipoUsuario(rgpPerfil);
+                    AutenticacaoEntity a = criarObjetoAutenticacao(edtEmailEspectador, loginEspectador, senhaEspectador, tipoUsuario);
+                    EspectadorEntity e = criarObjectoEspectador(null, nomeEspectador.getText().toString().trim(), a.getDataCriacao());
+                    if (tipoUsuario.equals("ESPECTADOR")) {
+                        telaUpload.putExtra("tipoUsuario", tipoUsuario);
+                        telaUpload.putExtra("objetoAutenticacao", a);
+                        telaUpload.putExtra("objetoEspectador", e);
                         progressDialog.dismiss();
-                        break;
+                        startActivity(telaUpload);
+
+                    } else if (tipoUsuario.equals("ESTABELECIMENTO")) {
+                        telaCadEstab.putExtra("objetoAutenticacao", a);
+                        telaCadEstab.putExtra("objetoEspectador", e);
+                        progressDialog.dismiss();
+                        startActivity(telaCadEstab);
+                    } else if (tipoUsuario.equals("MUSICO")) {
+                        telaCadMusico.putExtra("tipoUsuario", tipoUsuario);
+                        telaCadMusico.putExtra("objetoAutenticacao", a);
+                        telaCadMusico.putExtra("objetoEspectador", e);
+                        progressDialog.dismiss();
+                        startActivity(telaCadMusico);
                     }
-                    else if(aut.getLogin().equals(loginEspectador.getText().toString().trim())){
-                        Mensagem.notificar(TelaCadastroEspectador.this,"Login existente", "Este login já consta em nosso sistema");
-                        progressDialog.dismiss();
-                        break;
-                    }else if(!snapshot.hasNext()){
-                        final Intent telaUpload = new Intent(ctx, TelaUpload.class);
-                        final Intent telaCadEstab = new Intent(ctx, TelaCadastroEstabelecimento.class);
-                        final Intent telaCadMusico = new Intent(ctx, TelaCadastroMusico.class);
+                } else{
+                    while (snapshot.hasNext()) {
+                        AutenticacaoEntity aut = snapshot.next().getValue(AutenticacaoEntity.class);
+                        if (aut.getEmail().equals(edtEmailEspectador.getText().toString().trim())) {
+                            Mensagem.notificar(TelaCadastroEspectador.this, "Email existente", "Este email já consta em nosso sistema");
+                            progressDialog.dismiss();
+                            break;
+                        } else if (aut.getLogin().equals(loginEspectador.getText().toString().trim())) {
+                            Mensagem.notificar(TelaCadastroEspectador.this, "Login existente", "Este login já consta em nosso sistema");
+                            progressDialog.dismiss();
+                            break;
+                        } else if (!snapshot.hasNext()) {
+                            final Intent telaUpload = new Intent(ctx, TelaUpload.class);
+                            final Intent telaCadEstab = new Intent(ctx, TelaCadastroEstabelecimento.class);
+                            final Intent telaCadMusico = new Intent(ctx, TelaCadastroMusico.class);
 
-                        String tipoUsuario = definirTipoUsuario(rgpPerfil);
-                        AutenticacaoEntity a = criarObjetoAutenticacao(edtEmailEspectador, loginEspectador, senhaEspectador, tipoUsuario);
-                        EspectadorEntity e = criarObjectoEspectador(null, nomeEspectador.getText().toString().trim(), a.getDataCriacao());
-                        if(tipoUsuario.equals("ESPECTADOR")) {
-                            telaUpload.putExtra("tipoUsuario", tipoUsuario);
-                            telaUpload.putExtra("objetoAutenticacao", a);
-                            telaUpload.putExtra("objetoEspectador", e);
-                            progressDialog.dismiss();
-                            startActivity(telaUpload);
+                            String tipoUsuario = definirTipoUsuario(rgpPerfil);
+                            AutenticacaoEntity a = criarObjetoAutenticacao(edtEmailEspectador, loginEspectador, senhaEspectador, tipoUsuario);
+                            EspectadorEntity e = criarObjectoEspectador(null, nomeEspectador.getText().toString().trim(), a.getDataCriacao());
+                            if (tipoUsuario.equals("ESPECTADOR")) {
+                                telaUpload.putExtra("tipoUsuario", tipoUsuario);
+                                telaUpload.putExtra("objetoAutenticacao", a);
+                                telaUpload.putExtra("objetoEspectador", e);
+                                progressDialog.dismiss();
+                                startActivity(telaUpload);
 
-                        }else if(tipoUsuario.equals("ESTABELECIMENTO")){
-                            telaCadEstab.putExtra("objetoAutenticacao", a);
-                            telaCadEstab.putExtra("objetoEspectador", e);
-                            progressDialog.dismiss();
-                            startActivity(telaCadEstab);
-                        }else if(tipoUsuario.equals("MUSICO")){
-                            telaCadMusico.putExtra("tipoUsuario", tipoUsuario);
-                            telaCadMusico.putExtra("objetoAutenticacao", a);
-                            telaCadMusico.putExtra("objetoEspectador", e);
-                            progressDialog.dismiss();
-                            startActivity(telaCadMusico);
+                            } else if (tipoUsuario.equals("ESTABELECIMENTO")) {
+                                telaCadEstab.putExtra("objetoAutenticacao", a);
+                                telaCadEstab.putExtra("objetoEspectador", e);
+                                progressDialog.dismiss();
+                                startActivity(telaCadEstab);
+                            } else if (tipoUsuario.equals("MUSICO")) {
+                                telaCadMusico.putExtra("tipoUsuario", tipoUsuario);
+                                telaCadMusico.putExtra("objetoAutenticacao", a);
+                                telaCadMusico.putExtra("objetoEspectador", e);
+                                progressDialog.dismiss();
+                                startActivity(telaCadMusico);
+                            }
                         }
                     }
-                }
-
+            }
             }
 
             @Override

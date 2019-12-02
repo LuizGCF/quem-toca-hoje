@@ -136,21 +136,29 @@ public class TelaCadastroEstabelecimento extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Iterator<DataSnapshot> snapshot = dataSnapshot.getChildren().iterator();
-                while(snapshot.hasNext()) {
-                    EstabelecimentoEntity est = snapshot.next().getValue(EstabelecimentoEntity.class);
-                    if(est.getCnpj().equals(edtCNPJ.getText().toString().trim())){
-                        Mensagem.notificar(ctx, "CNPJ Existente", "Este CNPJ já consta em nosso sistema");
-                        progressDialog.dismiss();
-                        break;
-                    }
-                    else if(!snapshot.hasNext()){
-                        EstabelecimentoEntity e = prepararObjetoEstabelecimento();
-                        telaEndereco.putExtra("tipoUsuario", TipoUsuario.ESTABELECIMENTO.name());
-                        telaEndereco.putExtra("objetoAutenticacao", getIntent().getSerializableExtra("objetoAutenticacao"));
-                        telaEndereco.putExtra("objetoEstabelecimento", e);
-                        progressDialog.dismiss();
-                        startActivity(telaEndereco);
+                if (dataSnapshot.getChildrenCount() == 0L) {
+                    EstabelecimentoEntity e = prepararObjetoEstabelecimento();
+                    telaEndereco.putExtra("tipoUsuario", TipoUsuario.ESTABELECIMENTO.name());
+                    telaEndereco.putExtra("objetoAutenticacao", getIntent().getSerializableExtra("objetoAutenticacao"));
+                    telaEndereco.putExtra("objetoEstabelecimento", e);
+                    progressDialog.dismiss();
+                    startActivity(telaEndereco);
+                }else{
+                    Iterator<DataSnapshot> snapshot = dataSnapshot.getChildren().iterator();
+                    while (snapshot.hasNext()) {
+                        EstabelecimentoEntity est = snapshot.next().getValue(EstabelecimentoEntity.class);
+                        if (est.getCnpj().equals(edtCNPJ.getText().toString().trim())) {
+                            Mensagem.notificar(ctx, "CNPJ Existente", "Este CNPJ já consta em nosso sistema");
+                            progressDialog.dismiss();
+                            break;
+                        } else if (!snapshot.hasNext()) {
+                            EstabelecimentoEntity e = prepararObjetoEstabelecimento();
+                            telaEndereco.putExtra("tipoUsuario", TipoUsuario.ESTABELECIMENTO.name());
+                            telaEndereco.putExtra("objetoAutenticacao", getIntent().getSerializableExtra("objetoAutenticacao"));
+                            telaEndereco.putExtra("objetoEstabelecimento", e);
+                            progressDialog.dismiss();
+                            startActivity(telaEndereco);
+                        }
                     }
                 }
             }
