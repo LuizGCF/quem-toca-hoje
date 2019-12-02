@@ -2,18 +2,21 @@ package com.example.quemtocahoje.DTO;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AvaliacaoDTO implements Serializable {
 
     private String imagemURI;
+    private String loginUsuario;
     private String nomePerfil;
     private String idUsuario;
     private String descricaoGenero;
     private String tipoUsuario;
-    private ArrayList<Object> listaAvaliacoes;
+    private List listaAvaliacoes;
 
-    public AvaliacaoDTO(String imagemURI, String nomePerfil, String idUsuario, String descricaoGenero, String tipoUsuario, ArrayList<Object> listaAvaliacoes) {
+    public AvaliacaoDTO(String imagemURI,String loginUsuario, String nomePerfil, String idUsuario, String descricaoGenero, String tipoUsuario, List listaAvaliacoes) {
         this.imagemURI = imagemURI;
+        this.loginUsuario = loginUsuario;
         this.nomePerfil = nomePerfil;
         this.idUsuario = idUsuario;
         this.descricaoGenero = descricaoGenero;
@@ -27,6 +30,14 @@ public class AvaliacaoDTO implements Serializable {
 
     public void setImagemURI(String imagemURI) {
         this.imagemURI = imagemURI;
+    }
+
+    public String getLoginUsuario() {
+        return loginUsuario;
+    }
+
+    public void setLoginUsuario(String loginUsuario) {
+        this.loginUsuario = loginUsuario;
     }
 
     public String getNomePerfil() {
@@ -61,11 +72,11 @@ public class AvaliacaoDTO implements Serializable {
         this.tipoUsuario = tipoUsuario;
     }
 
-    public ArrayList<Object> getListaAvaliacoes() {
+    public List getListaAvaliacoes() {
         return listaAvaliacoes;
     }
 
-    public void setListaAvaliacoes(ArrayList<Object> listaAvaliacoes) {
+    public void setListaAvaliacoes(List listaAvaliacoes) {
         this.listaAvaliacoes = listaAvaliacoes;
     }
 

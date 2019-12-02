@@ -2,6 +2,7 @@ package com.example.quemtocahoje.Views;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Rating;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -12,14 +13,19 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.quemtocahoje.Chat.Activitys.ConversaActivity;
+import com.example.quemtocahoje.DTO.AutenticacaoDTO;
 import com.example.quemtocahoje.DTO.AvaliacaoDTO;
 import com.example.quemtocahoje.DTO.EventoDTO;
 import com.example.quemtocahoje.Enum.TabelasFirebase;
 import com.example.quemtocahoje.Enum.TipoUsuario;
+import com.example.quemtocahoje.Model.AutenticacaoDAO;
+import com.example.quemtocahoje.POJO.Autenticacao;
 import com.example.quemtocahoje.POJO.Avaliacao;
+import com.example.quemtocahoje.Persistencia.Entity.AutenticacaoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.AvaliacaoEstabelecimentoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.AvaliacaoMusicoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.PropostaEntity;
@@ -52,6 +58,7 @@ public class TelaPerfilUsuario extends AppCompatActivity {
     ListView lstAvaliacoes;
     Button btnMensagem;
     Button btnProposta;
+    TextView txtMediaAvaliacoes;
     private HashMap<DatabaseReference, ValueEventListener> hashMap;
     private ValueEventListener valueEventListener;
 
@@ -70,8 +77,8 @@ public class TelaPerfilUsuario extends AppCompatActivity {
         lstAvaliacoes = findViewById(R.id.lstAvaliacoes);
         btnMensagem = findViewById(R.id.btnMensagem);
         btnProposta = findViewById(R.id.btnProposta);
+        txtMediaAvaliacoes = findViewById(R.id.txtMediaAvaliacoes);
 
-        //Acho que esta certo, mas verificar porque nao recebe o valor certo da lista as vezes
         btnMensagem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +90,6 @@ public class TelaPerfilUsuario extends AppCompatActivity {
 
                 telaConversa.putExtra("remetente", idRemetente);
                 telaConversa.putExtra("destinatario",a.getIdUsuario());
-                //put extra id usuarios
                 startActivity(telaConversa);
             }
         });
@@ -92,7 +98,9 @@ public class TelaPerfilUsuario extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent telaProposta = new Intent(TelaPerfilUsuario.this, TelaProposta.class);
-
+                telaProposta.putExtra("intentTela","ENVIAR");
+                telaProposta.putExtra("labelDestinatario","ta");
+                telaProposta.putExtra("nomeEstabelecimento","estab");
                 startActivity(telaProposta);
             }
         });
@@ -102,12 +110,20 @@ public class TelaPerfilUsuario extends AppCompatActivity {
         a = (AvaliacaoDTO) getIntent().getSerializableExtra("usuario");
 
         if(a != null) {
-            txtNomePerfil.setText("Olá " + a.getNomePerfil());
+            txtNomePerfil.setText(a.getNomePerfil());
             txtDescricaoPerfil.setText(a.getDescricaoGenero());
-
+            if(a.getListaAvaliacoes() != null && a.getListaAvaliacoes().size() > 0){
+                AvaliacaoAdapter avaliacaoAdapter = new AvaliacaoAdapter(a.getListaAvaliacoes(),this,a.getTipoUsuario());
+                lstAvaliacoes.setAdapter(avaliacaoAdapter);
+                txtMediaAvaliacoes.setText("Média: "+ calcularMedia(a.getTipoUsuario(),a.getListaAvaliacoes()));
+            }
+            else
+            {
+                lstAvaliacoes.setVisibility(View.GONE);
+                txtMediaAvaliacoes.setVisibility(View.GONE);
+            }
         }
-
-        carregarAvaliacoes("estab");
+        //carregarAvaliacoes(a.getIdUsuario());
 
         carregarImagemPerfil();
 
@@ -120,36 +136,25 @@ public class TelaPerfilUsuario extends AppCompatActivity {
         //Criar uma tela com as conversas do perfil x
     }
 
-    //Continuar depois
-    private void carregarAvaliacoes(String usuario) {
-        ArrayList<EventoDTO> dtoFinal = new ArrayList<>();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Avaliacao.name())
-                .child(usuario);//a.getIdUsuario());//mockado por enqnt
-        ref.addValueEventListener(valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                hashMap.put(ref, valueEventListener);
-                Iterator<DataSnapshot> data = dataSnapshot.getChildren().iterator();
-                while (data.hasNext()) {
-                    if (a.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name())) {
-                        AvaliacaoEstabelecimentoEntity avEstab = data.next().getValue(AvaliacaoEstabelecimentoEntity.class);
-                        dtoFinal.add(new EventoDTO("", avEstab, null, null));
-
-                    } else if (a.getTipoUsuario().equals(TipoUsuario.BANDA.name()) || a.getTipoUsuario().equals(TipoUsuario.MUSICO.name())) {
-                        AvaliacaoMusicoEntity avMusico = data.next().getValue(AvaliacaoMusicoEntity.class);
-                        dtoFinal.add(new EventoDTO("", null, avMusico, null));
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+    private String calcularMedia(String tipoUsuario, List listaAvaliacoes) {
+        double media = 0;
+        if(tipoUsuario.equals(TipoUsuario.ESTABELECIMENTO.name()))
+        {
+            for (Object avaliacao: listaAvaliacoes) {
+                media += (((AvaliacaoEstabelecimentoEntity) avaliacao).getReceptividade() +((AvaliacaoEstabelecimentoEntity) avaliacao).getEstrutura() + ((AvaliacaoEstabelecimentoEntity) avaliacao).getOrganizacao())/3;
 
             }
-        });
+        }
+        else
+        {
+            for (Object avaliacao: listaAvaliacoes) {
+                media += (((AvaliacaoMusicoEntity) avaliacao).getEstilo() +((AvaliacaoMusicoEntity) avaliacao).getPerformance() + ((AvaliacaoMusicoEntity) avaliacao).getMusicalidade())/3;
 
+            }
+        }
+        return ""+media/listaAvaliacoes.size();
     }
+
 
     private void carregarImagensDemonstracao() {
         StorageReference ref = FirebaseStorage.getInstance().getReference().child(a.getIdUsuario()+"/imagem1.png");
@@ -189,9 +194,11 @@ class AvaliacaoAdapter extends BaseAdapter{
 
     List lista;
     Activity act;
-    AvaliacaoAdapter(List lista, Activity act){
+    String tipoUsuario;
+    AvaliacaoAdapter(List lista, Activity act,String tipoUsuario){
         this.lista = lista;
         this.act = act;
+        this.tipoUsuario = tipoUsuario;
     }
     @Override
     public int getCount() {
@@ -214,16 +221,48 @@ class AvaliacaoAdapter extends BaseAdapter{
 
         View view = act.getLayoutInflater().inflate(R.layout.customlistitemlayoutavaliacao, parent, false);
 
-        //Curso curso = cursos.get(position);
+        TextView txtAvaliacao1 = view.findViewById(R.id.txtAvaliacao1);
+        TextView txtAvaliacao2 = view.findViewById(R.id.txtAvaliacao2);
+        TextView txtAvaliacao3 = view.findViewById(R.id.txtAvaliacao3);
+        RatingBar rbAvaliacao1 = view.findViewById(R.id.rbAvaliacao1);
+        RatingBar rbAvaliacao2 = view.findViewById(R.id.rbAvaliacao2);
+        RatingBar rbAvaliacao3 = view.findViewById(R.id.rbAvaliacao3);
+        TextView txtComentarioFeito = view.findViewById(R.id.txtComentarioFeito);
 
-        ImageView imgPerfil = view.findViewById(R.id.imgPerfil);
-        TextView txtNomePerfil = view.findViewById(R.id.txtNomePerfil);
-        TextView txtDescricaoPerfil = view.findViewById(R.id.txtDescricaoPerfil);
+        if(tipoUsuario.equals(TipoUsuario.ESTABELECIMENTO.name()))
+        {
+            txtAvaliacao1.setText("Organização");
+            txtAvaliacao2.setText("Estrutura");
+            txtAvaliacao3.setText("Receptividade");
+
+            int organizacao = (int)((AvaliacaoEstabelecimentoEntity) lista.get(position)).getOrganizacao();
+            int estrutura = (int)((AvaliacaoEstabelecimentoEntity) lista.get(position)).getEstrutura();
+            int receptividade = (int)((AvaliacaoEstabelecimentoEntity) lista.get(position)).getReceptividade();
+
+            rbAvaliacao1.setRating(organizacao);
+            rbAvaliacao2.setRating(estrutura);
+            rbAvaliacao3.setRating(receptividade);
+
+            txtComentarioFeito.setText(((AvaliacaoEstabelecimentoEntity) lista.get(position)).getTxtComentario());
+        }
+        else
+        {
+            txtAvaliacao1.setText("Estilo");
+            txtAvaliacao2.setText("Musicalidade");
+            txtAvaliacao3.setText("Performance");
+
+            int estilo = (int)((AvaliacaoMusicoEntity) lista.get(position)).getEstilo();
+            int musicalidade = (int)((AvaliacaoMusicoEntity) lista.get(position)).getMusicalidade();
+            int performance = (int)((AvaliacaoMusicoEntity) lista.get(position)).getPerformance();
+
+            rbAvaliacao1.setRating(estilo);
+            rbAvaliacao2.setRating(musicalidade);
+            rbAvaliacao3.setRating(performance);
 
 
-        //txtNomePerfil.setText(curso.getNome());
-        //txtDescricaoPerfil.setText(curso.getDescricao());
-        //imgPerfil.setImageResource(R.drawable.java);
+            txtComentarioFeito.setText(((AvaliacaoMusicoEntity) lista.get(position)).getTxtComentario());
+
+        }
 
         return view;
     }
