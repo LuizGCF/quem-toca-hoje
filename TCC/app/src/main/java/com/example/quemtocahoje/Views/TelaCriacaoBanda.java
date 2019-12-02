@@ -99,11 +99,17 @@ public class TelaCriacaoBanda extends AppCompatActivity {
                 if (email.isEmpty())
                     Mensagem.notificar(TelaCriacaoBanda.this, "Atenção!", "Digite um email para ser adicionado");
                 else{
-                    if (validarEmailInserido(email)) {
-                        adapterIntegrantes.add(email);
-                        adapterIntegrantes.notifyDataSetChanged();
-                        edtEmailIntegrante.setText("");
-                    } else Mensagem.notificar(TelaCriacaoBanda.this, "Atenção!", "Este email já foi adicionado");
+                    if(isEmailValido(email)) {
+                        if (validarEmailInserido(email)) {
+                            adapterIntegrantes.add(email);
+                            adapterIntegrantes.notifyDataSetChanged();
+                            edtEmailIntegrante.setText("");
+                        } else {
+                            Mensagem.notificar(TelaCriacaoBanda.this, "Atenção!", "Este email já foi adicionado");
+                        }
+                    }else {
+                        Mensagem.notificar(TelaCriacaoBanda.this, "Atenção!", "Formato de email inválido");
+                    }
                 }
             }
         });
@@ -202,5 +208,10 @@ public class TelaCriacaoBanda extends AppCompatActivity {
                 ,convite
                 ,tipoEscolhido()
         );
+    }
+
+    private boolean isEmailValido(String email) {
+        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        return email.matches(regex);
     }
 }
