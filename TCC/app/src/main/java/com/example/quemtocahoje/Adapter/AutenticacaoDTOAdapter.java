@@ -30,7 +30,7 @@ public class AutenticacaoDTOAdapter {
 
     public static AutenticacaoDTO estabelecimentoToAutenticacaoDTO(EstabelecimentoEntity e, String email){
         AutenticacaoDTO dto = new AutenticacaoDTO();
-        dto.setNome(e.getNomeDono());//nome dono ou nome do estab?
+        dto.setNome(e.getNomeFantasia());//nome dono ou nome do estab?
         dto.setEmail(email);
         dto.setTipoUsuario(TipoUsuario.ESTABELECIMENTO.name());
         dto.setIdAutenticacao(e.getAutenticacao_id());

@@ -36,10 +36,10 @@ public class TelaAgendaUsuarios extends AppCompatActivity {
 
          listaagenda= new ArrayList<>();
         //trazer a lista com a agenda do usuario
-        listaagenda.add(new PropostaEntity("Nirvana Cover","idestab","statusproposta","03:00","06:00","local","descricao",0.00,"27/11/2019","26/11/2019"));
-        listaagenda.add(new PropostaEntity("Nirvana Cover","idestab","statusproposta","03:00","06:00","local","descricao",0.00,"27/11/2019","26/11/2019"));
-        listaagenda.add(new PropostaEntity("Nirvana Cover","idestab","statusproposta","03:00","06:00","local","descricao",0.00,"27/11/2019","26/11/2019"));
-        listaagenda.add(new PropostaEntity("Bossa Nova Brasil Comércio Ltda.","idestab","statusproposta","20:00","23:55","local","descricao",0.00,"27/11/2019","26/11/2019"));
+        //listaagenda.add(new PropostaEntity("Nirvana Cover","idestab","statusproposta","03:00","06:00","local","descricao",0.00,"27/11/2019","26/11/2019"));
+        //listaagenda.add(new PropostaEntity("Nirvana Cover","idestab","statusproposta","03:00","06:00","local","descricao",0.00,"27/11/2019","26/11/2019"));
+        //listaagenda.add(new PropostaEntity("Nirvana Cover","idestab","statusproposta","03:00","06:00","local","descricao",0.00,"27/11/2019","26/11/2019"));
+        //listaagenda.add(new PropostaEntity("Bossa Nova Brasil Comércio Ltda.","idestab","statusproposta","20:00","23:55","local","descricao",0.00,"27/11/2019","26/11/2019"));
 
         carregarRecyclerView();
     }

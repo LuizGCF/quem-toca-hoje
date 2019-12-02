@@ -85,6 +85,7 @@
             android:textSize="15dp"
             android:textColor="#F5F7F7"
             android:textStyle="bold"
+            android:visibility="gone"
             android:id="@+id/txtEsqueceuSuaSenha"/>
         <TextView
             android:layout_marginTop="5dp"

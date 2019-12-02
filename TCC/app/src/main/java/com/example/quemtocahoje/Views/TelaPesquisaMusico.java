@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.tv.TvView;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
@@ -30,6 +31,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.quemtocahoje.DTO.AutenticacaoDTO;
 import com.example.quemtocahoje.DTO.AvaliacaoDTO;
 import com.example.quemtocahoje.DTO.EventoDTO;
 import com.example.quemtocahoje.DTO.ItensListaBuscaDTO;
@@ -76,6 +78,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
 
     FirebaseStorageRegistro firebaseStorageRegistro;
 
+    AutenticacaoDTO dtoAutenticacao;
     private CustomAdapter adapter;
     private List<ItensListaBuscaDTO> allItens;
     //TODO Carregar a imagem de cada um dos tipos de usuario
@@ -88,6 +91,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
 
         firebaseStorageRegistro = new FirebaseStorageRegistro(FirebaseStorage.getInstance());
 
+        dtoAutenticacao =  (AutenticacaoDTO) getIntent().getSerializableExtra("dtoAutenticacao");
         RecyclerView lstResultadoPesquisaMusico = findViewById(R.id.lstResultadoPesquisaMusico);
         lstResultadoPesquisaMusico.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +104,11 @@ public class TelaPesquisaMusico extends AppCompatActivity {
     }
     private void carregarDados(){
         allItens = new ArrayList<>();
-        listarMusicos();
+        //listarMusicos();
+        if(dtoAutenticacao.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name()) || dtoAutenticacao.getTipoUsuario().equals(TipoUsuario.ESPECTADOR.name()))
+            listarBandas();
+        if(dtoAutenticacao.getTipoUsuario().equals(TipoUsuario.BANDA.name()) || dtoAutenticacao.getTipoUsuario().equals(TipoUsuario.MUSICO.name())|| dtoAutenticacao.getTipoUsuario().equals(TipoUsuario.ESPECTADOR.name()))
+            listarEstabelecimentos();
     }
 //Cadastrar um estabelecimento pra testar depois
 
@@ -318,172 +326,185 @@ public class TelaPesquisaMusico extends AppCompatActivity {
             return view;
         }
     }*/
-}
 
-class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ExampleViewHolder> implements Filterable
-{
-    private List<ItensListaBuscaDTO> exampleList;
-    private List<ItensListaBuscaDTO> exampleListFull;
+    class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ExampleViewHolder> implements Filterable
+    {
+        private List<ItensListaBuscaDTO> exampleList;
+        private List<ItensListaBuscaDTO> exampleListFull;
 
-    CustomAdapter(List<ItensListaBuscaDTO> exampleList) {
-        this.exampleList = exampleList;
-        exampleListFull = new ArrayList<>(exampleList);
-    }
-    class ExampleViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
-        ImageView imagem;
-        TextView nome;
-        TextView descricao;
+        CustomAdapter(List<ItensListaBuscaDTO> exampleList) {
+            this.exampleList = exampleList;
+            exampleListFull = new ArrayList<>(exampleList);
+        }
+        class ExampleViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
+            ImageView imagem;
+            TextView nome;
+            TextView descricao;
 
-        ExampleViewHolder(View itemView) {
-            super(itemView);
-            imagem = itemView.findViewById(R.id.imgListItem);
-            nome = itemView.findViewById(R.id.txtDescricaoGeneroBandaListItem);
-            descricao = itemView.findViewById(R.id.txtDescricaoBandaListItem);
-            itemView.setOnClickListener(this);
+            ExampleViewHolder(View itemView) {
+                super(itemView);
+                imagem = itemView.findViewById(R.id.imgListItem);
+                nome = itemView.findViewById(R.id.txtDescricaoGeneroBandaListItem);
+                descricao = itemView.findViewById(R.id.txtDescricaoBandaListItem);
+                itemView.setOnClickListener(this);
+            }
+
+            @Override
+            public void onClick(View v) {
+                //pegar os parametros e ir para a tela de resultado
+                ItensListaBuscaDTO ilb = exampleList.get(getAdapterPosition());
+
+                //Idusuario para pegar autenticacao na proxima tela
+                AvaliacaoDTO a = new AvaliacaoDTO(ilb.getImagem(),ilb.getId(),ilb.getNome(),ilb.getId(),ilb.getDescricao(),ilb.getTipoUsuario(),null);
+                carregarAvaliacoes(a, v.getContext());
+                //colocar dentro do carregarAvaliacoes
+                //Intent i = new Intent(v.getContext(),TelaPerfilUsuario.class);
+                //i.putExtra("usuario", a);
+                //v.getContext().startActivity(i);
+
+
+                //AlertDialog.Builder adb = new AlertDialog.Builder(v.getContext());
+                //adb.setTitle("Funciona");
+                //adb.setMessage("Confima?");
+                //adb.setPositiveButton("Aceitar", new AlertDialog.OnClickListener() {
+                //    @Override
+                //    public void onClick(DialogInterface dialog, int which) {
+                //        exampleList.remove(getAdapterPosition());
+                //        //notifyDataSetChanged();
+                //        CustomAdapter.this.notifyDataSetChanged();
+                //    }
+                //});
+                //adb.show();
+            }
+        }
+        @NonNull
+        @Override
+        public ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.customlistitemlayoutbanda,
+                    viewGroup, false);
+            return new ExampleViewHolder(v);
+        }
+
+
+        @Override
+        public void onBindViewHolder(@NonNull ExampleViewHolder exampleViewHolder, int i) {
+            ItensListaBuscaDTO currentItem = exampleList.get(i);
+
+            //exampleViewHolder.imagem.setImageBitmap(currentItem.getImagem());
+            if(currentItem.getImagem() != "" && currentItem.getImagem() != null)
+                Picasso.get().load(Uri.parse(currentItem.getImagem())).into(exampleViewHolder.imagem);
+            exampleViewHolder.descricao.setText(currentItem.getNome());
+            exampleViewHolder.nome.setText(currentItem.getDescricao());
         }
 
         @Override
-        public void onClick(View v) {
-            //pegar os parametros e ir para a tela de resultado
-            ItensListaBuscaDTO ilb = exampleList.get(getAdapterPosition());
-
-            //Idusuario para pegar autenticacao na proxima tela
-            AvaliacaoDTO a = new AvaliacaoDTO(ilb.getImagem(),ilb.getId(),ilb.getNome(),ilb.getId(),ilb.getDescricao(),ilb.getTipoUsuario(),null);
-            carregarAvaliacoes(a, v.getContext());
-            //colocar dentro do carregarAvaliacoes
-            //Intent i = new Intent(v.getContext(),TelaPerfilUsuario.class);
-            //i.putExtra("usuario", a);
-            //v.getContext().startActivity(i);
-
-
-            //AlertDialog.Builder adb = new AlertDialog.Builder(v.getContext());
-            //adb.setTitle("Funciona");
-            //adb.setMessage("Confima?");
-            //adb.setPositiveButton("Aceitar", new AlertDialog.OnClickListener() {
-            //    @Override
-            //    public void onClick(DialogInterface dialog, int which) {
-            //        exampleList.remove(getAdapterPosition());
-            //        //notifyDataSetChanged();
-            //        CustomAdapter.this.notifyDataSetChanged();
-            //    }
-            //});
-            //adb.show();
+        public int getItemCount() {
+            return exampleList.size();
         }
-    }
-    @NonNull
-    @Override
-    public ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.customlistitemlayoutbanda,
-                viewGroup, false);
-        return new ExampleViewHolder(v);
-    }
 
-
-    @Override
-    public void onBindViewHolder(@NonNull ExampleViewHolder exampleViewHolder, int i) {
-        ItensListaBuscaDTO currentItem = exampleList.get(i);
-
-        //exampleViewHolder.imagem.setImageBitmap(currentItem.getImagem());
-        if(currentItem.getImagem() != "" && currentItem.getImagem() != null)
-            Picasso.get().load(Uri.parse(currentItem.getImagem())).into(exampleViewHolder.imagem);
-        exampleViewHolder.descricao.setText(currentItem.getNome());
-        exampleViewHolder.nome.setText(currentItem.getDescricao());
-    }
-
-    @Override
-    public int getItemCount() {
-        return exampleList.size();
-    }
-
-    @Override
-    public Filter getFilter() {
-        return exampleFilter;
-    }
-
-    private Filter exampleFilter = new Filter() {
         @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<ItensListaBuscaDTO> filteredList = new ArrayList<>();
+        public Filter getFilter() {
+            return exampleFilter;
+        }
 
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(exampleListFull);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
+        private Filter exampleFilter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                List<ItensListaBuscaDTO> filteredList = new ArrayList<>();
 
-                for (ItensListaBuscaDTO item : exampleListFull) {
-                    if (item.getNome().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item);
+                if (constraint == null || constraint.length() == 0) {
+                    filteredList.addAll(exampleListFull);
+                } else {
+                    String filterPattern = constraint.toString().toLowerCase().trim();
+
+                    for (ItensListaBuscaDTO item : exampleListFull) {
+                        if (item.getNome().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
                     }
                 }
+
+                FilterResults results = new FilterResults();
+                results.values = filteredList;
+
+                return results;
             }
 
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            exampleList.clear();
-            exampleList.addAll((List) results.values);
-            notifyDataSetChanged();
-        }
-    };
-    //Continuar depois
-    private void carregarAvaliacoes(AvaliacaoDTO avaliacao, Context context){//String usuario) {
-        List avaliacoes = new ArrayList<>();
-        if(avaliacao.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name()))
-            avaliacoes = new ArrayList<AvaliacaoEstabelecimentoEntity>();
-        else if(avaliacao.getTipoUsuario().equals(TipoUsuario.BANDA.name()) || avaliacao.getTipoUsuario().equals(TipoUsuario.MUSICO.name()))
-            avaliacoes = new ArrayList<AvaliacaoMusicoEntity>();
-        ArrayList<EventoDTO> dtoFinal = new ArrayList<>();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Autenticacao.name())
-                .child(avaliacao.getIdUsuario());
-        List finalAvaliacoes = avaliacoes;
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                AutenticacaoEntity a = dataSnapshot.getValue(AutenticacaoEntity.class);
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                exampleList.clear();
+                exampleList.addAll((List) results.values);
+                notifyDataSetChanged();
+            }
+        };
+        //Continuar depois
+        private void carregarAvaliacoes(AvaliacaoDTO avaliacao, Context context){//String usuario) {
+            List avaliacoes = new ArrayList<>();
+            if(avaliacao.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name()))
+                avaliacoes = new ArrayList<AvaliacaoEstabelecimentoEntity>();
+            else if(avaliacao.getTipoUsuario().equals(TipoUsuario.BANDA.name()) || avaliacao.getTipoUsuario().equals(TipoUsuario.MUSICO.name()))
+                avaliacoes = new ArrayList<AvaliacaoMusicoEntity>();
+            ArrayList<EventoDTO> dtoFinal = new ArrayList<>();
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Autenticacao.name())
+                    .child(avaliacao.getIdUsuario());
+            List finalAvaliacoes = avaliacoes;
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    AutenticacaoEntity a = dataSnapshot.getValue(AutenticacaoEntity.class);
+                    if(a != null) {
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Avaliacao.name())
+                                .child(a.getLogin());
+                        ref.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                Iterator<DataSnapshot> data = dataSnapshot.getChildren().iterator();
+                                while (data.hasNext()) {
+                                    if (a.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name())) {
+                                        AvaliacaoEstabelecimentoEntity avEstab = data.next().getValue(AvaliacaoEstabelecimentoEntity.class);
+                                        dtoFinal.add(new EventoDTO("", avEstab, null, null));
+                                        finalAvaliacoes.add(avEstab);
 
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Avaliacao.name())
-                        .child(a.getLogin());
-                ref.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Iterator<DataSnapshot> data = dataSnapshot.getChildren().iterator();
-                        while (data.hasNext()) {
-                            if (a.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name())) {
-                                AvaliacaoEstabelecimentoEntity avEstab = data.next().getValue(AvaliacaoEstabelecimentoEntity.class);
-                                dtoFinal.add(new EventoDTO("", avEstab, null, null));
-                                finalAvaliacoes.add(avEstab);
 
-
-                            } else if (a.getTipoUsuario().equals(TipoUsuario.BANDA.name()) || a.getTipoUsuario().equals(TipoUsuario.MUSICO.name())) {
-                                AvaliacaoMusicoEntity avMusico = data.next().getValue(AvaliacaoMusicoEntity.class);
-                                dtoFinal.add(new EventoDTO("", null, avMusico, null));
-                                finalAvaliacoes.add(avMusico);
+                                    } else if (a.getTipoUsuario().equals(TipoUsuario.BANDA.name()) || a.getTipoUsuario().equals(TipoUsuario.MUSICO.name())) {
+                                        AvaliacaoMusicoEntity avMusico = data.next().getValue(AvaliacaoMusicoEntity.class);
+                                        dtoFinal.add(new EventoDTO("", null, avMusico, null));
+                                        finalAvaliacoes.add(avMusico);
+                                    }
+                                }
+                                if (finalAvaliacoes.size() > 0)
+                                    avaliacao.setListaAvaliacoes(finalAvaliacoes);
+                                Intent i = new Intent(context, TelaPerfilUsuario.class);
+                                i.putExtra("usuario", avaliacao);
+                                i.putExtra("dtoAutenticacao",dtoAutenticacao);
+                                context.startActivity(i);
                             }
-                        }
-                        if(finalAvaliacoes.size()>0)
-                            avaliacao.setListaAvaliacoes(finalAvaliacoes);
-                        Intent i = new Intent(context,TelaPerfilUsuario.class);
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {//??
+                                Intent i = new Intent(context, TelaPerfilUsuario.class);
+                                i.putExtra("usuario", avaliacao);
+                                i.putExtra("dtoAutenticacao",dtoAutenticacao);
+                                context.startActivity(i);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        Intent i = new Intent(context, TelaPerfilUsuario.class);
                         i.putExtra("usuario", avaliacao);
+                        i.putExtra("dtoAutenticacao",dtoAutenticacao);
                         context.startActivity(i);
                     }
+                }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
-            }
+                }
+            });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
+        }
     }
+
 }

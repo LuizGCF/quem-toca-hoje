@@ -62,6 +62,7 @@ public class TelaPerfilUsuario extends AppCompatActivity {
     private HashMap<DatabaseReference, ValueEventListener> hashMap;
     private ValueEventListener valueEventListener;
 
+    AutenticacaoDTO dtoAutenticacao;
     AvaliacaoDTO a;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,10 +98,11 @@ public class TelaPerfilUsuario extends AppCompatActivity {
         btnProposta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dtoAutenticacao =  (AutenticacaoDTO) getIntent().getSerializableExtra("dtoAutenticacao");
                 Intent telaProposta = new Intent(TelaPerfilUsuario.this, TelaProposta.class);
                 telaProposta.putExtra("intentTela","ENVIAR");
-                telaProposta.putExtra("labelDestinatario","ta");
-                telaProposta.putExtra("nomeEstabelecimento","estab");
+                telaProposta.putExtra("labelDestinatario",a.getNomePerfil());
+                telaProposta.putExtra("nomeEstabelecimento",dtoAutenticacao.getNome());
                 startActivity(telaProposta);
             }
         });

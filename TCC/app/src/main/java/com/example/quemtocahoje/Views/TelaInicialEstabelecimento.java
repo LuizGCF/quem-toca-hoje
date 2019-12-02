@@ -48,6 +48,7 @@ public class TelaInicialEstabelecimento extends AppCompatActivity {
         txtPesquisarInicialEstabelecimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                telaPesquisaMusico.putExtra("dtoAutenticacao",(AutenticacaoDTO) getIntent().getSerializableExtra("dtoAutenticacao"));
                 startActivity(telaPesquisaMusico);
             }
         });

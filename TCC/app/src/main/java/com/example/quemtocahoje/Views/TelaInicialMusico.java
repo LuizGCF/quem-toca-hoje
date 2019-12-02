@@ -93,7 +93,10 @@ public class TelaInicialMusico extends AppCompatActivity {
 
         txtPesquisarInicialMusico.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                telaPesquisaMusico.putExtra("dtoAutenticacao",dto);
+
                 startActivity(telaPesquisaMusico);
             }
         });
