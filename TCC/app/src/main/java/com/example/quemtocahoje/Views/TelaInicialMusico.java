@@ -122,7 +122,7 @@ public class TelaInicialMusico extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PropostaDAO dao = new PropostaDAO();
-                dao.recuperarPropostasUsuario("ta", TipoUsuario.BANDA.name(), TelaInicialMusico.this);
+                dao.recuperarPropostasUsuario("a banda", TipoUsuario.BANDA.name(), TelaInicialMusico.this);
             }
         });
 

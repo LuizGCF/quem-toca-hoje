@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.quemtocahoje.DTO.EventoDTO;
+import com.example.quemtocahoje.DTO.PropostasDTO;
 import com.example.quemtocahoje.Enum.StatusProposta;
 import com.example.quemtocahoje.Enum.TabelasFirebase;
 import com.example.quemtocahoje.Enum.TipoUsuario;
@@ -17,6 +18,7 @@ import com.example.quemtocahoje.Persistencia.Entity.PropostaEntity;
 import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.quemtocahoje.Views.TelaHistorico;
 import com.example.quemtocahoje.Views.TelaProposta;
+import com.example.quemtocahoje.Views.TelaPropostasPendentes;
 import com.example.quemtocahoje.Views.TelaVisualizarTodasPropostas;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -255,18 +257,19 @@ public class PropostaDAO {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 hashMap.put(firebaseDatabase, valueEventListener);
                 Iterator<DataSnapshot> snapshot = dataSnapshot.getChildren().iterator();
-                ArrayList<PropostaEntity> listaPropostas = new ArrayList<>();
+                ArrayList<PropostasDTO> listaPropostas = new ArrayList<>();
                 while(snapshot.hasNext()) {
                     PropostaEntity proposta = snapshot.next().getValue(PropostaEntity.class);
                     if(proposta.getStatusProposta().equals(StatusProposta.ABERTO.name()))
-                        listaPropostas.add(proposta);
+                        listaPropostas.add(new PropostasDTO(proposta.getIdProposta(),proposta.getIdEstabelecimento(),(proposta.getDataEvento() + "  " + proposta.getHorarioInicio() + " até " +proposta.getHorarioFim())));
                 }
 
                 if(!listaPropostas.isEmpty()){
                     Log.d("LISTAPROPOSTAS", listaPropostas.toString());
-                    Intent intent = new Intent(ctx, TelaVisualizarTodasPropostas.class);
+                    Intent intent = new Intent(ctx, TelaPropostasPendentes.class);
                     intent.putExtra("listaPropostas", listaPropostas);
                     intent.putExtra("tipoUsuario", tipoUsuario);
+                    intent.putExtra("nomeBanda", idUsuario);
                     removeValueEventListener(hashMap);
                     ctx.startActivity(intent);
                 }else{
@@ -278,6 +281,44 @@ public class PropostaDAO {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 removeValueEventListener(hashMap);
+            }
+        });
+
+    }
+
+    public void abrirPropostaParaResposta(String idProposta, String nomeBanda, Context ctx){
+        this.ctx = ctx;
+        progressDialog = new ProgressDialog(this.ctx);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Abrindo proposta");
+        progressDialog.setTitle("Aguarde");
+        progressDialog.show();
+
+        DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Proposta.name())
+                .child(TipoUsuario.BANDA.name()).child(nomeBanda).child(idProposta);
+
+        firebaseDatabase.addListenerForSingleValueEvent(valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                hashMap.put(firebaseDatabase,valueEventListener);
+                if(dataSnapshot != null){
+                    removeValueEventListener(hashMap);
+                    progressDialog.dismiss();
+                    PropostaEntity proposta = dataSnapshot.getValue(PropostaEntity.class);
+                    Intent intent = new Intent(ctx, TelaProposta.class);
+                    intent.putExtra("intentTela", "RESPONDER");
+                    intent.putExtra("objetoProposta", proposta);
+                    ctx.startActivity(intent);
+                }
+                progressDialog.dismiss();
+                removeValueEventListener(hashMap);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                progressDialog.dismiss();
+                removeValueEventListener(hashMap);
+
             }
         });
 

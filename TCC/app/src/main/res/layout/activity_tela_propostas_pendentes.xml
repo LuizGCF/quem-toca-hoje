@@ -22,9 +22,15 @@
         android:paddingTop="16dp"
         android:src="@drawable/logoaplicativo"/>
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="4dp"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/lstPropostasPendentes"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

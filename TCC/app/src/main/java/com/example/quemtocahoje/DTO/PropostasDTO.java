@@ -1,6 +1,8 @@
 package com.example.quemtocahoje.DTO;
 
-public class PropostasDTO {
+import java.io.Serializable;
+
+public class PropostasDTO implements Serializable {
     private String idProposta;
     private String estabelecimento;
     private String periodo;//"20/11/2019  11:50 às 13:47";
