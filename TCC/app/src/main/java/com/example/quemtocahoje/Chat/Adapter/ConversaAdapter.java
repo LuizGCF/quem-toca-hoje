@@ -43,7 +43,7 @@ public class ConversaAdapter extends ArrayAdapter<Conversa> {
             TextView ultimaMensagem = (TextView) view.findViewById(R.id.tv_subtitulo);
 
             Conversa conversa = conversas.get(position);
-            nome.setText( conversa.getNome() );
+            nome.setText( conversa.getIdUsuario() );
             ultimaMensagem.setText( conversa.getMensagem() );
 
         }

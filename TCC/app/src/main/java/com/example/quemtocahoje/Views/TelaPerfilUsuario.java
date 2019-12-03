@@ -84,12 +84,17 @@ public class TelaPerfilUsuario extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                dtoAutenticacao =  (AutenticacaoDTO) getIntent().getSerializableExtra("dtoAutenticacao");
+
                 String email =  FirebaseAuth.getInstance().getCurrentUser().getEmail();
                 String idRemetente = EncodeBase64.toBase64(email);
                 //String test = EncodeBase64.toBase64("d@gmail.com");
                 Intent telaConversa = new Intent(TelaPerfilUsuario.this, ConversaActivity.class);
 
-                telaConversa.putExtra("remetente", idRemetente);
+                if(dtoAutenticacao.getTipoUsuario().equals(TipoUsuario.BANDA.name()) || dtoAutenticacao.getTipoUsuario().equals(TipoUsuario.MUSICO.name()))
+                    telaConversa.putExtra("remetente",dtoAutenticacao.getNome());
+                else
+                    telaConversa.putExtra("remetente", idRemetente);
                 telaConversa.putExtra("destinatario",a.getIdUsuario());
                 startActivity(telaConversa);
             }

@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class TelaInicialEstabelecimento extends AppCompatActivity {
 
+    private TextView txtMensagensMusico;
     private TextView txtNomeEstabelecimento;
     private TextView txtPesquisarInicialEstabelecimento;
     private TextView txtPropostasInicialEstabelecimento;
@@ -34,7 +35,9 @@ public class TelaInicialEstabelecimento extends AppCompatActivity {
         final Intent telaPesquisaMusico = new Intent(this,TelaPesquisaMusico.class);
         final Intent telaProposta = new Intent(this,TelaProposta.class);
         final Intent telaAvaliacaoMusico = new Intent(this,TelaAvaliacaoMusico.class);
+        final Intent telaMensagensAtivas = new Intent(this,TelaMensagensAtivas.class);
 
+        txtMensagensMusico = findViewById(R.id.txtMensagensMusico);
         txtNomeEstabelecimento = findViewById(R.id.txtNomeEstabelecimento);
         txtPesquisarInicialEstabelecimento = findViewById(R.id.txtPesquisarInicialEstabelecimento);
         txtPropostasInicialEstabelecimento = findViewById(R.id.txtPropostasInicialEstabelecimento);
@@ -44,11 +47,20 @@ public class TelaInicialEstabelecimento extends AppCompatActivity {
         txtAvaliacaoMusico = findViewById(R.id.txtAvaliacaoMusico);
 
         txtNomeEstabelecimento.setText("Olá " + preencherNomeUsuario() + "!");
+        AutenticacaoDTO dto = (AutenticacaoDTO) getIntent().getSerializableExtra("dtoAutenticacao");
+
+        txtMensagensMusico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                telaMensagensAtivas.putExtra("AutenticacaoDTO",dto);
+                startActivity(telaMensagensAtivas);
+            }
+        });
 
         txtPesquisarInicialEstabelecimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                telaPesquisaMusico.putExtra("dtoAutenticacao",(AutenticacaoDTO) getIntent().getSerializableExtra("dtoAutenticacao"));
+                telaPesquisaMusico.putExtra("dtoAutenticacao",dto);
                 startActivity(telaPesquisaMusico);
             }
         });
@@ -74,7 +86,7 @@ public class TelaInicialEstabelecimento extends AppCompatActivity {
             public void onClick(View v) {
 
                 AvaliacaoDAO dao = new AvaliacaoDAO();
-                dao.recuperarListaAvaliacoesPendentes("estab", TipoUsuario.ESTABELECIMENTO.name(),TelaInicialEstabelecimento.this);
+                dao.recuperarListaAvaliacoesPendentes(preencherNomeUsuario(), TipoUsuario.ESTABELECIMENTO.name(),TelaInicialEstabelecimento.this);//estab
             }
         });
 
@@ -82,7 +94,7 @@ public class TelaInicialEstabelecimento extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PropostaDAO dao = new PropostaDAO();
-                dao.recuperarEventos("estab", TipoUsuario.ESTABELECIMENTO.name(), "HISTORICO", TelaInicialEstabelecimento.this);
+                dao.recuperarEventos(preencherNomeUsuario(), TipoUsuario.ESTABELECIMENTO.name(), "HISTORICO", TelaInicialEstabelecimento.this);//estab
 
             }
         });

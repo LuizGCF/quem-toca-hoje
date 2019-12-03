@@ -31,7 +31,16 @@
             android:textStyle="bold"
             android:layout_gravity="center_horizontal"
             android:id="@+id/txtNomeEstabelecimento"/>
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:textColor="#F5F7F7"
+            android:textStyle="bold"
+            android:text="Mensagens"
+            android:textSize="20dp"
+            android:id="@+id/txtMensagensMusico" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -45,6 +45,7 @@
             android:textStyle="bold"
             android:layout_height="wrap_content"
             android:text="Visualizando como:"
+            android:id="@+id/txtVisualizandoComo"
             android:textSize="20dp"/>
         <TextView
             android:layout_marginTop="5dp"
@@ -58,12 +59,12 @@
             android:id="@+id/txtNomeBandaInicialMusico"/>
     </LinearLayout>
     <TextView
-        android:id="@+id/txtPerfilInicialMusico"
+        android:id="@+id/txtMensagensMusico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="25dp"
-        android:text="Meu Perfil"
+        android:text="Mensagens"
         android:textColor="#F5F7F7"
         android:textSize="20dp"
         android:textStyle="bold" />

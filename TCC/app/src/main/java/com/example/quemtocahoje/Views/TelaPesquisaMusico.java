@@ -144,7 +144,6 @@ public class TelaPesquisaMusico extends AppCompatActivity {
 
                     }
                 }
-                listarBandas();
             }
 
             @Override
@@ -437,7 +436,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
                 notifyDataSetChanged();
             }
         };
-        //Continuar depois
+
         private void carregarAvaliacoes(AvaliacaoDTO avaliacao, Context context){//String usuario) {
             List avaliacoes = new ArrayList<>();
             if(avaliacao.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name()))

@@ -1,26 +1,42 @@
 package com.example.quemtocahoje.Views;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.quemtocahoje.DTO.AutenticacaoDTO;
+import com.example.quemtocahoje.Enum.TabelasFirebase;
 import com.example.quemtocahoje.Enum.TipoUsuario;
 import com.example.quemtocahoje.Model.AvaliacaoDAO;
 import com.example.quemtocahoje.Model.BandaDAO;
 import com.example.quemtocahoje.Model.PropostaDAO;
 import com.example.quemtocahoje.Persistencia.Entity.AvaliacaoMusicoEntity;
+import com.example.quemtocahoje.Persistencia.Entity.BandaEntity;
 import com.example.quemtocahoje.Persistencia.Entity.PropostaEntity;
+import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TelaInicialMusico extends AppCompatActivity {
 
     private TextView txtNomeMusico;
     private TextView txtNomeBandaInicialMusico;
-    private TextView txtPerfilInicialMusico;
+    private TextView txtMensagensMusico;
     private TextView txtPesquisarInicialMusico;
     private TextView txtPropostasInicialMusico;
     private TextView txtAgendaInicialMusico;
@@ -30,9 +46,10 @@ public class TelaInicialMusico extends AppCompatActivity {
     private TextView txtConviteInicialMusico;
     private TextView txtMeusConvitesInicialMusico;
     private TextView txtCadastrarBandaInicialMusico;
+    private TextView txtVisualizandoComo;
 
     private TextView txtAvaliacaoEstabelecimento;
-
+    AutenticacaoDTO dto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +63,11 @@ public class TelaInicialMusico extends AppCompatActivity {
 
         final Intent telaAvaliacaoEstabelecimento = new Intent(this, TelaAvaliacoesPendentes.class);
 
+        final Intent telaMensagensAtivas = new Intent(this,TelaMensagensAtivas.class);
+
         txtNomeMusico = findViewById(R.id.txtNomeMusico);
         txtNomeBandaInicialMusico = findViewById(R.id.txtNomeBandaInicialMusico);
-        txtPerfilInicialMusico = findViewById(R.id.txtPerfilInicialMusico);
+        txtMensagensMusico = findViewById(R.id.txtMensagensMusico);
         txtPesquisarInicialMusico = findViewById(R.id.txtPesquisarInicialMusico);
         txtPropostasInicialMusico = findViewById(R.id.txtPropostasInicialMusico);
         txtAgendaInicialMusico = findViewById(R.id.txtAgendaInicialMusico);
@@ -58,15 +77,26 @@ public class TelaInicialMusico extends AppCompatActivity {
         txtConviteInicialMusico = findViewById(R.id.txtConviteInicialMusico);
         txtMeusConvitesInicialMusico = findViewById(R.id.txtMeusConvitesInicialMusico);
         txtCadastrarBandaInicialMusico = findViewById(R.id.txtCadastrarBandaInicialMusico);
+        txtVisualizandoComo = findViewById(R.id.txtVisualizandoComo);
 
         txtAvaliacaoEstabelecimento = findViewById(R.id.txtAvaliacaoEstabelecimento);
 
 
-        AutenticacaoDTO dto = (AutenticacaoDTO) getIntent().getSerializableExtra("dtoAutenticacao");
+        dto = (AutenticacaoDTO) getIntent().getSerializableExtra("dtoAutenticacao");
 
         txtNomeMusico.setText("Olá " + dto.getNome() + "!");
 
+        carregarBandaInicial();
+
         final Intent convidarMembro = new Intent(this, TelaConvite.class);
+
+        txtMensagensMusico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                telaMensagensAtivas.putExtra("AutenticacaoDTO",dto);
+                startActivity(telaMensagensAtivas);
+            }
+        });
 
         txtConviteInicialMusico.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +138,7 @@ public class TelaInicialMusico extends AppCompatActivity {
                 finishAffinity();
             }
         });
-
+        //Desabilitar os 4 abaixo se não existir banda?
         txtAvaliacaoEstabelecimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -122,7 +152,7 @@ public class TelaInicialMusico extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PropostaDAO dao = new PropostaDAO();
-                dao.recuperarPropostasUsuario("a banda", TipoUsuario.BANDA.name(), TelaInicialMusico.this);
+                dao.recuperarPropostasUsuario(dto.getNome(), TipoUsuario.BANDA.name(), TelaInicialMusico.this);//a banda
             }
         });
 
@@ -130,7 +160,7 @@ public class TelaInicialMusico extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PropostaDAO dao = new PropostaDAO();
-                dao.recuperarEventos("ta", TipoUsuario.BANDA.name(), "HISTORICO",TelaInicialMusico.this);
+                dao.recuperarEventos(dto.getNome(), TipoUsuario.BANDA.name(), "HISTORICO",TelaInicialMusico.this);//ta
             }
         });
 
@@ -140,6 +170,99 @@ public class TelaInicialMusico extends AppCompatActivity {
                 Intent telaagendausuarios = new Intent(TelaInicialMusico.this,TelaAgendaUsuarios.class);
 
                 startActivity(telaagendausuarios);
+            }
+        });
+
+        txtVisualizacaoInicialMusico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                atualizarVisualizacaoBanda();
+            }
+            private void atualizarVisualizacaoBanda() {
+                List<BandaEntity> bandas = new ArrayList<>();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Banda.name());
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            final BandaEntity entidade = snapshot.getValue(BandaEntity.class);
+                            if(entidade.getIdCriador().equals(dto.getIdAutenticacao()))
+                            {
+                                bandas.add(entidade);
+                                //txtNomeBandaInicialMusico.setText(entidade.getNome());
+
+                            }
+                        }
+                        carregarListaBandas(bandas);
+                    }
+
+                    private void carregarListaBandas(List<BandaEntity> bandas) {
+                        List<String> nomebandas = new ArrayList<>();
+                        for (BandaEntity banda :bandas) {
+                            nomebandas.add(banda.getNome());
+                        }
+                        if(bandas.size() > 0) {
+                            AlertDialog.Builder b = new AlertDialog.Builder(TelaInicialMusico.this);
+                            b.setTitle("Escolha a banda: ");
+                            //Spinner popupSpinner = new Spinner(getApplicationContext(), Spinner.MODE_DIALOG);//??
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(TelaInicialMusico.this, android.R.layout.simple_spinner_dropdown_item, nomebandas);
+                            b.setAdapter(adapter, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    txtVisualizandoComo.setVisibility(View.VISIBLE);
+                                    txtNomeBandaInicialMusico.setVisibility(View.VISIBLE);
+                                    txtNomeBandaInicialMusico.setText(nomebandas.get(which));
+                                    dto.setNome(bandas.get(which).getNome());
+
+                                    dialog.dismiss();
+                                }
+
+                            });
+                            b.show();
+                        }
+                        else
+                        {
+                            Mensagem.notificar(TelaInicialMusico.this,"Bandas indisponíveis","Não existem bandas cadastradas nesse perfil, cadastre uma banda");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+    }
+    public void carregarBandaInicial()
+    {
+        List<BandaEntity> bandas = new ArrayList<>();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Banda.name());
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    final BandaEntity entidade = snapshot.getValue(BandaEntity.class);
+                    if(entidade.getIdCriador().equals(dto.getIdAutenticacao()))
+                    {
+                        bandas.add(entidade);
+                        //
+
+                    }
+                }
+                if(bandas.size()>0) {
+                    txtNomeBandaInicialMusico.setText(bandas.get(0).getNome());
+                    dto.setNome(bandas.get(0).getNome());
+                }
+                else {
+                    txtVisualizandoComo.setVisibility(View.INVISIBLE);
+                    txtNomeBandaInicialMusico.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }
