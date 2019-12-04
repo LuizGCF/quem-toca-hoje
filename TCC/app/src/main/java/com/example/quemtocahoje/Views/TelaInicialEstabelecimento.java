@@ -74,6 +74,18 @@ public class TelaInicialEstabelecimento extends AppCompatActivity {
             }
         });
 
+        txtAgendaInicialEstabelecimento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PropostaDAO dao = new PropostaDAO();
+                dao.recuperarEventos(dto.getNome(), TipoUsuario.ESTABELECIMENTO.name(), "AGENDA", TelaInicialEstabelecimento.this,getIntent());//estab
+
+                //Intent telaagendausuarios = new Intent(TelaInicialEstabelecimento.this,TelaAgendaUsuarios.class);
+                //telaagendausuarios.putExtra("dtoAutenticacao",dto);
+                //startActivity(telaagendausuarios);
+            }
+        });
+
         txtPropostasInicialEstabelecimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +106,7 @@ public class TelaInicialEstabelecimento extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PropostaDAO dao = new PropostaDAO();
-                dao.recuperarEventos(preencherNomeUsuario(), TipoUsuario.ESTABELECIMENTO.name(), "HISTORICO", TelaInicialEstabelecimento.this);//estab
+                dao.recuperarEventos(preencherNomeUsuario(), TipoUsuario.ESTABELECIMENTO.name(), "HISTORICO", TelaInicialEstabelecimento.this,getIntent());//estab
 
             }
         });

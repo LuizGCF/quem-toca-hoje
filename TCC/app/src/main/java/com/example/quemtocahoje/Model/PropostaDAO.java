@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.quemtocahoje.DTO.AutenticacaoDTO;
 import com.example.quemtocahoje.DTO.EventoDTO;
 import com.example.quemtocahoje.DTO.PropostasDTO;
 import com.example.quemtocahoje.Enum.StatusProposta;
@@ -16,7 +17,9 @@ import com.example.quemtocahoje.Persistencia.Entity.AvaliacaoEstabelecimentoEnti
 import com.example.quemtocahoje.Persistencia.Entity.AvaliacaoMusicoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.PropostaEntity;
 import com.example.quemtocahoje.Utility.Mensagem;
+import com.example.quemtocahoje.Views.TelaAgendaUsuarios;
 import com.example.quemtocahoje.Views.TelaHistorico;
+import com.example.quemtocahoje.Views.TelaInicialMusico;
 import com.example.quemtocahoje.Views.TelaProposta;
 import com.example.quemtocahoje.Views.TelaPropostasPendentes;
 import com.example.quemtocahoje.Views.TelaVisualizarTodasPropostas;
@@ -147,7 +150,7 @@ public class PropostaDAO {
         });
     }
 
-    public void recuperarEventos(String idUsuario,String tipoUsuario, String tipoPesquisa, Context ctx)  {
+    public void recuperarEventos(String idUsuario,String tipoUsuario, String tipoPesquisa, Context ctx,Intent i)  {//intent pra pegar os extras
         this.ctx = ctx;
         progressDialog = new ProgressDialog(this.ctx);
         progressDialog.setCancelable(false);
@@ -162,6 +165,7 @@ public class PropostaDAO {
                 hashMap.put(firebaseDatabase, valueEventListener);
                 List<PropostaEntity> eventos = new ArrayList<>();
                 Iterator<DataSnapshot> snapshot = dataSnapshot.getChildren().iterator();
+                boolean telaagenda = false;
                 while(snapshot.hasNext()){
                     PropostaEntity proposta = snapshot.next().getValue(PropostaEntity.class);
                         try {
@@ -175,6 +179,7 @@ public class PropostaDAO {
                                 }
                             }else { //agenda
                                 if (dataAtual.before(dataEvento) && proposta.getStatusProposta().equals(StatusProposta.ACEITO.name())) {
+                                    telaagenda = true;
                                     eventos.add(proposta);
                                 }
                             }
@@ -186,6 +191,14 @@ public class PropostaDAO {
                         }
                     }
                     removeValueEventListener(hashMap);
+                if(telaagenda && eventos.size() > 0)
+                {
+                    Intent telaagendausuarios = new Intent(ctx, TelaAgendaUsuarios.class);
+                    AutenticacaoDTO dto = (AutenticacaoDTO) i.getSerializableExtra("dtoAutenticacao");
+                    telaagendausuarios.putExtra("dtoAutenticacao",dto);
+                    telaagendausuarios.putExtra("dtoEventos",eventos.toArray());
+                    ctx.startActivity(telaagendausuarios);
+                }
                 if(tipoPesquisa.equals("HISTORICO")) {
                     ArrayList<EventoDTO> dtoFinal = new ArrayList<>();
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Avaliacao.name())

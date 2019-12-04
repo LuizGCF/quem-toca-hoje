@@ -160,16 +160,19 @@ public class TelaInicialMusico extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PropostaDAO dao = new PropostaDAO();
-                dao.recuperarEventos(dto.getNome(), TipoUsuario.BANDA.name(), "HISTORICO",TelaInicialMusico.this);//ta
+                dao.recuperarEventos(dto.getNome(), TipoUsuario.BANDA.name(), "HISTORICO",TelaInicialMusico.this,getIntent());//ta
             }
         });
 
         txtAgendaInicialMusico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent telaagendausuarios = new Intent(TelaInicialMusico.this,TelaAgendaUsuarios.class);
+                PropostaDAO dao = new PropostaDAO();
+                dao.recuperarEventos(dto.getNome(), TipoUsuario.BANDA.name(), "AGENDA", TelaInicialMusico.this,getIntent());//estab
 
-                startActivity(telaagendausuarios);
+                //Intent telaagendausuarios = new Intent(TelaInicialMusico.this,TelaAgendaUsuarios.class);
+                //telaagendausuarios.putExtra("dtoAutenticacao",dto);
+                //startActivity(telaagendausuarios);
             }
         });
 

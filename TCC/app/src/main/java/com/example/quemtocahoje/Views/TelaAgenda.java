@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.quemtocahoje.DTO.AutenticacaoDTO;
+import com.example.quemtocahoje.Enum.TipoUsuario;
 import com.example.quemtocahoje.Persistencia.Entity.PropostaEntity;
 import com.example.tcc.R;
 
@@ -30,11 +32,15 @@ public class TelaAgenda extends Activity {
     private TextView txtDescricaoProposta;
     private TextView txtDePara;
     private TextView txtCache;
+
+    AutenticacaoDTO dto;
     //Tela com o resultado ao clicar em algum valor da agenda
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_proposta_enviar);
+
+        dto = (AutenticacaoDTO) getIntent().getSerializableExtra("dtoAutenticacao");
 
         edtHorarioProposta = findViewById(R.id.edtHorarioProposta);
         imgSelecionarDataProposta = findViewById(R.id.imgSelecionarDataProposta);
@@ -76,12 +82,28 @@ public class TelaAgenda extends Activity {
             edtHorarioProposta.setText(proposta.getHorarioInicio());
             txtDataPropostaEscolhida.setText(proposta.getDataEnvioProposta());
             edtLocalProposta.setText(proposta.getLocal());
-            txtDePara.setText(proposta.getIdBanda());
             //edtCacheProposta.setText(proposta.getCache().toString());
             //edtDescricaoProposta.setText(proposta.getDescricao());
             edtHorarioFim.setText(proposta.getHorarioFim());
-            lblNomeDestinatario.setText(proposta.getHorarioFim());
+
+            if(dto.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name()))
+            {
+                txtDePara.setText("De: " + proposta.getIdEstabelecimento());
+                lblNomeDestinatario.setText(" para: " + proposta.getIdBanda());
+            }
+            else
+            {
+                txtDePara.setText("De: " + proposta.getIdEstabelecimento());
+                lblNomeDestinatario.setText(" para: " + proposta.getIdBanda());
+            }
 
         }
+
+        btnVoltarProposta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }
