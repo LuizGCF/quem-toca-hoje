@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.quemtocahoje.DTO.AutenticacaoDTO;
@@ -17,9 +16,7 @@ import com.example.quemtocahoje.Enum.TipoUsuario;
 import com.example.quemtocahoje.Model.AvaliacaoDAO;
 import com.example.quemtocahoje.Model.BandaDAO;
 import com.example.quemtocahoje.Model.PropostaDAO;
-import com.example.quemtocahoje.Persistencia.Entity.AvaliacaoMusicoEntity;
 import com.example.quemtocahoje.Persistencia.Entity.BandaEntity;
-import com.example.quemtocahoje.Persistencia.Entity.PropostaEntity;
 import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,6 +44,8 @@ public class TelaInicialMusico extends AppCompatActivity {
     private TextView txtMeusConvitesInicialMusico;
     private TextView txtCadastrarBandaInicialMusico;
     private TextView txtVisualizandoComo;
+    private ValueEventListener valueEventListener;
+    private boolean foiClick;
 
     private TextView txtAvaliacaoEstabelecimento;
     AutenticacaoDTO dto;
@@ -145,6 +144,7 @@ public class TelaInicialMusico extends AppCompatActivity {
             {
                 AvaliacaoDAO dao = new AvaliacaoDAO();
                 dao.recuperarListaAvaliacoesPendentes(dto.getNome(), TipoUsuario.BANDA.name(),TelaInicialMusico.this);
+
             }
         });
 
@@ -180,24 +180,28 @@ public class TelaInicialMusico extends AppCompatActivity {
         txtVisualizacaoInicialMusico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                foiClick = true;
                 atualizarVisualizacaoBanda();
             }
             private void atualizarVisualizacaoBanda() {
+
                 List<BandaEntity> bandas = new ArrayList<>();
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Banda.name());
-                ref.addValueEventListener(new ValueEventListener() {
+                ref.addValueEventListener(valueEventListener = new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        ref.removeEventListener(valueEventListener);
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             final BandaEntity entidade = snapshot.getValue(BandaEntity.class);
-                            if(entidade.getIdCriador().equals(dto.getIdAutenticacao()))
+                            if(entidade.getIdCriador().equals(dto.getIdAutenticacao()) || (entidade.getIntegrantes() != null && entidade.getIntegrantes().contains(dto.getEmail())))
                             {
                                 bandas.add(entidade);
                                 //txtNomeBandaInicialMusico.setText(entidade.getNome());
 
                             }
                         }
-                        carregarListaBandas(bandas);
+                        if(foiClick)
+                            carregarListaBandas(bandas);
                     }
 
                     private void carregarListaBandas(List<BandaEntity> bandas) {
@@ -206,6 +210,7 @@ public class TelaInicialMusico extends AppCompatActivity {
                             nomebandas.add(banda.getNome());
                         }
                         if(bandas.size() > 0) {
+                            foiClick = false;
                             AlertDialog.Builder b = new AlertDialog.Builder(TelaInicialMusico.this);
                             b.setTitle("Escolha a banda: ");
                             //Spinner popupSpinner = new Spinner(getApplicationContext(), Spinner.MODE_DIALOG);//??
@@ -231,9 +236,11 @@ public class TelaInicialMusico extends AppCompatActivity {
                             });
                             b.show();
                         }
-                        else
-                        {
-                            Mensagem.notificar(TelaInicialMusico.this,"Bandas indisponíveis","Não existem bandas cadastradas nesse perfil, cadastre uma banda");
+                        else {
+                            if (foiClick) {
+                                Mensagem.notificar(TelaInicialMusico.this, "Bandas indisponíveis", "Não existem bandas cadastradas nesse perfil, cadastre uma banda");
+                                foiClick = false;
+                            }
                         }
                     }
 
