@@ -165,7 +165,7 @@ public class PropostaDAO {
                 hashMap.put(firebaseDatabase, valueEventListener);
                 List<PropostaEntity> eventos = new ArrayList<>();
                 Iterator<DataSnapshot> snapshot = dataSnapshot.getChildren().iterator();
-                boolean telaagenda = false;
+                boolean telaagenda = tipoPesquisa.equals("HISTORICO")? false:true;
                 while(snapshot.hasNext()){
                     PropostaEntity proposta = snapshot.next().getValue(PropostaEntity.class);
                         try {
@@ -179,7 +179,6 @@ public class PropostaDAO {
                                 }
                             }else { //agenda
                                 if (dataAtual.before(dataEvento) && proposta.getStatusProposta().equals(StatusProposta.ACEITO.name())) {
-                                    telaagenda = true;
                                     eventos.add(proposta);
                                 }
                             }
@@ -193,12 +192,17 @@ public class PropostaDAO {
                     removeValueEventListener(hashMap);
                 if(telaagenda && eventos.size() > 0)
                 {
+                    progressDialog.dismiss();
                     Intent telaagendausuarios = new Intent(ctx, TelaAgendaUsuarios.class);
                     AutenticacaoDTO dto = (AutenticacaoDTO) i.getSerializableExtra("dtoAutenticacao");
                     telaagendausuarios.putExtra("dtoAutenticacao",dto);
                     telaagendausuarios.putExtra("dtoEventos",eventos.toArray());
                     ctx.startActivity(telaagendausuarios);
+                }else if(telaagenda && eventos.size() == 0){
+                    progressDialog.dismiss();
+                    Mensagem.notificar(ctx, "Agenda vazia", "Você não possui nenhum evento em sua agenda.");
                 }
+
                 if(tipoPesquisa.equals("HISTORICO")) {
                     ArrayList<EventoDTO> dtoFinal = new ArrayList<>();
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Avaliacao.name())
@@ -239,7 +243,7 @@ public class PropostaDAO {
                                 intent.putExtra("tipoUsuario", tipoUsuario);
                                 ctx.startActivity(intent);
                             }else{
-                                Mensagem.notificar(ctx, "Histórico vazio", "Esta banda não possui nenhum evento em seu histórico.");
+                                Mensagem.notificar(ctx, "Histórico vazio", "Você não possui nenhum evento em seu histórico.");
                             }
                         }
 
