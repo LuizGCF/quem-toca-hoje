@@ -269,7 +269,7 @@ public class TelaInicialMusico extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     final BandaEntity entidade = snapshot.getValue(BandaEntity.class);
-                    if(entidade.getIdCriador().equals(dto.getIdAutenticacao()))
+                    if(entidade.getIdCriador().equals(dto.getIdAutenticacao()) || (entidade.getIntegrantes() != null && entidade.getIntegrantes().contains(dto.getEmail())))
                     {
                         bandas.add(entidade);
                         //
