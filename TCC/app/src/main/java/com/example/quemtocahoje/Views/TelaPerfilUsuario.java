@@ -52,6 +52,7 @@ public class TelaPerfilUsuario extends AppCompatActivity {
     ImageView imgPerfil;
     TextView txtNomePerfil;
     TextView txtDescricaoPerfil;
+    TextView txtDescricao;
     ImageView imgImagemUsuario1;
     ImageView imgImagemUsuario2;
     ImageView imgImagemUsuario3;
@@ -73,6 +74,7 @@ public class TelaPerfilUsuario extends AppCompatActivity {
         imgPerfil = findViewById(R.id.imgPerfil);
         txtNomePerfil = findViewById(R.id.txtNomePerfil);
         txtDescricaoPerfil = findViewById(R.id.txtDescricaoPerfil);
+        txtDescricao = findViewById(R.id.txtDescricao);
         imgImagemUsuario1 = findViewById(R.id.imgImagemUsuario1);
         imgImagemUsuario2 = findViewById(R.id.imgImagemUsuario2);
         imgImagemUsuario3 = findViewById(R.id.imgImagemUsuario3);
@@ -123,7 +125,7 @@ public class TelaPerfilUsuario extends AppCompatActivity {
 
         if(a != null) {
             txtNomePerfil.setText(a.getNomePerfil());
-            txtDescricaoPerfil.setText(a.getDescricaoGenero());
+            txtDescricao.setText(a.getDescricaoGenero());
             if(a.getListaAvaliacoes() != null && a.getListaAvaliacoes().size() > 0){
                 AvaliacaoAdapter avaliacaoAdapter = new AvaliacaoAdapter(a.getListaAvaliacoes(),this,a.getTipoUsuario());
                 lstAvaliacoes.setAdapter(avaliacaoAdapter);

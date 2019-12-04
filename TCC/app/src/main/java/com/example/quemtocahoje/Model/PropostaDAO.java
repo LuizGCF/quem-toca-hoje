@@ -1,5 +1,6 @@
 package com.example.quemtocahoje.Model;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -326,6 +327,7 @@ public class PropostaDAO {
                     intent.putExtra("intentTela", "RESPONDER");
                     intent.putExtra("objetoProposta", proposta);
                     ctx.startActivity(intent);
+                    ((Activity) ctx).finish();
                 }
                 progressDialog.dismiss();
                 removeValueEventListener(hashMap);

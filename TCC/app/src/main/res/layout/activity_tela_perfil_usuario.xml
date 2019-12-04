@@ -39,7 +39,9 @@
         android:layout_below="@id/txtDescricaoPerfil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#fff"
         android:layout_margin="20dp"
+        android:textStyle="bold"
         android:id="@+id/txtDescricao"/>
     <TextView
         android:layout_width="wrap_content"
