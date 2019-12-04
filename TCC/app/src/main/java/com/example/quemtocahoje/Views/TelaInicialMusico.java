@@ -86,7 +86,7 @@ public class TelaInicialMusico extends AppCompatActivity {
 
         txtNomeMusico.setText("Olá " + dto.getNome() + "!");
 
-        carregarBandaInicial();
+        //carregarBandaInicial();
 
         final Intent convidarMembro = new Intent(this, TelaConvite.class);
 
@@ -164,6 +164,7 @@ public class TelaInicialMusico extends AppCompatActivity {
             }
         });
 
+        //agenda vazia só esta abrindo o dialog e fechando
         txtAgendaInicialMusico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -217,6 +218,13 @@ public class TelaInicialMusico extends AppCompatActivity {
                                     txtNomeBandaInicialMusico.setText(nomebandas.get(which));
                                     dto.setNome(bandas.get(which).getNome());
 
+                                    txtMensagensMusico.setVisibility(View.VISIBLE);
+                                    txtAvaliacaoEstabelecimento.setVisibility(View.VISIBLE);
+                                    txtPropostasInicialMusico.setVisibility(View.VISIBLE);
+                                    txtHistoricoInicialMusico.setVisibility(View.VISIBLE);
+                                    txtAgendaInicialMusico.setVisibility(View.VISIBLE);
+                                    txtConviteInicialMusico.setVisibility(View.VISIBLE);
+
                                     dialog.dismiss();
                                 }
 
@@ -237,7 +245,15 @@ public class TelaInicialMusico extends AppCompatActivity {
             }
         });
     }
-    public void carregarBandaInicial()
+
+    //por estar no onresume, se tiver mais de uma banda vai sempre voltar para a primeira
+    @Override
+    protected void onStart() {
+        super.onStart();
+        carregarBandaInicial();
+    }
+
+    public void carregarBandaInicial()//perfil musico sem banda cadastrada ainda pesquisa?
     {
         List<BandaEntity> bandas = new ArrayList<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Banda.name());
@@ -256,10 +272,26 @@ public class TelaInicialMusico extends AppCompatActivity {
                 if(bandas.size()>0) {
                     txtNomeBandaInicialMusico.setText(bandas.get(0).getNome());
                     dto.setNome(bandas.get(0).getNome());
+                    txtVisualizandoComo.setVisibility(View.VISIBLE);
+                    txtNomeBandaInicialMusico.setVisibility(View.VISIBLE);
+
+                    txtMensagensMusico.setVisibility(View.VISIBLE);
+                    txtAvaliacaoEstabelecimento.setVisibility(View.VISIBLE);
+                    txtPropostasInicialMusico.setVisibility(View.VISIBLE);
+                    txtHistoricoInicialMusico.setVisibility(View.VISIBLE);
+                    txtAgendaInicialMusico.setVisibility(View.VISIBLE);
+                    txtConviteInicialMusico.setVisibility(View.VISIBLE);
                 }
                 else {
                     txtVisualizandoComo.setVisibility(View.INVISIBLE);
                     txtNomeBandaInicialMusico.setVisibility(View.INVISIBLE);
+
+                    txtMensagensMusico.setVisibility(View.GONE);
+                    txtAvaliacaoEstabelecimento.setVisibility(View.GONE);
+                    txtPropostasInicialMusico.setVisibility(View.GONE);
+                    txtHistoricoInicialMusico.setVisibility(View.GONE);
+                    txtAgendaInicialMusico.setVisibility(View.GONE);
+                    txtConviteInicialMusico.setVisibility(View.GONE);
                 }
             }
 

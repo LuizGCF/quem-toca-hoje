@@ -445,10 +445,46 @@ public class TelaPesquisaMusico extends AppCompatActivity {
             else if(avaliacao.getTipoUsuario().equals(TipoUsuario.BANDA.name()) || avaliacao.getTipoUsuario().equals(TipoUsuario.MUSICO.name()))
                 avaliacoes = new ArrayList<AvaliacaoMusicoEntity>();
             ArrayList<EventoDTO> dtoFinal = new ArrayList<>();
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Autenticacao.name())
-                    .child(avaliacao.getIdUsuario());
+            //DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Autenticacao.name())
+            //        .child(avaliacao.getIdUsuario());
             List finalAvaliacoes = avaliacoes;
-            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference(TabelasFirebase.Avaliacao.name())
+                    .child(avaliacao.getNomePerfil());
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Iterator<DataSnapshot> data = dataSnapshot.getChildren().iterator();
+                    while (data.hasNext()) {
+                        if (avaliacao.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name())) {
+                            AvaliacaoEstabelecimentoEntity avEstab = data.next().getValue(AvaliacaoEstabelecimentoEntity.class);
+                            dtoFinal.add(new EventoDTO("", avEstab, null, null));
+                            finalAvaliacoes.add(avEstab);
+
+
+                        } else if (avaliacao.getTipoUsuario().equals(TipoUsuario.BANDA.name()) || avaliacao.getTipoUsuario().equals(TipoUsuario.MUSICO.name())) {
+                            AvaliacaoMusicoEntity avMusico = data.next().getValue(AvaliacaoMusicoEntity.class);
+                            dtoFinal.add(new EventoDTO("", null, avMusico, null));
+                            finalAvaliacoes.add(avMusico);
+                        }
+                    }
+                    if (finalAvaliacoes.size() > 0)
+                        avaliacao.setListaAvaliacoes(finalAvaliacoes);
+                    Intent i = new Intent(context, TelaPerfilUsuario.class);
+                    i.putExtra("usuario", avaliacao);
+                    i.putExtra("dtoAutenticacao", TelaPesquisaMusico.this.dtoAutenticacao);
+                    context.startActivity(i);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {//??
+                    Intent i = new Intent(context, TelaPerfilUsuario.class);
+                    i.putExtra("usuario", avaliacao);
+                    i.putExtra("dtoAutenticacao", TelaPesquisaMusico.this.dtoAutenticacao);
+                    context.startActivity(i);
+                }
+            });
+            /*ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     AutenticacaoEntity a = dataSnapshot.getValue(AutenticacaoEntity.class);
@@ -476,7 +512,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
                                     avaliacao.setListaAvaliacoes(finalAvaliacoes);
                                 Intent i = new Intent(context, TelaPerfilUsuario.class);
                                 i.putExtra("usuario", avaliacao);
-                                i.putExtra("dtoAutenticacao",dtoAutenticacao);
+                                i.putExtra("dtoAutenticacao", TelaPesquisaMusico.this.dtoAutenticacao);
                                 context.startActivity(i);
                             }
 
@@ -484,7 +520,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
                             public void onCancelled(@NonNull DatabaseError databaseError) {//??
                                 Intent i = new Intent(context, TelaPerfilUsuario.class);
                                 i.putExtra("usuario", avaliacao);
-                                i.putExtra("dtoAutenticacao",dtoAutenticacao);
+                                i.putExtra("dtoAutenticacao", TelaPesquisaMusico.this.dtoAutenticacao);
                                 context.startActivity(i);
                             }
                         });
@@ -493,7 +529,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
                     {
                         Intent i = new Intent(context, TelaPerfilUsuario.class);
                         i.putExtra("usuario", avaliacao);
-                        i.putExtra("dtoAutenticacao",dtoAutenticacao);
+                        i.putExtra("dtoAutenticacao", TelaPesquisaMusico.this.dtoAutenticacao);
                         context.startActivity(i);
                     }
                 }
@@ -502,7 +538,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
-            });
+            });*/
 
         }
     }

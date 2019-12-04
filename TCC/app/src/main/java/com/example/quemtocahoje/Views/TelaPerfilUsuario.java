@@ -164,7 +164,8 @@ public class TelaPerfilUsuario extends AppCompatActivity {
 
             }
         }
-        return ""+media/listaAvaliacoes.size();
+        String resultado = String.format("%.2f",media/listaAvaliacoes.size());
+        return resultado;
     }
 
 

@@ -23,6 +23,7 @@ import com.example.quemtocahoje.DTO.ConvitesRecebidosDTO;
 import com.example.quemtocahoje.DTO.ItensListaBuscaDTO;
 import com.example.quemtocahoje.Enum.StatusProposta;
 import com.example.quemtocahoje.Model.BandaDAO;
+import com.example.quemtocahoje.Utility.Mensagem;
 import com.example.tcc.R;
 import com.squareup.picasso.Picasso;
 
@@ -44,12 +45,19 @@ public class TelaMeusConvites extends AppCompatActivity{
 
         setContentView(R.layout.activity_tela_meus_convites);
 
-         lstMeusConvites = findViewById(R.id.lstMeusConvites);
+        getSupportActionBar().hide();
+        lstMeusConvites = findViewById(R.id.lstMeusConvites);
         autenticacaoEmail = getIntent().getStringExtra("emailAutenticacao");
         convitesRecebidosDTO = (ArrayList<ConvitesRecebidosDTO>) getIntent().getSerializableExtra("listaConvites");
 
-        carregarRecyclerView();
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        carregarRecyclerView();
     }
 
     private void carregarRecyclerView() {
@@ -102,6 +110,10 @@ class CustomAdapterConvites extends RecyclerView.Adapter<com.example.quemtocahoj
                     CustomAdapterConvites.this.notifyDataSetChanged();
                     BandaDAO dao = new BandaDAO();
                     dao.atualizarConvite(email,nome.getText().toString(), StatusProposta.RECUSADO.name(), v.getContext());
+                    if(CustomAdapterConvites.this.getItemCount() == 0)
+                    {
+                        Mensagem.notificarFecharAtividade(v.getContext(),"Sem convites","Não há convites restantes para responder");
+                    }
                 }});
             adb.setPositiveButton("Aceitar", new AlertDialog.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
@@ -109,6 +121,10 @@ class CustomAdapterConvites extends RecyclerView.Adapter<com.example.quemtocahoj
                        CustomAdapterConvites.this.notifyDataSetChanged();
                        BandaDAO dao = new BandaDAO();
                        dao.atualizarConvite(email,nome.getText().toString(), StatusProposta.ACEITO.name(), v.getContext());
+                    if(CustomAdapterConvites.this.getItemCount() == 0)
+                    {
+                        Mensagem.notificarFecharAtividade(v.getContext(),"Sem convites","Não há convites restantes para responder");
+                    }
                 }});
             adb.show();
 

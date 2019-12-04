@@ -35,6 +35,8 @@ public class TelaHistorico extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_historico);
 
+        getSupportActionBar().hide();
+
         lstHistoricoEventos = findViewById(R.id.lstHistoricoEventos);
         listaEvento = (ArrayList<EventoDTO>) getIntent().getSerializableExtra("eventosDTO");
         tipoUsuario = getIntent().getStringExtra("tipoUsuario");

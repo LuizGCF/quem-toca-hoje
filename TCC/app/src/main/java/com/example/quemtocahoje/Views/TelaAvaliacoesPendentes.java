@@ -1,5 +1,6 @@
 package com.example.quemtocahoje.Views;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -38,8 +39,16 @@ public class TelaAvaliacoesPendentes extends AppCompatActivity {
         tipoUsuario = getIntent().getStringExtra("tipoUsuario");
         idUsuario = getIntent().getStringExtra("idUsuario");
 
+        getSupportActionBar().hide();
+
         avaliacoesPendentesAdapters = new ArrayList<>();
         avaliacoesPendentesAdapters = (ArrayList<AvaliacoesPendentesDTO>) getIntent().getSerializableExtra("listaAvaliacoes");
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         carregarRecyclerView();
 
     }
@@ -90,13 +99,14 @@ class AvaliacoesPendentesAdapter extends RecyclerView.Adapter<com.example.quemto
                     intent.putExtra("idEvento", dto.getId());
                     intent.putExtra("idEstabelecimento", dto.getNome());
                     intent.putExtra("idBanda", idUsuario);
+                    ((Activity) ctx).finish();
                     ctx.startActivity(intent);
                 }else if(tipoUsuario.equals(TipoUsuario.ESTABELECIMENTO.name())){
                     Intent intent = new Intent(ctx, TelaAvaliacaoMusico.class);
                     intent.putExtra("idEvento", dto.getId());
                     intent.putExtra("idBanda", dto.getNome());
                     intent.putExtra("idEstabelecimento", idUsuario);
-
+                    ((Activity) ctx).finish();
                     ctx.startActivity(intent);
                 }
 
