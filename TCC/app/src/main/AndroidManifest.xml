@@ -9,9 +9,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logoaplicativo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logoaplicativo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.example.quemtocahoje.Views.TelaPropostasPendentes">
@@ -46,11 +46,7 @@
 
         <activity android:name="com.example.quemtocahoje.Chat.Activitys.ConversaActivity" />
         <activity android:name="com.example.quemtocahoje.Views.TelaCriacaoBanda" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
     </activity>
         <activity android:name="com.example.quemtocahoje.Views.TelaAvalicaoEstabelecimento" />
         <activity android:name="com.example.quemtocahoje.Views.TelaAvaliacaoMusico" />
@@ -63,12 +59,19 @@
         <activity android:name="com.example.quemtocahoje.Views.TelaPesquisaMusico" />
         <activity android:name="com.example.quemtocahoje.Views.TelaConvite" />
         <activity android:name="com.example.quemtocahoje.Views.TelaProposta" />
+
         <activity android:name="com.example.quemtocahoje.Views.TelaUpload" />
         <activity android:name="com.example.quemtocahoje.Views.TelaCadastroEstabelecimento" />
         <activity android:name="com.example.quemtocahoje.Views.TelaCadastroMusico" />
         <activity android:name="com.example.quemtocahoje.Views.TelaCadastroEspectador" />
         <activity android:name="com.example.quemtocahoje.Views.TelaEscolhaCadastro" />
-        <activity android:name="com.example.quemtocahoje.Views.TelaInicial"/>
+        <activity android:name="com.example.quemtocahoje.Views.TelaInicial">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <activity android:name="com.example.quemtocahoje.Views.TelaEsqueceuaSenha" />
         <activity android:name="com.example.quemtocahoje.Views.TelaRedefinirSenha" />

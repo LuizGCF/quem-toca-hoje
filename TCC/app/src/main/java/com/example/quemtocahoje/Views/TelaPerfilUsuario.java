@@ -69,6 +69,7 @@ public class TelaPerfilUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_perfil_usuario);
 
+        getSupportActionBar().hide();
         imgPerfil = findViewById(R.id.imgPerfil);
         txtNomePerfil = findViewById(R.id.txtNomePerfil);
         txtDescricaoPerfil = findViewById(R.id.txtDescricaoPerfil);
@@ -115,6 +116,10 @@ public class TelaPerfilUsuario extends AppCompatActivity {
         hashMap = new HashMap<>();
 
         a = (AvaliacaoDTO) getIntent().getSerializableExtra("usuario");
+        dtoAutenticacao =  (AutenticacaoDTO) getIntent().getSerializableExtra("dtoAutenticacao");
+
+        if(!dtoAutenticacao.getTipoUsuario().equals(TipoUsuario.ESTABELECIMENTO.name()))
+            btnProposta.setVisibility(View.INVISIBLE);
 
         if(a != null) {
             txtNomePerfil.setText(a.getNomePerfil());

@@ -89,6 +89,7 @@ public class TelaPesquisaMusico extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
 
+        getSupportActionBar().hide();
         firebaseStorageRegistro = new FirebaseStorageRegistro(FirebaseStorage.getInstance());
 
         dtoAutenticacao =  (AutenticacaoDTO) getIntent().getSerializableExtra("dtoAutenticacao");

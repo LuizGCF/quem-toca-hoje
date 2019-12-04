@@ -38,6 +38,7 @@ public class TelaMensagensAtivas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_mensagens_ativas);
 
+        getSupportActionBar().hide();
         conversas = new ArrayList<>();
         listView = findViewById(R.id.lv_conversas);
         adapter = new ConversaAdapter(this, conversas );

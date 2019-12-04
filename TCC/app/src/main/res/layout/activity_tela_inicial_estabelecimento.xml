@@ -57,6 +57,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
             android:text="Propostas"
+            android:visibility="gone"
             android:textSize="20dp"
             android:textColor="#F5F7F7"
             android:textStyle="bold"
